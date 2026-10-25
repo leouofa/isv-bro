@@ -3,7 +3,6 @@ extends CanvasLayer
 
 @onready var panel: Control = $Panel
 @onready var resume_btn: Button = $Panel/VBox/ResumeBtn
-@onready var codex_btn: Button = $Panel/VBox/CodexBtn
 @onready var restart_btn: Button = $Panel/VBox/RestartBtn
 @onready var exit_btn: Button = $Panel/VBox/ExitBtn
 
@@ -25,8 +24,6 @@ func _ready() -> void:
 
 	if resume_btn:
 		resume_btn.pressed.connect(resume_game)
-	if codex_btn:
-		codex_btn.pressed.connect(_on_codex_pressed)
 	if restart_btn:
 		restart_btn.pressed.connect(func(): _ask_confirmation("restart", "RESTART CURRENT SECTOR?"))
 	if exit_btn:
@@ -38,7 +35,7 @@ func _ready() -> void:
 		confirm_no_btn.pressed.connect(_on_confirm_no)
 
 func _set_panel_buttons_enabled(enabled: bool) -> void:
-	for btn in [resume_btn, codex_btn, restart_btn, exit_btn]:
+	for btn in [resume_btn, restart_btn, exit_btn]:
 		if btn:
 			btn.disabled = not enabled
 			btn.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
@@ -88,12 +85,6 @@ func resume_game() -> void:
 		tree.paused = false
 	if is_inside_tree() and has_node("/root/MusicManager"):
 		get_node("/root/MusicManager").set_low_pass_enabled(false)
-
-func _on_codex_pressed() -> void:
-	var codex_scn := load("res://scenes/CodexScreen.tscn") as PackedScene
-	if codex_scn:
-		var inst := codex_scn.instantiate()
-		add_child(inst)
 
 func _ask_confirmation(action: String, message: String) -> void:
 	pending_action = action

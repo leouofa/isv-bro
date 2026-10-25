@@ -61,7 +61,7 @@ func _init() -> void:
 	var required_actions := [
 		"move_left", "move_right", "move_up", "move_down",
 		"barrel_roll", "boost", "airbrake",
-		"root_1", "root_2", "root_3", "root_4", "pause"
+		"root_1", "root_2", "root_3", "root_4", "pause", "toggle_codex"
 	]
 	for act in required_actions:
 		assert_true(
@@ -171,6 +171,21 @@ func _init() -> void:
 			assert_true(paused == false, "PauseMenu.resume_game() restores SceneTree.paused = false")
 		pause_scn.free()
 
+		# Test GameWorld in-game Codex toggle
+		var gw_scn := (load("res://scenes/GameWorld.tscn") as PackedScene).instantiate()
+		root.add_child(gw_scn)
+		assert_true(gw_scn.has_method("toggle_codex"), "GameWorld has toggle_codex method")
+		var gw_hud = gw_scn.get_node_or_null("HUD") as CanvasLayer
+		assert_true(gw_hud != null and gw_hud.visible == true, "HUD is visible initially in GameWorld")
+		gw_scn.open_codex()
+		assert_true(paused == true, "GameWorld.open_codex() pauses SceneTree")
+		assert_true(gw_scn.get("codex_instance") != null, "GameWorld.open_codex() instantiates CodexScreen")
+		assert_true(gw_hud.visible == false, "HUD and scanlines are hidden when Codex is open")
+		gw_scn.close_codex()
+		assert_true(paused == false, "GameWorld.close_codex() restores SceneTree.paused = false")
+		assert_true(gw_hud.visible == true, "HUD and scanlines are restored when Codex is closed")
+		gw_scn.free()
+
 	# SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity
 	print("\n--- SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity ---")
 	var sfx_node := Node.new()
@@ -232,6 +247,8 @@ func _init() -> void:
 	root.add_child(p_scn)
 	var resume_btn = p_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
 	assert_true(resume_btn != null and resume_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "PauseMenu ResumeBtn has CURSOR_POINTING_HAND")
+	var codex_btn = p_scn.get_node_or_null("Panel/VBox/CodexBtn")
+	assert_true(codex_btn == null, "CodexBtn removed from PauseMenu")
 	var p_panel = p_scn.get_node_or_null("Panel") as PanelContainer
 	var p_style = p_panel.get_theme_stylebox("panel") as StyleBoxFlat if p_panel else null
 	assert_true(p_style != null and p_style.content_margin_left >= 16.0 and p_style.content_margin_right >= 16.0, "PauseMenu Panel has content margin padding")
@@ -248,11 +265,13 @@ func _init() -> void:
 	assert_true(c_card != null and c_card.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex DetailCard has CURSOR_POINTING_HAND")
 	c_scn.free()
 
-	# Verify HUD salvo buttons cursor
+	# Verify HUD salvo buttons cursor and top-right Codex hint
 	var hud_scn := (load("res://scenes/HUD.tscn") as PackedScene).instantiate()
 	root.add_child(hud_scn)
 	var btn1 = hud_scn.get_node_or_null("TacticalBanner/VBox/ButtonsContainer/Btn1") as Button
 	assert_true(btn1 != null and btn1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "HUD Salvo Btn1 has CURSOR_POINTING_HAND")
+	var codex_hint = hud_scn.get_node_or_null("TopRight/CodexHint") as Label
+	assert_true(codex_hint != null and codex_hint.text.contains("[B] CODEX BRO-TANICA"), "HUD TopRight has [B] CODEX BRO-TANICA hint")
 	hud_scn.free()
 
 	ui_node.free()

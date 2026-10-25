@@ -119,6 +119,23 @@ theme_override_colors/font_color = Color(0, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "1X BRO-FACTOR"
 
+[node name="TopRight" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 90.0
+grow_horizontal = 0
+
+[node name="CodexHint" type="Label" parent="TopRight"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 0.9)
+theme_override_font_sizes/font_size = 15
+text = "[B] CODEX BRO-TANICA"
+horizontal_alignment = 2
+
 [node name="BottomLeft" type="VBoxContainer" parent="."]
 anchors_preset = 2
 anchor_top = 1.0

@@ -27,6 +27,9 @@ var hazard_timer: float = 0.0
 @onready var rings_container: Node3D = $TunnelRings
 @onready var objects_container: Node3D = $DynamicObjects
 @onready var laser_mesh: MeshInstance3D = $LaserBeam
+@onready var codex_layer: CanvasLayer = $CodexLayer
+
+var codex_instance: Node = null
 
 var ANOMALY_SCENE: PackedScene = load("res://scenes/Anomaly.tscn")
 var BOSS_SCENE: PackedScene = load("res://scenes/BossExam.tscn")
@@ -89,6 +92,81 @@ func _physics_process(delta: float) -> void:
 
 	# Handle root salvo key inputs (1-4, Q-E-R-F)
 	handle_root_inputs()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_codex"):
+		var pause_menu = get_node_or_null("PauseMenu")
+		if pause_menu and pause_menu.visible:
+			return
+		toggle_codex()
+		get_viewport().set_input_as_handled()
+
+func toggle_codex() -> void:
+	if is_instance_valid(codex_instance):
+		close_codex()
+	else:
+		open_codex()
+
+func _get_tree_safe() -> SceneTree:
+	if is_inside_tree() and get_tree():
+		return get_tree()
+	var main_loop := Engine.get_main_loop()
+	if main_loop is SceneTree:
+		return main_loop as SceneTree
+	if Engine.has_meta("active_tree"):
+		return Engine.get_meta("active_tree") as SceneTree
+	return null
+
+func _get_hud() -> CanvasLayer:
+	if hud != null:
+		return hud
+	return get_node_or_null("HUD") as CanvasLayer
+
+func _get_codex_layer() -> CanvasLayer:
+	if codex_layer != null:
+		return codex_layer
+	return get_node_or_null("CodexLayer") as CanvasLayer
+
+func open_codex() -> void:
+	var pause_menu = get_node_or_null("PauseMenu")
+	if pause_menu and pause_menu.visible:
+		return
+	var codex_scn := load("res://scenes/CodexScreen.tscn") as PackedScene
+	if codex_scn:
+		var inst = codex_scn.instantiate()
+		inst.set("paused_game", true)
+		codex_instance = inst
+		var h := _get_hud()
+		if h:
+			h.visible = false
+		inst.tree_exited.connect(_on_codex_tree_exited)
+		var cl := _get_codex_layer()
+		if cl:
+			cl.add_child(inst)
+		else:
+			add_child(inst)
+		var tree := _get_tree_safe()
+		if tree:
+			tree.paused = true
+		if is_inside_tree() and has_node("/root/MusicManager"):
+			get_node("/root/MusicManager").set_low_pass_enabled(true)
+
+func close_codex() -> void:
+	if is_instance_valid(codex_instance):
+		if codex_instance.has_method("close_screen"):
+			codex_instance.close_screen()
+		else:
+			codex_instance.queue_free()
+		codex_instance = null
+	var h := _get_hud()
+	if h:
+		h.visible = true
+
+func _on_codex_tree_exited() -> void:
+	codex_instance = null
+	var h := _get_hud()
+	if h:
+		h.visible = true
 
 func update_lock_on_target() -> void:
 	# Clean dead targets
