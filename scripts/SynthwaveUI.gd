@@ -229,11 +229,12 @@ func apply_button_style(btn: Button) -> void:
 # Card Styling, Cursor & Interactivity
 # ----------------------------------------------------
 func apply_card_style(card: Control, is_unlocked: bool = true) -> void:
-	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	if is_unlocked:
+		card.mouse_filter = Control.MOUSE_FILTER_STOP
 		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		card.add_theme_stylebox_override("panel", card_style_normal)
 	else:
+		card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		card.add_theme_stylebox_override("panel", card_style_locked)
 
@@ -261,28 +262,42 @@ func _setup_card_interactions(card: Control) -> void:
 			card.add_theme_stylebox_override("panel", card_style_normal)
 	)
 
-	# Full card click handler
+	# Full card click & activation handler (Mouse, Keyboard & Controller)
 	card.gui_input.connect(func(event: InputEvent):
+		var is_locked: bool = card.has_meta("is_locked") and bool(card.get_meta("is_locked"))
+		if is_locked:
+			return
+
+		var triggered := false
 		if event is InputEventMouseButton:
 			var mb := event as InputEventMouseButton
 			if mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
-				var is_locked: bool = card.has_meta("is_locked") and bool(card.get_meta("is_locked"))
-				if not is_locked:
-					var sfx := _get_sfx()
-					if sfx and sfx.has_method("play_ui_click"):
-						sfx.play_ui_click()
+				triggered = true
+		elif event is InputEventKey:
+			var k := event as InputEventKey
+			if (k.keycode == KEY_ENTER or k.keycode == KEY_SPACE) and k.pressed and not k.echo:
+				triggered = true
+		elif event is InputEventJoypadButton:
+			var jb := event as InputEventJoypadButton
+			if jb.button_index == JOY_BUTTON_A and jb.pressed:
+				triggered = true
 
-					# Check for custom callable or internal launch button
-					var handled := false
-					if card.has_meta("card_clicked_callable"):
-						var cb = card.get_meta("card_clicked_callable")
-						if cb is Callable:
-							cb.call()
-							handled = true
-					if not handled:
-						var launch_btn: Button = card.get_node_or_null("VBox/LaunchBtn")
-						if launch_btn and not launch_btn.disabled:
-							launch_btn.emit_signal("pressed")
+		if triggered:
+			var sfx := _get_sfx()
+			if sfx and sfx.has_method("play_ui_click"):
+				sfx.play_ui_click()
+
+			# Check for custom callable or internal launch button
+			var handled := false
+			if card.has_meta("card_clicked_callable"):
+				var cb = card.get_meta("card_clicked_callable")
+				if cb is Callable:
+					cb.call()
+					handled = true
+			if not handled:
+				var launch_btn: Button = card.get_node_or_null("VBox/LaunchBtn")
+				if launch_btn and not launch_btn.disabled:
+					launch_btn.emit_signal("pressed")
 	)
 
 # ----------------------------------------------------

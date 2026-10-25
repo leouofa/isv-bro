@@ -215,12 +215,6 @@ theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
 
-[node name="LaunchBtn" type="Button" parent="VBox/SectorSelectView/SectorCards/Card1/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "ENGAGE SECTOR"
-
 [node name="Card2" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -259,12 +253,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
-
-[node name="LaunchBtn" type="Button" parent="VBox/SectorSelectView/SectorCards/Card2/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "ENGAGE SECTOR"
 
 [node name="Card3" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
@@ -305,12 +293,6 @@ theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
 
-[node name="LaunchBtn" type="Button" parent="VBox/SectorSelectView/SectorCards/Card3/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "ENGAGE SECTOR"
-
 [node name="Card4" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -349,12 +331,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
-
-[node name="LaunchBtn" type="Button" parent="VBox/SectorSelectView/SectorCards/Card4/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "ENGAGE SECTOR"
 
 [node name="SettingsModal" type="PanelContainer" parent="."]
 visible = false

@@ -184,8 +184,8 @@ func _init() -> void:
 	var card1 = menu_scn.get_node_or_null("VBox/SectorSelectView/SectorCards/Card1") as PanelContainer
 	assert_true(card1 != null and card1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "MainMenu Card1 has CURSOR_POINTING_HAND")
 
-	var launch1_btn = card1.get_node_or_null("VBox/LaunchBtn") as Button
-	assert_true(launch1_btn != null and launch1_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "SectorCard LaunchBtn has CURSOR_POINTING_HAND")
+	var launch1_btn = card1.get_node_or_null("VBox/LaunchBtn")
+	assert_true(launch1_btn == null, "Engage sector LaunchBtn removed from SectorCard")
 
 	# Test whole-card click triggers sector engagement
 	ui_node.apply_card_style(card1, true)
@@ -197,6 +197,14 @@ func _init() -> void:
 	click_ev.pressed = true
 	card1.emit_signal("gui_input", click_ev)
 	assert_true(clicked_box[0] == 1, "Clicking entire SectorCard triggers sector engagement")
+
+	# Test keyboard activation (Enter / Space) on focused card
+	clicked_box[0] = -1
+	var key_ev := InputEventKey.new()
+	key_ev.keycode = KEY_ENTER
+	key_ev.pressed = true
+	card1.emit_signal("gui_input", key_ev)
+	assert_true(clicked_box[0] == 1, "Keyboard Enter on focused SectorCard triggers sector engagement")
 
 	menu_scn.free()
 

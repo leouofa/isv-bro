@@ -63,11 +63,11 @@ func _on_new_game_pressed() -> void:
 	if sector_select_view:
 		sector_select_view.visible = true
 
-	# Focus the first sector launch button or back button
+	# Focus the first unlocked sector card or back button
 	if is_inside_tree():
-		var card1_btn: Button = sector_cards_container.get_node_or_null("Card1/VBox/LaunchBtn") if sector_cards_container else null
-		if card1_btn and not card1_btn.disabled:
-			card1_btn.grab_focus()
+		var card1: Control = sector_cards_container.get_node_or_null("Card1") if sector_cards_container else null
+		if card1 and card1.focus_mode != Control.FOCUS_NONE:
+			card1.grab_focus()
 		elif back_btn:
 			back_btn.grab_focus()
 
@@ -98,7 +98,6 @@ func setup_sector_cards() -> void:
 		var desc_label: Label = card.get_node_or_null("VBox/Desc")
 		var score_label: Label = card.get_node_or_null("VBox/Score")
 		var grade_label: Label = card.get_node_or_null("VBox/Grade")
-		var launch_btn: Button = card.get_node_or_null("VBox/LaunchBtn")
 
 		if title_label:
 			title_label.text = data["name"]
@@ -129,23 +128,21 @@ func setup_sector_cards() -> void:
 				grade_label.text = "RANK: LOCKED"
 				grade_label.modulate = Color(0.35, 0.35, 0.35, 0.6)
 
-		if launch_btn:
-			if is_unlocked:
-				launch_btn.disabled = false
-				launch_btn.text = "ENGAGE SECTOR"
-				var sec_id: int = data["id"]
-				var start_callable := func(): start_sector(sec_id)
-				if not launch_btn.pressed.is_connected(start_callable):
-					launch_btn.pressed.connect(start_callable)
-			else:
-				launch_btn.disabled = true
-				launch_btn.text = "LOCKED"
+		var sec_id: int = data["id"]
+		card.set_meta("is_locked", not is_unlocked)
+		card.set_meta("card_clicked_callable", func(): start_sector(sec_id))
+
+		if is_unlocked:
+			card.focus_mode = Control.FOCUS_ALL
+			card.mouse_filter = Control.MOUSE_FILTER_STOP
+			card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		else:
+			card.focus_mode = Control.FOCUS_NONE
+			card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			card.mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 		var synth_ui = get_node_or_null("/root/SynthwaveUI") if is_inside_tree() else null
 		if synth_ui:
-			card.set_meta("is_locked", not is_unlocked)
-			var sec_id: int = data["id"]
-			card.set_meta("card_clicked_callable", func(): start_sector(sec_id))
 			synth_ui.apply_card_style(card, is_unlocked)
 
 func start_sector(sector: int) -> void:
