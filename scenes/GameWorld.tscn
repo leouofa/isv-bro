@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/GameWorld.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://scenes/PlayerJet.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/PauseMenu.tscn" id="4_pause"]
+
+[sub_resource type="Environment" id="Environment_glow"]
+background_mode = 1
+background_color = Color(0.04, 0.04, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.15, 0.25, 1)
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.25
+glow_blend_mode = 0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_laser"]
+top_radius = 0.08
+bottom_radius = 0.08
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser"]
+shading_mode = 0
+albedo_color = Color(0, 0.94, 1, 1)
+
+[node name="GameWorld" type="Node3D"]
+script = ExtResource("1_world")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_glow")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 10, 0)
+light_color = Color(0.95, 0.95, 1, 1)
+light_energy = 1.2
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 2.2, 5.8)
+fov = 76.0
+
+[node name="PlayerJet" parent="." instance=ExtResource("2_player")]
+
+[node name="TunnelRings" type="Node3D" parent="."]
+
+[node name="DynamicObjects" type="Node3D" parent="."]
+
+[node name="LaserBeam" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+visible = false
+mesh = SubResource("CylinderMesh_laser")
+surface_material_override/0 = SubResource("StandardMaterial3D_laser")
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]

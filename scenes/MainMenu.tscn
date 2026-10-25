@@ -1,0 +1,357 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.04, 0.08, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.08, 0.08, 0.14, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.94, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 14.0
+content_margin_top = 16.0
+content_margin_right = 14.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.06, 0.06, 0.12, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 0.5, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 46
+text = "🕶️ ISV BRO"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "INTERNATIONAL SCIENTIFIC VOCABULARY: BLAST RESONANCE OPERATIVE"
+horizontal_alignment = 1
+
+[node name="SectorCards" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Card1" type="PanelContainer" parent="VBox/SectorCards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card1"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "SECTOR 01
+BIO-GENESIS"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Cytology & Cellular Dynamics"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Score" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "RECORD: 0000000"
+horizontal_alignment = 1
+
+[node name="Grade" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "RANK: -"
+horizontal_alignment = 1
+
+[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card1/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "ENGAGE SECTOR"
+
+[node name="Card2" type="PanelContainer" parent="VBox/SectorCards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "SECTOR 02
+ASTRO-DYNAMICS"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Celestial Bodies & Orbitals"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Score" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "RECORD: 0000000"
+horizontal_alignment = 1
+
+[node name="Grade" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "RANK: -"
+horizontal_alignment = 1
+
+[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card2/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "ENGAGE SECTOR"
+
+[node name="Card3" type="PanelContainer" parent="VBox/SectorCards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card3"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "SECTOR 03
+LITHIC MATRIX"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Geology & Crust Dynamics"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Score" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "RECORD: 0000000"
+horizontal_alignment = 1
+
+[node name="Grade" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "RANK: -"
+horizontal_alignment = 1
+
+[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card3/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "ENGAGE SECTOR"
+
+[node name="Card4" type="PanelContainer" parent="VBox/SectorCards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card4"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "SECTOR 04
+QUANTUM ENERGETICS"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Thermodynamics & Light"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Score" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "RECORD: 0000000"
+horizontal_alignment = 1
+
+[node name="Grade" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "RANK: -"
+horizontal_alignment = 1
+
+[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card4/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "ENGAGE SECTOR"
+
+[node name="BottomBar" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="CodexBtn" type="Button" parent="VBox/BottomBar"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "📖 CODEX BRO-TANICA"
+
+[node name="SettingsBtn" type="Button" parent="VBox/BottomBar"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "⚙️ AUDIO & CRT SETTINGS"
+
+[node name="QuitBtn" type="Button" parent="VBox/BottomBar"]
+custom_minimum_size = Vector2(160, 44)
+layout_mode = 2
+text = "EXIT GAME"
+
+[node name="SettingsModal" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -170.0
+offset_right = 220.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Panel" type="Control" parent="SettingsModal"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="SettingsModal/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ModalTitle" type="Label" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.5, 1)
+theme_override_font_sizes/font_size = 22
+text = "SYSTEM CONFIGURATION"
+horizontal_alignment = 1
+
+[node name="MasterLabel" type="Label" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+value = 100.0
+
+[node name="MusicLabel" type="Label" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+value = 85.0
+
+[node name="SFXLabel" type="Label" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFXSlider" type="HSlider" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+value = 90.0
+
+[node name="CRTCheck" type="CheckBox" parent="SettingsModal/Panel/VBox"]
+layout_mode = 2
+button_pressed = true
+text = "Enable 90s CRT Scanlines Shader"
+
+[node name="CloseBtn" type="Button" parent="SettingsModal/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "SAVE & CLOSE"

@@ -1,0 +1,197 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="1_hud"]
+[ext_resource type="Script" path="res://scripts/BroCopilot.gd" id="2_copilot"]
+[ext_resource type="Shader" path="res://shaders/crt_overlay.gdshader" id="3_crt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_crt"]
+shader = ExtResource("3_crt")
+shader_parameter/scanline_count = 360.0
+shader_parameter/scanline_intensity = 0.25
+shader_parameter/curvature = 0.02
+shader_parameter/vignette_intensity = 0.35
+shader_parameter/chromatic_aberration = 0.002
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.06, 0.06, 0.12, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.94, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="ReticleBox" type="Control" parent="."]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 80.0
+offset_bottom = 80.0
+mouse_filter = 2
+
+[node name="DiamondBorder" type="ReferenceRect" parent="ReticleBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 0.94, 1, 1)
+border_width = 2.5
+editor_only = false
+
+[node name="TacticalBanner" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 18.0
+offset_right = 340.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="VBox" type="VBoxContainer" parent="TacticalBanner"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClueLabel" type="Label" parent="TacticalBanner/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "TARGET CLUE: \"CELL DISSOLUTION OR DESTRUCTION\""
+horizontal_alignment = 1
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="TacticalBanner/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Btn1" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "[1 / Q] -lysis"
+
+[node name="Btn2" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "[2 / E] -stasis"
+
+[node name="Btn3" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "[3 / R] cyto-"
+
+[node name="Btn4" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+text = "[4 / F] bio-"
+
+[node name="TopLeft" type="VBoxContainer" parent="."]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 260.0
+offset_bottom = 90.0
+
+[node name="ScoreLabel" type="Label" parent="TopLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "SCORE: 0000000"
+
+[node name="ComboBadge" type="Label" parent="TopLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "1X BRO-FACTOR"
+
+[node name="BottomLeft" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -120.0
+offset_right = 320.0
+offset_bottom = -24.0
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="ShieldLabel" type="Label" parent="BottomLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.22, 1, 0.08, 1)
+theme_override_font_sizes/font_size = 14
+text = "SHIELD INTEGRITY"
+
+[node name="ShieldBar" type="ProgressBar" parent="BottomLeft"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="OverheatLabel" type="Label" parent="BottomLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "COGNITIVE OVERHEAT"
+
+[node name="OverheatBar" type="ProgressBar" parent="BottomLeft"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="LockoutLabel" type="Label" parent="BottomLeft"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "!! WEAPONS LOCKED OUT !!"
+
+[node name="CommsWidget" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -460.0
+offset_top = -140.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="DialogueBox" type="PanelContainer" parent="CommsWidget"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CommsWidget/DialogueBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "LOCK ONTO THOSE SCIENTIFIC ROOTS, BRO!"
+autowrap_mode = 2
+
+[node name="BroAvatar" type="Control" parent="CommsWidget"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+script = ExtResource("2_copilot")
+
+[node name="CRTOverlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_crt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
