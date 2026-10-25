@@ -1,0 +1,149 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/CodexScreen.gd" id="1_codex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.04, 0.08, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.94, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.08, 0.08, 0.14, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0.5, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[node name="CodexScreen" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_codex")
+
+[node name="Background" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBox/TopBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "CODEX BRO-TANICA"
+
+[node name="SectorFilter" type="OptionButton" parent="VBox/TopBar"]
+custom_minimum_size = Vector2(280, 36)
+layout_mode = 2
+
+[node name="ProgressLabel" type="Label" parent="VBox/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "CODEX DISCOVERY: 0 / 48 (0%)"
+horizontal_alignment = 1
+
+[node name="CloseBtn" type="Button" parent="VBox/TopBar"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "CLOSE"
+
+[node name="Content" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="ScrollList" type="ScrollContainer" parent="VBox/Content"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+
+[node name="RootList" type="VBoxContainer" parent="VBox/Content/ScrollList"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="DetailCard" type="PanelContainer" parent="VBox/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Content/DetailCard"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="RootLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "-LYSIS"
+
+[node name="OriginLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "ORIGIN: Greek (lyein)"
+
+[node name="MeaningLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "MEANING: Dissolution, loosening, or cell destruction"
+autowrap_mode = 2
+
+[node name="ExamplesLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.22, 1, 0.08, 1)
+theme_override_font_sizes/font_size = 18
+text = "SCIENTIFIC EXAMPLES: Cytolysis, Hydrolysis, Paralysis"
+autowrap_mode = 2
+
+[node name="StatsLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 16
+text = "STATS: 0 HITS / 0 MISSES"
+
+[node name="MnemonicLabel" type="Label" parent="VBox/Content/DetailCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "B.R.O. MNEMONIC:
+\"LYSIS breaks it LOOSE and dissolves it with lasers!\""
+autowrap_mode = 2

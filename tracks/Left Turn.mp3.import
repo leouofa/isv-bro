@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://csdwve7suaop"
+path="res://.godot/imported/Left Turn.mp3-6fb72ee2e8827a7d6e5cca8f0ca2bde2.mp3str"
+
+[deps]
+
+source_file="res://tracks/Left Turn.mp3"
+dest_files=["res://.godot/imported/Left Turn.mp3-6fb72ee2e8827a7d6e5cca8f0ca2bde2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

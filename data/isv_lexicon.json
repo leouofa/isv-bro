@@ -1,0 +1,608 @@
+{
+  "sectors": [
+    {
+      "id": 1,
+      "code": "BIO",
+      "name": "Sector 01: Cytology & Bio-Genesis",
+      "theme_color": "#39FF14",
+      "track": "res://tracks/The Run.mp3",
+      "boss_track": "res://tracks/Left Turn.mp3"
+    },
+    {
+      "id": 2,
+      "code": "ASTRO",
+      "name": "Sector 02: Astro & Celestial Dynamics",
+      "theme_color": "#00F0FF",
+      "track": "res://tracks/Ultrabeat.mp3",
+      "boss_track": "res://tracks/Left Turn.mp3"
+    },
+    {
+      "id": 3,
+      "code": "GEO",
+      "name": "Sector 03: Geo & Lithospheric Matrix",
+      "theme_color": "#FFE600",
+      "track": "res://tracks/Undercurrent.mp3",
+      "boss_track": "res://tracks/Left Turn.mp3"
+    },
+    {
+      "id": 4,
+      "code": "THERMO",
+      "name": "Sector 04: Thermo & Quantum Energetics",
+      "theme_color": "#FF007F",
+      "track": "res://tracks/Escape.mp3",
+      "boss_track": "res://tracks/Rerun.mp3"
+    }
+  ],
+  "roots": [
+    {
+      "id": "bio",
+      "sector": 1,
+      "root": "bio-",
+      "origin": "Greek (bios)",
+      "meaning": "Life or living organisms",
+      "examples": ["Biology", "Biosphere", "Symbiosis"],
+      "distractors": ["geo-", "lith-", "cryo-"],
+      "mnemonic": "BIO is LIFE, bro! Keep your bio-shield alive!"
+    },
+    {
+      "id": "cyto",
+      "sector": 1,
+      "root": "cyto-",
+      "origin": "Greek (kytos)",
+      "meaning": "Cell or hollow receptacle",
+      "examples": ["Cytoplasm", "Cytology", "Leukocyte"],
+      "distractors": ["soma-", "blast-", "troph-"],
+      "mnemonic": "CYTO = CELL! Every cell in your body is hyped!"
+    },
+    {
+      "id": "lysis",
+      "sector": 1,
+      "root": "-lysis",
+      "origin": "Greek (lyein)",
+      "meaning": "Dissolution, loosening, or cell destruction",
+      "examples": ["Cytolysis", "Hydrolysis", "Paralysis"],
+      "distractors": ["-stasis", "-genesis", "-trophy"],
+      "mnemonic": "LYSIS breaks it LOOSE and dissolves it with lasers!"
+    },
+    {
+      "id": "stasis",
+      "sector": 1,
+      "root": "-stasis",
+      "origin": "Greek (stasis)",
+      "meaning": "Standing still, equilibrium, or stability",
+      "examples": ["Homeostasis", "Hemostasis", "Cryostasis"],
+      "distractors": ["-lysis", "-kinesis", "-phagy"],
+      "mnemonic": "STASIS = STAY STILL in perfect balance!"
+    },
+    {
+      "id": "phag",
+      "sector": 1,
+      "root": "phag- / -phagy",
+      "origin": "Greek (phagein)",
+      "meaning": "To eat, engulf, or devour",
+      "examples": ["Macrophage", "Esophagus", "Autophagy"],
+      "distractors": ["troph-", "blast-", "soma-"],
+      "mnemonic": "PHAG = PAC-MAN eating up cellular debris!"
+    },
+    {
+      "id": "soma",
+      "sector": 1,
+      "root": "soma- / -some",
+      "origin": "Greek (soma)",
+      "meaning": "Body or bodily structure",
+      "examples": ["Somatic", "Chromosome", "Ribosome"],
+      "distractors": ["cyto-", "morph-", "endo-"],
+      "mnemonic": "SOMA is the BODY, bro—never skip soma day!"
+    },
+    {
+      "id": "blast",
+      "sector": 1,
+      "root": "-blast / blasto-",
+      "origin": "Greek (blastos)",
+      "meaning": "Immature cell, bud, or germ layer",
+      "examples": ["Osteoblast", "Fibroblast", "Blastocyst"],
+      "distractors": ["-clast", "-lysis", "soma-"],
+      "mnemonic": "BLAST cells are young builders ready to sprout!"
+    },
+    {
+      "id": "endo",
+      "sector": 1,
+      "root": "endo-",
+      "origin": "Greek (endon)",
+      "meaning": "Within, inner, or absorbing",
+      "examples": ["Endoskeleton", "Endocrine", "Endocytosis"],
+      "distractors": ["exo-", "peri-", "apo-"],
+      "mnemonic": "ENDO goes IN-DOORS, deep inside the structure!"
+    },
+    {
+      "id": "exo",
+      "sector": 1,
+      "root": "exo-",
+      "origin": "Greek (exo)",
+      "meaning": "Outside, external, or outer",
+      "examples": ["Exoskeleton", "Exothermic", "Exocytosis"],
+      "distractors": ["endo-", "meso-", "intra-"],
+      "mnemonic": "EXO = EXIT to the outside shell!"
+    },
+    {
+      "id": "auto",
+      "sector": 1,
+      "root": "auto-",
+      "origin": "Greek (autos)",
+      "meaning": "Self or occurring from within",
+      "examples": ["Autotroph", "Autophagy", "Autonomic"],
+      "distractors": ["hetero-", "homo-", "syn-"],
+      "mnemonic": "AUTO = AUTOMATICALLY by yourself, bro!"
+    },
+    {
+      "id": "troph",
+      "sector": 1,
+      "root": "-troph / tropho-",
+      "origin": "Greek (trophe)",
+      "meaning": "Nourishment, food, or growth",
+      "examples": ["Autotroph", "Hypertrophy", "Atrophy"],
+      "distractors": ["phag-", "lysis", "stasis"],
+      "mnemonic": "TROPH = Winner's TROPHY of cellular nutrition!"
+    },
+    {
+      "id": "morph",
+      "sector": 1,
+      "root": "morph- / -morphic",
+      "origin": "Greek (morphe)",
+      "meaning": "Form, shape, or structure",
+      "examples": ["Metamorphosis", "Morphology", "Amorphous"],
+      "distractors": ["chrom-", "soma-", "stereo-"],
+      "mnemonic": "MORPH = Mighty Morphin' shape-shifters!"
+    },
+    {
+      "id": "astro",
+      "sector": 2,
+      "root": "astro-",
+      "origin": "Greek (astron)",
+      "meaning": "Star or celestial body",
+      "examples": ["Astrophysics", "Asteroid", "Astronaut"],
+      "distractors": ["cosmo-", "helio-", "geo-"],
+      "mnemonic": "ASTRO = STARS shining across the galaxy!"
+    },
+    {
+      "id": "cosmo",
+      "sector": 2,
+      "root": "cosmo-",
+      "origin": "Greek (kosmos)",
+      "meaning": "Universe, world, or order",
+      "examples": ["Cosmology", "Microcosm", "Cosmonaut"],
+      "distractors": ["astro-", "chrono-", "tele-"],
+      "mnemonic": "COSMO = The entire ordered UNIVERSE, bro!"
+    },
+    {
+      "id": "helio",
+      "sector": 2,
+      "root": "helio-",
+      "origin": "Greek (helios)",
+      "meaning": "The Sun",
+      "examples": ["Heliocentric", "Helium", "Perihelion"],
+      "distractors": ["lumin-", "pyro-", "photo-"],
+      "mnemonic": "HELIO = Blazing hot SUN power!"
+    },
+    {
+      "id": "peri",
+      "sector": 2,
+      "root": "peri-",
+      "origin": "Greek (peri)",
+      "meaning": "Around, near, or enclosing",
+      "examples": ["Perihelion", "Perigee", "Perimeter"],
+      "distractors": ["apo-", "tele-", "endo-"],
+      "mnemonic": "PERI = Close around the PERIMETER!"
+    },
+    {
+      "id": "apo",
+      "sector": 2,
+      "root": "apo-",
+      "origin": "Greek (apo)",
+      "meaning": "Away from, farthest point, or detached",
+      "examples": ["Apogee", "Aphelion", "Apoptosis"],
+      "distractors": ["peri-", "syn-", "ad-"],
+      "mnemonic": "APO = APART and far away in deep orbit!"
+    },
+    {
+      "id": "chrono",
+      "sector": 2,
+      "root": "chrono-",
+      "origin": "Greek (khronos)",
+      "meaning": "Time",
+      "examples": ["Chronology", "Synchronize", "Chronometer"],
+      "distractors": ["tachy-", "brady-", "kinet-"],
+      "mnemonic": "CHRONO = Cosmic TIME on your chronograph!"
+    },
+    {
+      "id": "tele",
+      "sector": 2,
+      "root": "tele-",
+      "origin": "Greek (tele)",
+      "meaning": "Far off, distant, or across space",
+      "examples": ["Telescope", "Telemetry", "Teleport"],
+      "distractors": ["peri-", "micro-", "auto-"],
+      "mnemonic": "TELE = Seeing FAR across the starfield!"
+    },
+    {
+      "id": "baro",
+      "sector": 2,
+      "root": "baro-",
+      "origin": "Greek (baros)",
+      "meaning": "Weight or atmospheric pressure",
+      "examples": ["Barometer", "Isobar", "Hyperbaric"],
+      "distractors": ["grav-", "thermo-", "dynam-"],
+      "mnemonic": "BARO = Heavy BARBELL pressure, bro!"
+    },
+    {
+      "id": "lumin",
+      "sector": 2,
+      "root": "lumin-",
+      "origin": "Latin (lumen)",
+      "meaning": "Light or radiant emission",
+      "examples": ["Luminosity", "Bioluminescence", "Luminary"],
+      "distractors": ["photo-", "chrom-", "spectr-"],
+      "mnemonic": "LUMIN = Illuminate the dark void!"
+    },
+    {
+      "id": "grav",
+      "sector": 2,
+      "root": "grav-",
+      "origin": "Latin (gravis)",
+      "meaning": "Heavy or weight-inducing force",
+      "examples": ["Gravity", "Graviton", "Specific Gravity"],
+      "distractors": ["baro-", "dynam-", "kinet-"],
+      "mnemonic": "GRAV = Heavy GRAVITY pulling you in!"
+    },
+    {
+      "id": "sidere",
+      "sector": 2,
+      "root": "sidere-",
+      "origin": "Latin (sidus)",
+      "meaning": "Star or constellation alignment",
+      "examples": ["Sidereal", "Consider"],
+      "distractors": ["astro-", "cosmo-", "helio-"],
+      "mnemonic": "SIDERE = Locked onto distant STAR time!"
+    },
+    {
+      "id": "nebula",
+      "sector": 2,
+      "root": "nebul-",
+      "origin": "Latin (nebula)",
+      "meaning": "Mist, cloud, or vapor",
+      "examples": ["Nebula", "Nebulizer", "Nebulous"],
+      "distractors": ["hydro-", "hal-", "bath-"],
+      "mnemonic": "NEBUL = Cosmic CLOUD of star-forming gas!"
+    },
+    {
+      "id": "geo",
+      "sector": 3,
+      "root": "geo-",
+      "origin": "Greek (ge)",
+      "meaning": "Earth or planetary ground",
+      "examples": ["Geology", "Geothermal", "Apogee"],
+      "distractors": ["lith-", "petro-", "orogen-"],
+      "mnemonic": "GEO = Planet EARTH beneath our thrusters!"
+    },
+    {
+      "id": "lith",
+      "sector": 3,
+      "root": "lith- / -lite",
+      "origin": "Greek (lithos)",
+      "meaning": "Stone or rock",
+      "examples": ["Lithosphere", "Monolith", "Neolithic"],
+      "distractors": ["petro-", "geo-", "clast-"],
+      "mnemonic": "LITH = Solid STONE monoliths!"
+    },
+    {
+      "id": "petro",
+      "sector": 3,
+      "root": "petro-",
+      "origin": "Greek (petra)",
+      "meaning": "Rock or mineral crag",
+      "examples": ["Petrology", "Petrified", "Petroleum"],
+      "distractors": ["lith-", "strat-", "hal-"],
+      "mnemonic": "PETRO = Petrified into solid ROCK!"
+    },
+    {
+      "id": "pyro",
+      "sector": 3,
+      "root": "pyro-",
+      "origin": "Greek (pyr)",
+      "meaning": "Fire or extreme volcanic heat",
+      "examples": ["Pyroclastic", "Pyrite", "Pyrometer"],
+      "distractors": ["thermo-", "helio-", "radi-"],
+      "mnemonic": "PYRO = Blazing volcanic FIRE, bro!"
+    },
+    {
+      "id": "strat",
+      "sector": 3,
+      "root": "strat-",
+      "origin": "Latin (stratum)",
+      "meaning": "Layer or horizontal sheet",
+      "examples": ["Stratigraphy", "Stratosphere", "Substrate"],
+      "distractors": ["clast-", "morph-", "stereo-"],
+      "mnemonic": "STRAT = Stacked horizontal LAYERS of rock!"
+    },
+    {
+      "id": "seism",
+      "sector": 3,
+      "root": "seism-",
+      "origin": "Greek (seismos)",
+      "meaning": "Earthquake or vibration",
+      "examples": ["Seismograph", "Seismic", "Microseism"],
+      "distractors": ["kinet-", "dynam-", "baro-"],
+      "mnemonic": "SEISM = Earth-shaking vibration waves!"
+    },
+    {
+      "id": "hydro",
+      "sector": 3,
+      "root": "hydro-",
+      "origin": "Greek (hydor)",
+      "meaning": "Water or liquid fluid",
+      "examples": ["Hydrology", "Hydrothermal", "Dehydrate"],
+      "distractors": ["cryo-", "hal-", "bath-"],
+      "mnemonic": "HYDRO = Stay HYDRATED with pure H2O!"
+    },
+    {
+      "id": "orogen",
+      "sector": 3,
+      "root": "oro-",
+      "origin": "Greek (oros)",
+      "meaning": "Mountain or relief uplift",
+      "examples": ["Orogeny", "Orographic"],
+      "distractors": ["geo-", "strat-", "lith-"],
+      "mnemonic": "ORO = Towering MOUNTAIN peaks rising up!"
+    },
+    {
+      "id": "cryo",
+      "sector": 3,
+      "root": "cryo-",
+      "origin": "Greek (kryos)",
+      "meaning": "Icy cold or frost",
+      "examples": ["Cryosphere", "Cryogenics", "Cryolite"],
+      "distractors": ["thermo-", "hydro-", "pyro-"],
+      "mnemonic": "CRYO = Ice-cold sub-zero freeze!"
+    },
+    {
+      "id": "hal",
+      "sector": 3,
+      "root": "hal- / halo-",
+      "origin": "Greek (hals)",
+      "meaning": "Salt or saline mineral",
+      "examples": ["Halite", "Halophile", "Halogen"],
+      "distractors": ["petro-", "lith-", "bath-"],
+      "mnemonic": "HAL = Crystalline rock SALT!"
+    },
+    {
+      "id": "clast",
+      "sector": 3,
+      "root": "-clast / clastic",
+      "origin": "Greek (klastos)",
+      "meaning": "Broken in pieces or fragmented",
+      "examples": ["Pyroclastic", "Clastic Rock", "Osteoclast"],
+      "distractors": ["-blast", "-lysis", "strat-"],
+      "mnemonic": "CLAST = Smashed and BROKEN rock fragments!"
+    },
+    {
+      "id": "bath",
+      "sector": 3,
+      "root": "bath- / bathy-",
+      "origin": "Greek (bathys)",
+      "meaning": "Deep or abyssal depth",
+      "examples": ["Bathymetry", "Batholith", "Bathysphere"],
+      "distractors": ["orogen-", "peri-", "apo-"],
+      "mnemonic": "BATHY = Deep ocean trench depths!"
+    },
+    {
+      "id": "thermo",
+      "sector": 4,
+      "root": "thermo-",
+      "origin": "Greek (therme)",
+      "meaning": "Heat or thermal energy",
+      "examples": ["Thermodynamics", "Endothermic", "Thermometer"],
+      "distractors": ["cryo-", "pyro-", "dynam-"],
+      "mnemonic": "THERMO = Thermal HEAT energy cranked to 11!"
+    },
+    {
+      "id": "kinet",
+      "sector": 4,
+      "root": "kinet- / cine-",
+      "origin": "Greek (kinein)",
+      "meaning": "Motion or active movement",
+      "examples": ["Kinetic", "Telekinesis", "Kinematics"],
+      "distractors": ["stasis-", "tachy-", "dynam-"],
+      "mnemonic": "KINET = Pure KINETIC motion in flight!"
+    },
+    {
+      "id": "tachy",
+      "sector": 4,
+      "root": "tachy-",
+      "origin": "Greek (tachys)",
+      "meaning": "Swift, rapid, or faster-than-light",
+      "examples": ["Tachyon", "Tachycardia", "Tachometer"],
+      "distractors": ["brady-", "chrono-", "kinet-"],
+      "mnemonic": "TACHY = Hyper-SPEED tachyon boost!"
+    },
+    {
+      "id": "brady",
+      "sector": 4,
+      "root": "brady-",
+      "origin": "Greek (bradys)",
+      "meaning": "Slow or decelerated",
+      "examples": ["Bradycardia", "Bradykinesia"],
+      "distractors": ["tachy-", "iso-", "chrono-"],
+      "mnemonic": "BRADY = Slowing down the pace!"
+    },
+    {
+      "id": "photo",
+      "sector": 4,
+      "root": "photo-",
+      "origin": "Greek (phos / photos)",
+      "meaning": "Light or photon radiation",
+      "examples": ["Photosynthesis", "Photon", "Photoelectric"],
+      "distractors": ["lumin-", "chrom-", "spectr-"],
+      "mnemonic": "PHOTO = Laser LIGHT beams!"
+    },
+    {
+      "id": "chrom",
+      "sector": 4,
+      "root": "chrom- / chromato-",
+      "origin": "Greek (khroma)",
+      "meaning": "Color or spectral pigment",
+      "examples": ["Chromatography", "Monochrome", "Chromosome"],
+      "distractors": ["photo-", "spectr-", "morph-"],
+      "mnemonic": "CHROM = Full-spectrum neon COLOR!"
+    },
+    {
+      "id": "iso",
+      "sector": 4,
+      "root": "iso-",
+      "origin": "Greek (isos)",
+      "meaning": "Equal, identical, or uniform",
+      "examples": ["Isotope", "Isothermal", "Isometric"],
+      "distractors": ["hetero-", "auto-", "homo-"],
+      "mnemonic": "ISO = Perfectly EQUAL on all sides!"
+    },
+    {
+      "id": "dynam",
+      "sector": 4,
+      "root": "dynam-",
+      "origin": "Greek (dynamis)",
+      "meaning": "Power, force, or work capacity",
+      "examples": ["Thermodynamics", "Aerodynamics", "Dynamo"],
+      "distractors": ["kinet-", "grav-", "thermo-"],
+      "mnemonic": "DYNAM = Explosive DYNAMITE force!"
+    },
+    {
+      "id": "stereo",
+      "sector": 4,
+      "root": "stereo-",
+      "origin": "Greek (stereos)",
+      "meaning": "Solid or three-dimensional",
+      "examples": ["Stereochemistry", "Stereoscopic"],
+      "distractors": ["strat-", "morph-", "soma-"],
+      "mnemonic": "STEREO = 3D solid spatial structure!"
+    },
+    {
+      "id": "radi",
+      "sector": 4,
+      "root": "radi-",
+      "origin": "Latin (radius)",
+      "meaning": "Ray, beam, or spoke emission",
+      "examples": ["Radiation", "Radioactive", "Radiant"],
+      "distractors": ["photo-", "spectr-", "lumin-"],
+      "mnemonic": "RADI = Emitting high-energy RAYS!"
+    },
+    {
+      "id": "spectr",
+      "sector": 4,
+      "root": "spectr-",
+      "origin": "Latin (spectrum)",
+      "meaning": "Image, band of wavelengths, or appearance",
+      "examples": ["Spectroscopy", "Mass Spectrometer", "Electromagnetic Spectrum"],
+      "distractors": ["chrom-", "photo-", "lumin-"],
+      "mnemonic": "SPECTR = The full wavelength band!"
+    },
+    {
+      "id": "quant",
+      "sector": 4,
+      "root": "quant-",
+      "origin": "Latin (quantus)",
+      "meaning": "Discrete amount or how much",
+      "examples": ["Quantum", "Quantize", "Quantification"],
+      "distractors": ["iso-", "baro-", "chrono-"],
+      "mnemonic": "QUANT = Discrete packets of quantum energy!"
+    }
+  ],
+  "boss_exams": [
+    {
+      "sector": 1,
+      "boss_name": "THE MITOCHONDRION OVERLORD",
+      "subtitle": "Cellular Synthesis Final Exam",
+      "compounds": [
+        {
+          "term": "CYTOLYSIS",
+          "clue": "Dissolution or destruction of a living cell",
+          "sequence": ["cyto", "lysis"]
+        },
+        {
+          "term": "ENDOCYTOSIS",
+          "clue": "Taking matter INSIDE a CELL",
+          "sequence": ["endo", "cyto"]
+        },
+        {
+          "term": "AUTOPHAGY",
+          "clue": "SELF-EATING of cellular components",
+          "sequence": ["auto", "phag"]
+        }
+      ]
+    },
+    {
+      "sector": 2,
+      "boss_name": "THE SINGULARITY LEVIATHAN",
+      "subtitle": "Orbital Celestial Final Exam",
+      "compounds": [
+        {
+          "term": "PERIHELION",
+          "clue": "Point in orbit nearest to the Sun",
+          "sequence": ["peri", "helio"]
+        },
+        {
+          "term": "ASTROCHRONOLOGY",
+          "clue": "Dating of celestial bodies and cosmic time",
+          "sequence": ["astro", "chrono"]
+        },
+        {
+          "term": "COSMOLUMINOSITY",
+          "clue": "Radiant light emission across the universe",
+          "sequence": ["cosmo", "lumin"]
+        }
+      ]
+    },
+    {
+      "sector": 3,
+      "boss_name": "THE LITHIC COLOSSUS",
+      "subtitle": "Lithospheric Matrix Final Exam",
+      "compounds": [
+        {
+          "term": "GEOTHERMAL",
+          "clue": "Relating to the internal heat of the Earth",
+          "sequence": ["geo", "thermo"]
+        },
+        {
+          "term": "PYROCLASTIC",
+          "clue": "Formed from volcanic fire and broken rock fragments",
+          "sequence": ["pyro", "clast"]
+        },
+        {
+          "term": "CRYOLITHOSPHERE",
+          "clue": "Frozen icy stone layer of a planetary crust",
+          "sequence": ["cryo", "lith"]
+        }
+      ]
+    },
+    {
+      "sector": 4,
+      "boss_name": "THE ENTROPIC AUTOMATON",
+      "subtitle": "Quantum Energetics Final Exam",
+      "compounds": [
+        {
+          "term": "THERMODYNAMICS",
+          "clue": "Physics of heat energy and mechanical power",
+          "sequence": ["thermo", "dynam"]
+        },
+        {
+          "term": "PHOTOKINESIS",
+          "clue": "Motion or activity induced by light rays",
+          "sequence": ["photo", "kinet"]
+        },
+        {
+          "term": "ISOCHROMATIC",
+          "clue": "Having equal or uniform spectral color",
+          "sequence": ["iso", "chrom"]
+        }
+      ]
+    }
+  ]
+}
