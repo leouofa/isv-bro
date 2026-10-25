@@ -80,21 +80,25 @@ alignment = 1
 [node name="Btn1" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[1 / Q] -lysis"
 
 [node name="Btn2" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[2 / E] -stasis"
 
 [node name="Btn3" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[3 / R] cyto-"
 
 [node name="Btn4" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[4 / F] bio-"
 
 [node name="TopLeft" type="VBoxContainer" parent="."]
@@ -114,6 +118,23 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "1X BRO-FACTOR"
+
+[node name="TopRight" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 90.0
+grow_horizontal = 0
+
+[node name="CodexHint" type="Label" parent="TopRight"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 0.9)
+theme_override_font_sizes/font_size = 15
+text = "[B] CODEX BRO-TANICA"
+horizontal_alignment = 2
 
 [node name="BottomLeft" type="VBoxContainer" parent="."]
 anchors_preset = 2

@@ -15,14 +15,32 @@ extends Control
 
 var all_roots: Array = []
 var selected_sector: int = 0 # 0 = All
+var paused_game: bool = false
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if close_btn:
-		close_btn.pressed.connect(func(): queue_free())
+		close_btn.pressed.connect(close_screen)
 
 	setup_sector_filter()
 	load_all_roots()
 	populate_list()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_codex") or event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		close_screen()
+
+func close_screen() -> void:
+	if paused_game:
+		var main_loop := Engine.get_main_loop()
+		if main_loop is SceneTree:
+			(main_loop as SceneTree).paused = false
+		elif Engine.has_meta("active_tree"):
+			(Engine.get_meta("active_tree") as SceneTree).paused = false
+		if is_inside_tree() and has_node("/root/MusicManager"):
+			get_node("/root/MusicManager").set_low_pass_enabled(false)
+	queue_free()
 
 func setup_sector_filter() -> void:
 	if sector_filter:
@@ -64,6 +82,7 @@ func populate_list() -> void:
 
 		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(0, 36)
+		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		var display_name: String = root_entry.get("root", rid)
 		if is_unlocked:
 			btn.text = "★ " + display_name + " — " + root_entry.get("meaning", "")

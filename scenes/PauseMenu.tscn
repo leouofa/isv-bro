@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dark"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
 bg_color = Color(0.04, 0.04, 0.08, 0.92)
 border_width_left = 3
 border_width_top = 3
@@ -16,6 +20,7 @@ corner_radius_bottom_left = 8
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
+visible = false
 script = ExtResource("1_script")
 
 [node name="Dimmer" type="ColorRect" parent="."]
@@ -33,9 +38,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -180.0
+offset_top = -150.0
 offset_right = 200.0
-offset_bottom = 180.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dark")
@@ -55,22 +60,29 @@ horizontal_alignment = 1
 [node name="ResumeBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "RESUME FLIGHT"
-
-[node name="CodexBtn" type="Button" parent="Panel/VBox"]
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-text = "CODEX BRO-TANICA"
 
 [node name="RestartBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "RESTART SECTOR"
 
 [node name="ExitBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "EXIT TO MAIN MENU"
+
+[node name="ConfirmDimmer" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
 
 [node name="ConfirmBox" type="PanelContainer" parent="."]
 visible = false
@@ -107,9 +119,19 @@ alignment = 1
 [node name="YesBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+focus_neighbor_left = NodePath("../NoBtn")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../NoBtn")
+focus_neighbor_bottom = NodePath(".")
+mouse_default_cursor_shape = 2
 text = "YES"
 
 [node name="NoBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+focus_neighbor_left = NodePath("../YesBtn")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../YesBtn")
+focus_neighbor_bottom = NodePath(".")
+mouse_default_cursor_shape = 2
 text = "NO"

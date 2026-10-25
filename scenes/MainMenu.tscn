@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_menu"]
 
@@ -12,6 +12,22 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 0.94, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 14.0
+content_margin_top = 16.0
+content_margin_right = 14.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_locked"]
+bg_color = Color(0.04, 0.04, 0.07, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.25, 0.32, 0.6)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -89,29 +105,96 @@ theme_override_font_sizes/font_size = 18
 text = "INTERNATIONAL SCIENTIFIC VOCABULARY: BLAST RESONANCE OPERATIVE"
 horizontal_alignment = 1
 
-[node name="SectorCards" type="HBoxContainer" parent="VBox"]
+[node name="MainMenuView" type="CenterContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MenuVBox" type="VBoxContainer" parent="VBox/MainMenuView"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="NewGameBtn" type="Button" parent="VBox/MainMenuView/MenuVBox"]
+custom_minimum_size = Vector2(280, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "NEW GAME"
+
+[node name="CodexBtn" type="Button" parent="VBox/MainMenuView/MenuVBox"]
+custom_minimum_size = Vector2(280, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "CODEX"
+
+[node name="SettingsBtn" type="Button" parent="VBox/MainMenuView/MenuVBox"]
+custom_minimum_size = Vector2(280, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "SETTINGS"
+
+[node name="QuitBtn" type="Button" parent="VBox/MainMenuView/MenuVBox"]
+custom_minimum_size = Vector2(280, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "EXIT GAME"
+
+[node name="SectorSelectView" type="VBoxContainer" parent="VBox"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="Card1" type="PanelContainer" parent="VBox/SectorCards"]
+[node name="TopBar" type="HBoxContainer" parent="VBox/SectorSelectView"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BackBtn" type="Button" parent="VBox/SectorSelectView/TopBar"]
+custom_minimum_size = Vector2(120, 38)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 15
+text = "← BACK"
+
+[node name="ViewTitle" type="Label" parent="VBox/SectorSelectView/TopBar"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "SELECT MISSION SECTOR"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="VBox/SectorSelectView/TopBar"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="SectorCards" type="HBoxContainer" parent="VBox/SectorSelectView"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Card1" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card1"]
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorSelectView/SectorCards/Card1"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Title" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+[node name="Title" type="Label" parent="VBox/SectorSelectView/SectorCards/Card1/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "SECTOR 01
 BIO-GENESIS"
 horizontal_alignment = 1
 
-[node name="Desc" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+[node name="Desc" type="Label" parent="VBox/SectorSelectView/SectorCards/Card1/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 13
@@ -119,42 +202,38 @@ text = "Cytology & Cellular Dynamics"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Score" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+[node name="Score" type="Label" parent="VBox/SectorSelectView/SectorCards/Card1/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "RECORD: 0000000"
 horizontal_alignment = 1
 
-[node name="Grade" type="Label" parent="VBox/SectorCards/Card1/VBox"]
+[node name="Grade" type="Label" parent="VBox/SectorSelectView/SectorCards/Card1/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
 
-[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card1/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "ENGAGE SECTOR"
-
-[node name="Card2" type="PanelContainer" parent="VBox/SectorCards"]
+[node name="Card2" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card2"]
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorSelectView/SectorCards/Card2"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Title" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+[node name="Title" type="Label" parent="VBox/SectorSelectView/SectorCards/Card2/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "SECTOR 02
 ASTRO-DYNAMICS"
 horizontal_alignment = 1
 
-[node name="Desc" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+[node name="Desc" type="Label" parent="VBox/SectorSelectView/SectorCards/Card2/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 13
@@ -162,42 +241,38 @@ text = "Celestial Bodies & Orbitals"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Score" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+[node name="Score" type="Label" parent="VBox/SectorSelectView/SectorCards/Card2/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "RECORD: 0000000"
 horizontal_alignment = 1
 
-[node name="Grade" type="Label" parent="VBox/SectorCards/Card2/VBox"]
+[node name="Grade" type="Label" parent="VBox/SectorSelectView/SectorCards/Card2/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
 
-[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card2/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "ENGAGE SECTOR"
-
-[node name="Card3" type="PanelContainer" parent="VBox/SectorCards"]
+[node name="Card3" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card3"]
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorSelectView/SectorCards/Card3"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Title" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+[node name="Title" type="Label" parent="VBox/SectorSelectView/SectorCards/Card3/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "SECTOR 03
 LITHIC MATRIX"
 horizontal_alignment = 1
 
-[node name="Desc" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+[node name="Desc" type="Label" parent="VBox/SectorSelectView/SectorCards/Card3/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 13
@@ -205,42 +280,38 @@ text = "Geology & Crust Dynamics"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Score" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+[node name="Score" type="Label" parent="VBox/SectorSelectView/SectorCards/Card3/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "RECORD: 0000000"
 horizontal_alignment = 1
 
-[node name="Grade" type="Label" parent="VBox/SectorCards/Card3/VBox"]
+[node name="Grade" type="Label" parent="VBox/SectorSelectView/SectorCards/Card3/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
 
-[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card3/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "ENGAGE SECTOR"
-
-[node name="Card4" type="PanelContainer" parent="VBox/SectorCards"]
+[node name="Card4" type="PanelContainer" parent="VBox/SectorSelectView/SectorCards"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="VBox" type="VBoxContainer" parent="VBox/SectorCards/Card4"]
+[node name="VBox" type="VBoxContainer" parent="VBox/SectorSelectView/SectorCards/Card4"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Title" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+[node name="Title" type="Label" parent="VBox/SectorSelectView/SectorCards/Card4/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "SECTOR 04
 QUANTUM ENERGETICS"
 horizontal_alignment = 1
 
-[node name="Desc" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+[node name="Desc" type="Label" parent="VBox/SectorSelectView/SectorCards/Card4/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 13
@@ -248,43 +319,18 @@ text = "Thermodynamics & Light"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Score" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+[node name="Score" type="Label" parent="VBox/SectorSelectView/SectorCards/Card4/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "RECORD: 0000000"
 horizontal_alignment = 1
 
-[node name="Grade" type="Label" parent="VBox/SectorCards/Card4/VBox"]
+[node name="Grade" type="Label" parent="VBox/SectorSelectView/SectorCards/Card4/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "RANK: -"
 horizontal_alignment = 1
-
-[node name="LaunchBtn" type="Button" parent="VBox/SectorCards/Card4/VBox"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "ENGAGE SECTOR"
-
-[node name="BottomBar" type="HBoxContainer" parent="VBox"]
-layout_mode = 2
-theme_override_constants/separation = 24
-alignment = 1
-
-[node name="CodexBtn" type="Button" parent="VBox/BottomBar"]
-custom_minimum_size = Vector2(220, 44)
-layout_mode = 2
-text = "📖 CODEX BRO-TANICA"
-
-[node name="SettingsBtn" type="Button" parent="VBox/BottomBar"]
-custom_minimum_size = Vector2(220, 44)
-layout_mode = 2
-text = "⚙️ AUDIO & CRT SETTINGS"
-
-[node name="QuitBtn" type="Button" parent="VBox/BottomBar"]
-custom_minimum_size = Vector2(160, 44)
-layout_mode = 2
-text = "EXIT GAME"
 
 [node name="SettingsModal" type="PanelContainer" parent="."]
 visible = false
@@ -354,4 +400,5 @@ text = "Enable 90s CRT Scanlines Shader"
 [node name="CloseBtn" type="Button" parent="SettingsModal/Panel/VBox"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "SAVE & CLOSE"

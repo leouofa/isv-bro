@@ -54,4 +54,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_laser")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 
+[node name="CodexLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 3
+
 [node name="PauseMenu" parent="." instance=ExtResource("4_pause")]

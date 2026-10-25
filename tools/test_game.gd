@@ -61,7 +61,7 @@ func _init() -> void:
 	var required_actions := [
 		"move_left", "move_right", "move_up", "move_down",
 		"barrel_roll", "boost", "airbrake",
-		"root_1", "root_2", "root_3", "root_4", "pause"
+		"root_1", "root_2", "root_3", "root_4", "pause", "toggle_codex"
 	]
 	for act in required_actions:
 		assert_true(
@@ -148,9 +148,134 @@ func _init() -> void:
 		if pause_scn.has_method("pause_game") and pause_scn.has_method("resume_game"):
 			pause_scn.pause_game()
 			assert_true(paused == true, "PauseMenu.pause_game() sets SceneTree.paused = true")
+			
+			# Test confirmation popup dimmer and button state
+			var c_dimmer = pause_scn.get_node_or_null("ConfirmDimmer") as ColorRect
+			var c_box = pause_scn.get_node_or_null("ConfirmBox") as Control
+			var res_btn = pause_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
+			var no_btn = pause_scn.get_node_or_null("ConfirmBox/VBox/HBox/NoBtn") as Button
+			assert_true(c_dimmer != null, "ConfirmDimmer node exists in PauseMenu")
+			assert_true(c_dimmer.visible == false, "ConfirmDimmer is hidden initially")
+			
+			pause_scn._ask_confirmation("restart", "RESTART CURRENT SECTOR?")
+			assert_true(c_dimmer.visible == true, "ConfirmDimmer becomes visible on confirmation prompt")
+			assert_true(c_box.visible == true, "ConfirmBox becomes visible on confirmation prompt")
+			assert_true(res_btn.disabled == true, "Background PauseMenu buttons disabled during confirmation")
+			
+			pause_scn._on_confirm_no()
+			assert_true(c_dimmer.visible == false, "ConfirmDimmer is hidden after canceling confirmation")
+			assert_true(c_box.visible == false, "ConfirmBox is hidden after canceling confirmation")
+			assert_true(res_btn.disabled == false, "Background PauseMenu buttons re-enabled after canceling confirmation")
+			
 			pause_scn.resume_game()
 			assert_true(paused == false, "PauseMenu.resume_game() restores SceneTree.paused = false")
 		pause_scn.free()
+
+		# Test GameWorld in-game Codex toggle
+		var gw_scn := (load("res://scenes/GameWorld.tscn") as PackedScene).instantiate()
+		root.add_child(gw_scn)
+		assert_true(gw_scn.has_method("toggle_codex"), "GameWorld has toggle_codex method")
+		var gw_hud = gw_scn.get_node_or_null("HUD") as CanvasLayer
+		assert_true(gw_hud != null and gw_hud.visible == true, "HUD is visible initially in GameWorld")
+		gw_scn.open_codex()
+		assert_true(paused == true, "GameWorld.open_codex() pauses SceneTree")
+		assert_true(gw_scn.get("codex_instance") != null, "GameWorld.open_codex() instantiates CodexScreen")
+		assert_true(gw_hud.visible == false, "HUD and scanlines are hidden when Codex is open")
+		gw_scn.close_codex()
+		assert_true(paused == false, "GameWorld.close_codex() restores SceneTree.paused = false")
+		assert_true(gw_hud.visible == true, "HUD and scanlines are restored when Codex is closed")
+		gw_scn.free()
+
+	# SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity
+	print("\n--- SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity ---")
+	var sfx_node := Node.new()
+	sfx_node.set_name("SoundEffects")
+	sfx_node.set_script(load("res://scripts/SoundEffects.gd"))
+	root.add_child(sfx_node)
+	sfx_node._ready()
+
+	assert_true(sfx_node.get("sfx_ui_hover") != null, "SoundEffects generates procedural sfx_ui_hover")
+	assert_true(sfx_node.get("sfx_ui_click") != null, "SoundEffects generates procedural sfx_ui_click")
+	sfx_node.play_ui_hover()
+	assert_true(true, "SoundEffects.play_ui_hover() executes cleanly")
+
+	var ui_node := Node.new()
+	ui_node.set_name("SynthwaveUI")
+	ui_node.set_script(load("res://scripts/SynthwaveUI.gd"))
+	root.add_child(ui_node)
+	ui_node._ready()
+
+	assert_true(ui_node.get("btn_style_hover") != null, "SynthwaveUI initializes btn_style_hover")
+	assert_true(ui_node.get("card_style_hover") != null, "SynthwaveUI initializes card_style_hover")
+
+	var menu_scn := (load("res://scenes/MainMenu.tscn") as PackedScene).instantiate()
+	root.add_child(menu_scn)
+	menu_scn._ready()
+
+	var new_game_btn = menu_scn.get_node_or_null("VBox/MainMenuView/MenuVBox/NewGameBtn") as Button
+	assert_true(new_game_btn != null and new_game_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "MainMenu NewGameBtn has CURSOR_POINTING_HAND")
+
+	var card1 = menu_scn.get_node_or_null("VBox/SectorSelectView/SectorCards/Card1") as PanelContainer
+	assert_true(card1 != null and card1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "MainMenu Card1 has CURSOR_POINTING_HAND")
+
+	var launch1_btn = card1.get_node_or_null("VBox/LaunchBtn")
+	assert_true(launch1_btn == null, "Engage sector LaunchBtn removed from SectorCard")
+
+	# Test whole-card click triggers sector engagement
+	ui_node.apply_card_style(card1, true)
+	var clicked_box := [-1]
+	card1.set_meta("card_clicked_callable", func(): clicked_box[0] = 1)
+	card1.set_meta("is_locked", false)
+	var click_ev := InputEventMouseButton.new()
+	click_ev.button_index = MOUSE_BUTTON_LEFT
+	click_ev.pressed = true
+	card1.emit_signal("gui_input", click_ev)
+	assert_true(clicked_box[0] == 1, "Clicking entire SectorCard triggers sector engagement")
+
+	# Test keyboard activation (Enter / Space) on focused card
+	clicked_box[0] = -1
+	var key_ev := InputEventKey.new()
+	key_ev.keycode = KEY_ENTER
+	key_ev.pressed = true
+	card1.emit_signal("gui_input", key_ev)
+	assert_true(clicked_box[0] == 1, "Keyboard Enter on focused SectorCard triggers sector engagement")
+
+	menu_scn.free()
+
+	# Verify PauseMenu buttons cursor and panel padding
+	var p_scn := (load("res://scenes/PauseMenu.tscn") as PackedScene).instantiate()
+	root.add_child(p_scn)
+	var resume_btn = p_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
+	assert_true(resume_btn != null and resume_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "PauseMenu ResumeBtn has CURSOR_POINTING_HAND")
+	var codex_btn = p_scn.get_node_or_null("Panel/VBox/CodexBtn")
+	assert_true(codex_btn == null, "CodexBtn removed from PauseMenu")
+	var p_panel = p_scn.get_node_or_null("Panel") as PanelContainer
+	var p_style = p_panel.get_theme_stylebox("panel") as StyleBoxFlat if p_panel else null
+	assert_true(p_style != null and p_style.content_margin_left >= 16.0 and p_style.content_margin_right >= 16.0, "PauseMenu Panel has content margin padding")
+	p_scn.free()
+
+	# Verify CodexScreen elements cursor
+	var c_scn := (load("res://scenes/CodexScreen.tscn") as PackedScene).instantiate()
+	root.add_child(c_scn)
+	var c_close = c_scn.get_node_or_null("VBox/TopBar/CloseBtn") as Button
+	var c_filter = c_scn.get_node_or_null("VBox/TopBar/SectorFilter") as OptionButton
+	var c_card = c_scn.get_node_or_null("VBox/Content/DetailCard") as PanelContainer
+	assert_true(c_close != null and c_close.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex CloseBtn has CURSOR_POINTING_HAND")
+	assert_true(c_filter != null and c_filter.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex SectorFilter has CURSOR_POINTING_HAND")
+	assert_true(c_card != null and c_card.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex DetailCard has CURSOR_POINTING_HAND")
+	c_scn.free()
+
+	# Verify HUD salvo buttons cursor and top-right Codex hint
+	var hud_scn := (load("res://scenes/HUD.tscn") as PackedScene).instantiate()
+	root.add_child(hud_scn)
+	var btn1 = hud_scn.get_node_or_null("TacticalBanner/VBox/ButtonsContainer/Btn1") as Button
+	assert_true(btn1 != null and btn1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "HUD Salvo Btn1 has CURSOR_POINTING_HAND")
+	var codex_hint = hud_scn.get_node_or_null("TopRight/CodexHint") as Label
+	assert_true(codex_hint != null and codex_hint.text.contains("[B] CODEX BRO-TANICA"), "HUD TopRight has [B] CODEX BRO-TANICA hint")
+	hud_scn.free()
+
+	ui_node.free()
+	sfx_node.free()
 
 	gm.free()
 	lex_node.free()
