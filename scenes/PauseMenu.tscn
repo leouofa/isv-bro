@@ -55,21 +55,25 @@ horizontal_alignment = 1
 [node name="ResumeBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "RESUME FLIGHT"
 
 [node name="CodexBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "CODEX BRO-TANICA"
 
 [node name="RestartBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "RESTART SECTOR"
 
 [node name="ExitBtn" type="Button" parent="Panel/VBox"]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "EXIT TO MAIN MENU"
 
 [node name="ConfirmBox" type="PanelContainer" parent="."]
@@ -107,9 +111,11 @@ alignment = 1
 [node name="YesBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "YES"
 
 [node name="NoBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "NO"

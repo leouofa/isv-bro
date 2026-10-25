@@ -80,21 +80,25 @@ alignment = 1
 [node name="Btn1" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[1 / Q] -lysis"
 
 [node name="Btn2" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[2 / E] -stasis"
 
 [node name="Btn3" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[3 / R] cyto-"
 
 [node name="Btn4" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "[4 / F] bio-"
 
 [node name="TopLeft" type="VBoxContainer" parent="."]

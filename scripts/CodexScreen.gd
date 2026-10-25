@@ -64,6 +64,7 @@ func populate_list() -> void:
 
 		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(0, 36)
+		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		var display_name: String = root_entry.get("root", rid)
 		if is_unlocked:
 			btn.text = "★ " + display_name + " — " + root_entry.get("meaning", "")

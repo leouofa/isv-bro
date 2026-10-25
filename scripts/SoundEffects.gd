@@ -14,6 +14,8 @@ var sfx_shield_hit: AudioStreamWAV
 var sfx_error_buzz: AudioStreamWAV
 var sfx_combo_up: AudioStreamWAV
 var sfx_pickup: AudioStreamWAV
+var sfx_ui_hover: AudioStreamWAV
+var sfx_ui_click: AudioStreamWAV
 var bro_chirps: Array[AudioStreamWAV] = []
 
 func _ready() -> void:
@@ -40,9 +42,11 @@ func _get_player() -> AudioStreamPlayer:
 	return p
 
 func play_sound(stream: AudioStreamWAV, volume_db: float = 0.0, pitch: float = 1.0) -> void:
-	if stream == null:
+	if stream == null or not is_inside_tree():
 		return
 	var p := _get_player()
+	if not p.is_inside_tree():
+		return
 	p.stream = stream
 	p.volume_db = volume_db
 	p.pitch_scale = pitch
@@ -71,6 +75,12 @@ func play_combo_up(combo_mult: int = 2) -> void:
 func play_pickup() -> void:
 	play_sound(sfx_pickup, 0.0, 1.0)
 
+func play_ui_hover() -> void:
+	play_sound(sfx_ui_hover, -14.0, randf_range(0.98, 1.04))
+
+func play_ui_click() -> void:
+	play_sound(sfx_ui_click, -8.0, randf_range(0.98, 1.02))
+
 func play_bro_voice_cadence(syllables: int = 4) -> void:
 	if bro_chirps.is_empty():
 		return
@@ -90,6 +100,8 @@ func generate_procedural_sounds() -> void:
 	sfx_error_buzz = _gen_buzz()
 	sfx_combo_up = _gen_arpeggio()
 	sfx_pickup = _gen_pickup()
+	sfx_ui_hover = _gen_ui_hover()
+	sfx_ui_click = _gen_ui_click()
 
 	# Generate 4 Star Fox-style voice chirp variations
 	for f in [340.0, 440.0, 520.0, 620.0]:
@@ -246,6 +258,44 @@ func _gen_chirp(base_freq: float) -> AudioStreamWAV:
 		var env := sin(t * PI)
 		var wave := (absf(fmod(phase, 2.0 * PI) - PI) / PI) * 2.0 - 1.0 # Triangle
 		var sample := int(clampf(wave * env * 0.6, -1.0, 1.0) * 32767.0)
+		bytes.encode_s16(i * 2, sample)
+
+	return _create_wav(bytes)
+
+func _gen_ui_hover() -> AudioStreamWAV:
+	# Crisp, high-tech synthwave blip
+	var duration := 0.032
+	var total_samples := int(SAMPLE_RATE * duration)
+	var bytes := PackedByteArray()
+	bytes.resize(total_samples * 2)
+
+	var phase := 0.0
+	for i in range(total_samples):
+		var t := float(i) / float(total_samples)
+		var freq := lerpf(1200.0, 1800.0, t)
+		phase += 2.0 * PI * freq / SAMPLE_RATE
+		var env := exp(-6.0 * t) * sin(t * PI)
+		var wave := sin(phase) + 0.25 * sin(2.0 * phase)
+		var sample := int(clampf(wave * env * 0.4, -1.0, 1.0) * 32767.0)
+		bytes.encode_s16(i * 2, sample)
+
+	return _create_wav(bytes)
+
+func _gen_ui_click() -> AudioStreamWAV:
+	# Resonant synth click
+	var duration := 0.045
+	var total_samples := int(SAMPLE_RATE * duration)
+	var bytes := PackedByteArray()
+	bytes.resize(total_samples * 2)
+
+	var phase := 0.0
+	for i in range(total_samples):
+		var t := float(i) / float(total_samples)
+		var freq := lerpf(880.0, 220.0, t * t)
+		phase += 2.0 * PI * freq / SAMPLE_RATE
+		var env := exp(-12.0 * t)
+		var wave := (fmod(phase, 2.0 * PI) / PI) - 1.0 # Saw
+		var sample := int(clampf(wave * env * 0.5, -1.0, 1.0) * 32767.0)
 		bytes.encode_s16(i * 2, sample)
 
 	return _create_wav(bytes)

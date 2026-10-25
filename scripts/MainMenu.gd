@@ -141,6 +141,13 @@ func setup_sector_cards() -> void:
 				launch_btn.disabled = true
 				launch_btn.text = "LOCKED"
 
+		var synth_ui = get_node_or_null("/root/SynthwaveUI") if is_inside_tree() else null
+		if synth_ui:
+			card.set_meta("is_locked", not is_unlocked)
+			var sec_id: int = data["id"]
+			card.set_meta("card_clicked_callable", func(): start_sector(sec_id))
+			synth_ui.apply_card_style(card, is_unlocked)
+
 func start_sector(sector: int) -> void:
 	if is_inside_tree() and has_node("/root/GameManager"):
 		get_node("/root/GameManager").current_sector = sector

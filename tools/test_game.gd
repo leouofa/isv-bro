@@ -152,6 +152,82 @@ func _init() -> void:
 			assert_true(paused == false, "PauseMenu.resume_game() restores SceneTree.paused = false")
 		pause_scn.free()
 
+	# SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity
+	print("\n--- SUITE 9: Synthwave UI, Cursor Shapes & Card Interactivity ---")
+	var sfx_node := Node.new()
+	sfx_node.set_name("SoundEffects")
+	sfx_node.set_script(load("res://scripts/SoundEffects.gd"))
+	root.add_child(sfx_node)
+	sfx_node._ready()
+
+	assert_true(sfx_node.get("sfx_ui_hover") != null, "SoundEffects generates procedural sfx_ui_hover")
+	assert_true(sfx_node.get("sfx_ui_click") != null, "SoundEffects generates procedural sfx_ui_click")
+	sfx_node.play_ui_hover()
+	assert_true(true, "SoundEffects.play_ui_hover() executes cleanly")
+
+	var ui_node := Node.new()
+	ui_node.set_name("SynthwaveUI")
+	ui_node.set_script(load("res://scripts/SynthwaveUI.gd"))
+	root.add_child(ui_node)
+	ui_node._ready()
+
+	assert_true(ui_node.get("btn_style_hover") != null, "SynthwaveUI initializes btn_style_hover")
+	assert_true(ui_node.get("card_style_hover") != null, "SynthwaveUI initializes card_style_hover")
+
+	var menu_scn := (load("res://scenes/MainMenu.tscn") as PackedScene).instantiate()
+	root.add_child(menu_scn)
+	menu_scn._ready()
+
+	var new_game_btn = menu_scn.get_node_or_null("VBox/MainMenuView/MenuVBox/NewGameBtn") as Button
+	assert_true(new_game_btn != null and new_game_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "MainMenu NewGameBtn has CURSOR_POINTING_HAND")
+
+	var card1 = menu_scn.get_node_or_null("VBox/SectorSelectView/SectorCards/Card1") as PanelContainer
+	assert_true(card1 != null and card1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "MainMenu Card1 has CURSOR_POINTING_HAND")
+
+	var launch1_btn = card1.get_node_or_null("VBox/LaunchBtn") as Button
+	assert_true(launch1_btn != null and launch1_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "SectorCard LaunchBtn has CURSOR_POINTING_HAND")
+
+	# Test whole-card click triggers sector engagement
+	ui_node.apply_card_style(card1, true)
+	var clicked_box := [-1]
+	card1.set_meta("card_clicked_callable", func(): clicked_box[0] = 1)
+	card1.set_meta("is_locked", false)
+	var click_ev := InputEventMouseButton.new()
+	click_ev.button_index = MOUSE_BUTTON_LEFT
+	click_ev.pressed = true
+	card1.emit_signal("gui_input", click_ev)
+	assert_true(clicked_box[0] == 1, "Clicking entire SectorCard triggers sector engagement")
+
+	menu_scn.free()
+
+	# Verify PauseMenu buttons cursor
+	var p_scn := (load("res://scenes/PauseMenu.tscn") as PackedScene).instantiate()
+	root.add_child(p_scn)
+	var resume_btn = p_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
+	assert_true(resume_btn != null and resume_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "PauseMenu ResumeBtn has CURSOR_POINTING_HAND")
+	p_scn.free()
+
+	# Verify CodexScreen elements cursor
+	var c_scn := (load("res://scenes/CodexScreen.tscn") as PackedScene).instantiate()
+	root.add_child(c_scn)
+	var c_close = c_scn.get_node_or_null("VBox/TopBar/CloseBtn") as Button
+	var c_filter = c_scn.get_node_or_null("VBox/TopBar/SectorFilter") as OptionButton
+	var c_card = c_scn.get_node_or_null("VBox/Content/DetailCard") as PanelContainer
+	assert_true(c_close != null and c_close.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex CloseBtn has CURSOR_POINTING_HAND")
+	assert_true(c_filter != null and c_filter.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex SectorFilter has CURSOR_POINTING_HAND")
+	assert_true(c_card != null and c_card.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Codex DetailCard has CURSOR_POINTING_HAND")
+	c_scn.free()
+
+	# Verify HUD salvo buttons cursor
+	var hud_scn := (load("res://scenes/HUD.tscn") as PackedScene).instantiate()
+	root.add_child(hud_scn)
+	var btn1 = hud_scn.get_node_or_null("TacticalBanner/VBox/ButtonsContainer/Btn1") as Button
+	assert_true(btn1 != null and btn1.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "HUD Salvo Btn1 has CURSOR_POINTING_HAND")
+	hud_scn.free()
+
+	ui_node.free()
+	sfx_node.free()
+
 	gm.free()
 	lex_node.free()
 
