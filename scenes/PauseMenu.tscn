@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://scripts/PauseMenu.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dark"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
 bg_color = Color(0.04, 0.04, 0.08, 0.92)
 border_width_left = 3
 border_width_top = 3

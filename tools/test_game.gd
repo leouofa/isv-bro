@@ -208,11 +208,14 @@ func _init() -> void:
 
 	menu_scn.free()
 
-	# Verify PauseMenu buttons cursor
+	# Verify PauseMenu buttons cursor and panel padding
 	var p_scn := (load("res://scenes/PauseMenu.tscn") as PackedScene).instantiate()
 	root.add_child(p_scn)
 	var resume_btn = p_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
 	assert_true(resume_btn != null and resume_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "PauseMenu ResumeBtn has CURSOR_POINTING_HAND")
+	var p_panel = p_scn.get_node_or_null("Panel") as PanelContainer
+	var p_style = p_panel.get_theme_stylebox("panel") as StyleBoxFlat if p_panel else null
+	assert_true(p_style != null and p_style.content_margin_left >= 16.0 and p_style.content_margin_right >= 16.0, "PauseMenu Panel has content margin padding")
 	p_scn.free()
 
 	# Verify CodexScreen elements cursor
