@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/TitleBackground3D.gd" id="1_bg"]
+[ext_resource type="Shader" path="res://shaders/synthwave_grid.gdshader" id="2_shader"]
+
+[sub_resource type="Environment" id="Environment_title"]
+background_mode = 1
+background_color = Color(0.03, 0.02, 0.06, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.25, 0.15, 0.35, 1)
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.3
+glow_blend_mode = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grid"]
+render_priority = 0
+shader = ExtResource("2_shader")
+shader_parameter/grid_color = Color(0, 0.94, 1, 1)
+shader_parameter/bg_color = Color(0.03, 0.02, 0.06, 1)
+shader_parameter/grid_spacing = 1.5
+shader_parameter/line_thickness = 0.04
+shader_parameter/scroll_speed = 7.0
+shader_parameter/fog_start = 8.0
+shader_parameter/fog_end = 45.0
+shader_parameter/glow_boost = 2.4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_grid"]
+material = SubResource("ShaderMaterial_grid")
+size = Vector2(90, 90)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sun"]
+shading_mode = 0
+albedo_color = Color(1, 0.1, 0.45, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_sun"]
+material = SubResource("StandardMaterial3D_sun")
+radius = 4.5
+height = 9.0
+
+[node name="TitleBackground3D" type="Node3D"]
+script = ExtResource("1_bg")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_title")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.965926, -0.0669873, 0.25, 0, 0.965926, 0.258819, -0.258819, -0.25, 0.933013, 0, 8, 0)
+light_color = Color(0.85, 0.75, 1, 1)
+light_energy = 0.7
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 1.7, 5)
+fov = 72.0
+
+[node name="GridPlane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -20)
+mesh = SubResource("PlaneMesh_grid")
+
+[node name="HorizonSun" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.2, 0, 2.5, -46)
+mesh = SubResource("SphereMesh_sun")
+
+[node name="RingsContainer" type="Node3D" parent="."]

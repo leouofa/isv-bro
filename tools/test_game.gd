@@ -277,6 +277,30 @@ func _init() -> void:
 	ui_node.free()
 	sfx_node.free()
 
+	print("\n--- SUITE 10: Title Screen Synthwave Background & Random Tracks ---")
+	var main_menu := (load("res://scenes/MainMenu.tscn") as PackedScene).instantiate()
+	root.add_child(main_menu)
+	var title_lbl = main_menu.get_node_or_null("VBox/Header/Title") as Label
+	assert_true(title_lbl != null and title_lbl.text == "ISV BRO", "Title text is exactly 'ISV BRO' with glasses emoji removed")
+	var bg_container = main_menu.get_node_or_null("SubViewportContainer/SubViewport/TitleBackground3D")
+	assert_true(bg_container != null, "3D Synthwave Background SubViewport present in MainMenu")
+	assert_true(bg_container.get_node_or_null("GridPlane") != null, "Synthwave grid terrain plane present")
+	assert_true(bg_container.get_node_or_null("HorizonSun") != null, "Synthwave horizon sun present")
+
+	var mm_node = (load("res://scripts/MusicManager.gd") as GDScript).new()
+	root.add_child(mm_node)
+	var all_tracks = mm_node.get_all_tracks()
+	assert_true(all_tracks.size() >= 15, "MusicManager discovered all tracks in res://tracks/ (found %d)" % all_tracks.size())
+	mm_node.play_random_title_music()
+	assert_true(all_tracks.has(mm_node.current_track_path), "MusicManager selected valid random track: %s" % mm_node.current_track_path)
+	assert_true(mm_node.current_sector_played == -2, "MusicManager set to title music sector (-2)")
+	var cur_track = mm_node.current_track_path
+	mm_node._on_track_finished()
+	assert_true(all_tracks.has(mm_node.current_track_path), "MusicManager shuffled to next track: %s" % mm_node.current_track_path)
+
+	main_menu.free()
+	mm_node.free()
+
 	gm.free()
 	lex_node.free()
 

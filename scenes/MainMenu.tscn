@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://scenes/TitleBackground3D.tscn" id="2_bg3d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.04, 0.04, 0.08, 1)
+bg_color = Color(0.03, 0.02, 0.06, 0.35)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
 bg_color = Color(0.08, 0.08, 0.14, 0.95)
@@ -62,6 +63,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="TitleBackground3D" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_bg3d")]
+
 [node name="Background" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -69,6 +86,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -95,7 +113,7 @@ theme_override_colors/font_shadow_color = Color(1, 0, 0.5, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_font_sizes/font_size = 46
-text = "🕶️ ISV BRO"
+text = "ISV BRO"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="VBox/Header"]
