@@ -27,7 +27,7 @@ const SECTORS_DATA := [
 
 func _ready() -> void:
 	if is_inside_tree() and has_node("/root/MusicManager"):
-		get_node("/root/MusicManager").play_sector_music(0, 0)
+		get_node("/root/MusicManager").play_random_title_music()
 
 	setup_sector_cards()
 
