@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://n105hj6ia8cy"
+path="res://.godot/imported/The Flight.mp3-a1bf41ee06ea4c269bc143309ba539da.mp3str"
+
+[deps]
+
+source_file="res://tracks/The Flight.mp3"
+dest_files=["res://.godot/imported/The Flight.mp3-a1bf41ee06ea4c269bc143309ba539da.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,92 @@
+# ==============================================================================
+# GAME SPECIFICATION INPUT: ISV BRO
+# International Scientific Vocabulary - Blast Resonance Operative
+# ==============================================================================
+GAME_TITLE: "ISV BRO"
+SUBTITLE: "International Scientific Vocabulary: Radical 90s Science Rail Shooter"
+GENRE_ARCHETYPE: "3D Rail Shooter / Educational Arcade"
+CAMERA_PERSPECTIVE: "Third-Person Behind Jet (FOV 75-80, dynamic roll & banking camera tilt)"
+TARGET_ENGINE: "Godot 4.3+ / 4.7+ (Forward+ Renderer, Jolt 3D Physics)"
+
+NARRATIVE_AND_PREMISE: >
+  In the late 90s, high-energy particle accelerators unlocked the "Etymo-Verse"—a subspace
+  where scientific phenomena and Latin/Greek roots materialize as volatile anomalies.
+  You pilot the experimental Hadron Jet alongside "B.R.O." (Blaster Research Officer),
+  a hyperactive, sunglasses-wearing AI scientist hype-man stationed in your HUD.
+  Together, you blast through hazard-choked quantum corridors, neutralizing rogue scientific
+  anomalies by matching their true International Scientific Vocabulary (ISV) roots before
+  cognitive overheat melts your ship's cores.
+
+CORE_GAMEPLAY_LOOP: >
+  1. The Hadron Jet accelerates automatically along a 3D rail through high-energy test chambers.
+  2. The player steers within a screen-bounded viewport (WASD / Left Stick) to dodge physical
+     hazards (laser gates, particle grids, quantum debris) using barrel rolls, airbrakes, and boosts.
+  3. Approaching anomalies display scientific definitions or corrupted terms (e.g., "Cell Destruction").
+  4. The lock-on targeting reticle automatically focuses on prioritized targets, projecting
+     3–4 root choices mapped to quick-keys (1-4 / Q-E / Gamepad Face Buttons).
+  5. Selecting the correct Greek/Latin root (e.g., "lysis") fires a resonant laser salvo,
+     annihilating the anomaly, advancing the combo multiplier, and triggering praise from B.R.O.
+  6. Incorrect answers spike the "Cognitive Overheat" meter, risking weapon lockout.
+  7. Surviving the sector gauntlet leads to a multi-stage "Boss Exam" requiring compound root synthesis.
+
+KEY_MECHANICS:
+  - Flight Controls:
+      - 2D Viewport Bounding Box: Smooth 6DOF-feel movement inside screen limits (WASD / Left Stick)
+      - Barrel Roll (Double-tap A/D or L1/R1): Deflects light hazards and grants brief invulnerability frames
+      - Airbrake (S / L2) & Afterburner Boost (W / R2): Tactical speed control for hazard navigation
+  - ISV Combat & Targeting:
+      - Lock-on Reticle: Soft-locks onto incoming anomalies in front of the craft
+      - Root Salvo Triggers: 4 contextual root options displayed in HUD around the reticle [1/Q, 2/E, 3/R, 4/F]
+      - Rapid Synthesis: Multi-root anomalies require sequential selection (e.g., "Photo" + "Synthesis")
+  - Health & Fail States:
+      - Shield Integrity (HP): Depleted by collisions with physical obstacles; slowly regenerates when avoiding damage
+      - Cognitive Overheat Meter: Starts at 0%; spikes by +25% on incorrect root selection. Reaching 100% causes
+        emergency coolant venting (temporary weapons lockout + severe score penalty). Total shield loss = run over.
+  - Radical Combo System:
+      - Consecutive correct roots build the "Bro-Factor" multiplier (1x -> 2x -> 4x -> 8x "RADICAL!")
+      - Missing or taking damage resets the combo multiplier
+
+LEVELS_AND_CURRICULUM_STRUCTURE:
+  - Sector Progression (Themed Scientific Disciplines):
+      - Sector 01: Cytology & Bio-Genesis (Roots: bio-, cyto-, soma-, phag-, blast-, -lysis, etc.)
+      - Sector 02: Astro & Celestial Dynamics (Roots: astro-, cosmo-, helio-, peri-, apo-, -orbit, etc.)
+      - Sector 03: Geo & Lithospheric Matrix (Roots: geo-, lith-, petro-, pyro-, morph-, -strat, etc.)
+      - Sector 04: Thermo & Quantum Energetics (Roots: thermo-, kinet-, tachy-, photo-, chrom-, etc.)
+  - Boss Exams:
+      - Massive multi-jointed boss entities (e.g., "The Mitochondrion Overlord", "The Lithic Golem")
+      - Phases require decoding composite scientific terms under time pressure while dodging bullet patterns
+  - Adaptive Spaced Repetition:
+      - Missed roots are logged in the player profile and injected with higher probability in future waves
+  - Codex Bro-tanica:
+      - Main-menu & pause compendium documenting all discovered roots, Greek/Latin origins,
+        definitions, and real-world scientific terminology examples
+
+AUDIO_AND_VISUAL_THEME:
+  - Aesthetic:
+      - Radical 90s Science Arcade: Bold neon palette (Electric Cyan #00F0FF, Hot Magenta #FF007F,
+        Nuclear Lime #39FF14, Solar Yellow #FFE600, Deep Obsidian #0A0A12)
+      - CRT scanlines overlay option, wireframe HUD elements, high-tech particle colliders, spinning atomic orbitals
+  - B.R.O. HUD Persona:
+      - Animated pixel-art or stylized low-poly avatar in the corner HUD with expressive reactive animations
+      - Hype voice callouts & dialogue banners ("TUBULAR ETYMOLOGY, BRO!", "CHECK THE GREEK ROOT!", "COOLING DOWN!")
+  - Soundtrack Integration (Utilizing tracks/):
+      - Dynamic OST mapping from workspace tracks:
+          - Sector 01: tracks/The Run.mp3
+          - Sector 02: tracks/Ultrabeat.mp3
+          - Sector 03: tracks/Undercurrent.mp3
+          - Sector 04: tracks/Escape.mp3
+          - Boss Exams: tracks/Left Turn.mp3 & tracks/Rerun.mp3
+          - Codex & Menus: tracks/Entryway.mp3 & tracks/Mirror Tech.mp3
+      - Low-pass filter kicks in during pause or Cognitive Overheat recovery
+
+SCORING_AND_PERSISTENCE:
+  - Scoring:
+      - Root Blast: +200 pts x Combo Multiplier
+      - Perfect Sector Wave: +2,500 bonus
+      - Boss Defeat: +10,000 bonus
+      - Final Grade: S ("DOCTORAL BRO"), A, B, C, D rank based on accuracy percentage and completion time
+  - Save System (user://isv_save.json):
+      - High scores and letter ranks per sector
+      - Codex Bro-tanica unlock percentage and mastery level per root
+      - Adaptive mistake tracker for spaced repetition weighting
+# ==============================================================================

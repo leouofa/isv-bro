@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d1kydo1opucec"
+path="res://.godot/imported/The End.mp3-930616119d81415b08be8093a930fb8f.mp3str"
+
+[deps]
+
+source_file="res://tracks/The End.mp3"
+dest_files=["res://.godot/imported/The End.mp3-930616119d81415b08be8093a930fb8f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cxc1fma863c1q"
+path="res://.godot/imported/Mirror Tech.mp3-bec4c9195051e4d239b64235b98e533b.mp3str"
+
+[deps]
+
+source_file="res://tracks/Mirror Tech.mp3"
+dest_files=["res://.godot/imported/Mirror Tech.mp3-bec4c9195051e4d239b64235b98e533b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

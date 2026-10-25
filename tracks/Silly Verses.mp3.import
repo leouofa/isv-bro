@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://8haro04mfcoc"
+path="res://.godot/imported/Silly Verses.mp3-7c913c955144fe377161c02dc2b1bc68.mp3str"
+
+[deps]
+
+source_file="res://tracks/Silly Verses.mp3"
+dest_files=["res://.godot/imported/Silly Verses.mp3-7c913c955144fe377161c02dc2b1bc68.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
