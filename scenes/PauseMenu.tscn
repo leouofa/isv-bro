@@ -80,6 +80,15 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "EXIT TO MAIN MENU"
 
+[node name="ConfirmDimmer" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
 [node name="ConfirmBox" type="PanelContainer" parent="."]
 visible = false
 anchors_preset = 8
@@ -115,11 +124,19 @@ alignment = 1
 [node name="YesBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+focus_neighbor_left = NodePath("../NoBtn")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../NoBtn")
+focus_neighbor_bottom = NodePath(".")
 mouse_default_cursor_shape = 2
 text = "YES"
 
 [node name="NoBtn" type="Button" parent="ConfirmBox/VBox/HBox"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+focus_neighbor_left = NodePath("../YesBtn")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../YesBtn")
+focus_neighbor_bottom = NodePath(".")
 mouse_default_cursor_shape = 2
 text = "NO"

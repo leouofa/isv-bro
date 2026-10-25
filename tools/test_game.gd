@@ -148,6 +148,25 @@ func _init() -> void:
 		if pause_scn.has_method("pause_game") and pause_scn.has_method("resume_game"):
 			pause_scn.pause_game()
 			assert_true(paused == true, "PauseMenu.pause_game() sets SceneTree.paused = true")
+			
+			# Test confirmation popup dimmer and button state
+			var c_dimmer = pause_scn.get_node_or_null("ConfirmDimmer") as ColorRect
+			var c_box = pause_scn.get_node_or_null("ConfirmBox") as Control
+			var res_btn = pause_scn.get_node_or_null("Panel/VBox/ResumeBtn") as Button
+			var no_btn = pause_scn.get_node_or_null("ConfirmBox/VBox/HBox/NoBtn") as Button
+			assert_true(c_dimmer != null, "ConfirmDimmer node exists in PauseMenu")
+			assert_true(c_dimmer.visible == false, "ConfirmDimmer is hidden initially")
+			
+			pause_scn._ask_confirmation("restart", "RESTART CURRENT SECTOR?")
+			assert_true(c_dimmer.visible == true, "ConfirmDimmer becomes visible on confirmation prompt")
+			assert_true(c_box.visible == true, "ConfirmBox becomes visible on confirmation prompt")
+			assert_true(res_btn.disabled == true, "Background PauseMenu buttons disabled during confirmation")
+			
+			pause_scn._on_confirm_no()
+			assert_true(c_dimmer.visible == false, "ConfirmDimmer is hidden after canceling confirmation")
+			assert_true(c_box.visible == false, "ConfirmBox is hidden after canceling confirmation")
+			assert_true(res_btn.disabled == false, "Background PauseMenu buttons re-enabled after canceling confirmation")
+			
 			pause_scn.resume_game()
 			assert_true(paused == false, "PauseMenu.resume_game() restores SceneTree.paused = false")
 		pause_scn.free()
