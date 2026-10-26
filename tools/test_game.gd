@@ -425,6 +425,23 @@ func _init() -> void:
 	jet_scn._on_area_entered(orb_hazard)
 	assert_true(gm.shield_hp == initial_shield - 15.0, "Hazard collision decrements shield by 15.0 (%.1f -> %.1f)" % [initial_shield, gm.shield_hp])
 	orb_hazard.free()
+
+	# Pickup collection test: ensure parent container is NOT freed on collection
+	var test_container := Node3D.new()
+	root.add_child(test_container)
+	var coolant_pickup := Area3D.new()
+	coolant_pickup.add_to_group("pickup_coolant")
+	test_container.add_child(coolant_pickup)
+	jet_scn._on_area_entered(coolant_pickup)
+	assert_true(is_instance_valid(test_container), "Parent container remains valid after coolant pickup collected")
+
+	var shield_pickup := Area3D.new()
+	shield_pickup.add_to_group("pickup_shield")
+	test_container.add_child(shield_pickup)
+	jet_scn._on_area_entered(shield_pickup)
+	assert_true(is_instance_valid(test_container), "Parent container remains valid after shield pickup collected")
+	test_container.free()
+
 	jet_scn.free()
 
 	# Shield depletion to 0 triggers run_ended
@@ -440,6 +457,15 @@ func _init() -> void:
 	gm.run_ended.disconnect(conn_callable)
 
 	# Verify GameOverScreen results presentation (Game Over and Victory)
+	var ui_for_go := Node.new()
+	ui_for_go.set_name("SynthwaveUI")
+	ui_for_go.set_script(load("res://scripts/SynthwaveUI.gd"))
+	root.add_child(ui_for_go)
+	ui_for_go._ready()
+
+	assert_true(ui_for_go.has_method("apply_button_style"), "SynthwaveUI provides apply_button_style")
+	assert_true(ui_for_go.has_method("apply_btn_style"), "SynthwaveUI provides apply_btn_style alias")
+
 	var go_scn: Node = (load("res://scenes/GameOverScreen.tscn") as PackedScene).instantiate()
 	root.add_child(go_scn)
 	go_scn.call("_ready")
@@ -459,6 +485,7 @@ func _init() -> void:
 	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 1", "GameOverScreen displays 'WORDS MISSED: 1'")
 
 	go_scn.free()
+	ui_for_go.free()
 
 	gm.free()
 	lex_node.free()

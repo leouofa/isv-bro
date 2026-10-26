@@ -82,6 +82,20 @@ func _get_lexicon_manager() -> Node:
 		return tree.root.get_node("LexiconManager")
 	return null
 
+func _get_objects_container() -> Node3D:
+	if is_instance_valid(objects_container):
+		return objects_container
+	if is_inside_tree() and has_node("DynamicObjects"):
+		var dyn = get_node("DynamicObjects") as Node3D
+		if is_instance_valid(dyn):
+			objects_container = dyn
+			return objects_container
+	var new_dyn := Node3D.new()
+	new_dyn.name = "DynamicObjects"
+	add_child(new_dyn)
+	objects_container = new_dyn
+	return objects_container
+
 func setup_lexicon_queue() -> void:
 	unmastered_roots.clear()
 	mastered_root_ids.clear()
@@ -429,7 +443,7 @@ func spawn_anomaly() -> void:
 	else:
 		target_root = unmastered_roots[0]
 
-	objects_container.add_child(anom)
+	_get_objects_container().add_child(anom)
 	anom.setup(target_root, sector_id)
 	active_anomalies.append(anom)
 	anom.destroyed.connect(_on_anomaly_destroyed)
@@ -464,7 +478,7 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 		gate.position = Vector3(pos_x, pos_y, -60.0)
 		if mid > 0.14:
 			gate.rotation.z = PI * 0.5
-		objects_container.add_child(gate)
+		_get_objects_container().add_child(gate)
 
 		var tw := create_tween()
 		tw.tween_property(gate, "position:z", 10.0, 3.5)
@@ -484,7 +498,7 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 		shape.shape = box
 		ring_hazard.add_child(shape)
 		ring_hazard.position = Vector3(randf_range(-3.0, 3.0), randf_range(-1.8, 1.8), -60.0)
-		objects_container.add_child(ring_hazard)
+		_get_objects_container().add_child(ring_hazard)
 
 		var tw := create_tween()
 		tw.tween_property(ring_hazard, "position:z", 10.0, 3.2)
@@ -509,7 +523,7 @@ func _spawn_pickup(scene: PackedScene, group_name: String) -> void:
 	shape.shape = sp
 	item.add_child(shape)
 	item.position = Vector3(randf_range(-4.0, 4.0), randf_range(-2.0, 2.0), -55.0)
-	objects_container.add_child(item)
+	_get_objects_container().add_child(item)
 
 	var tw := create_tween()
 	tw.tween_property(item, "position:z", 10.0, 3.8)
@@ -524,7 +538,7 @@ func spawn_boss() -> void:
 
 	boss_instance = BOSS_SCENE.instantiate() as Node3D
 	boss_instance.position = Vector3(0, 1.0, -28.0)
-	objects_container.add_child(boss_instance)
+	_get_objects_container().add_child(boss_instance)
 	boss_instance.setup_boss(sector_id)
 	boss_instance.boss_defeated.connect(_on_boss_defeated)
 

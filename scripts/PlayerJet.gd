@@ -150,7 +150,9 @@ func _on_area_entered(area: Area3D) -> void:
 		if gm:
 			gm.apply_coolant(35.0)
 		coolant_collected.emit(35.0)
-		area.get_parent().queue_free()
+		area.set_deferred("monitoring", false)
+		area.set_deferred("monitorable", false)
+		area.queue_free()
 	elif area.is_in_group("pickup_shield"):
 		var sfx = _get_sound_effects()
 		if sfx:
@@ -159,4 +161,6 @@ func _on_area_entered(area: Area3D) -> void:
 		if gm:
 			gm.restore_shield(30.0)
 		shield_collected.emit(30.0)
-		area.get_parent().queue_free()
+		area.set_deferred("monitoring", false)
+		area.set_deferred("monitorable", false)
+		area.queue_free()

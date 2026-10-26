@@ -225,6 +225,9 @@ func apply_button_style(btn: Button) -> void:
 				sfx.play_ui_click()
 		)
 
+func apply_btn_style(btn: Button) -> void:
+	apply_button_style(btn)
+
 # ----------------------------------------------------
 # Card Styling, Cursor & Interactivity
 # ----------------------------------------------------

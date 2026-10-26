@@ -48,13 +48,19 @@ func _ready() -> void:
 		retry_btn.pressed.connect(_on_retry_pressed)
 		retry_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		if sui:
-			sui.apply_btn_style(retry_btn)
+			if sui.has_method("apply_button_style"):
+				sui.apply_button_style(retry_btn)
+			elif sui.has_method("apply_btn_style"):
+				sui.apply_btn_style(retry_btn)
 
 	if menu_btn:
 		menu_btn.pressed.connect(_on_menu_pressed)
 		menu_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		if sui:
-			sui.apply_btn_style(menu_btn)
+			if sui.has_method("apply_button_style"):
+				sui.apply_button_style(menu_btn)
+			elif sui.has_method("apply_btn_style"):
+				sui.apply_btn_style(menu_btn)
 
 func setup_results(summary: Dictionary) -> void:
 	var survived: bool = summary.get("survived", false)
