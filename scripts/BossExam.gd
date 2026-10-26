@@ -146,6 +146,10 @@ func launch_boss_attack() -> void:
 func _spawn_plasma_orb(container: Node, spawn_pos: Vector3, travel_time: float) -> void:
 	var orb := Area3D.new()
 	orb.add_to_group("hazards")
+	orb.collision_layer = 2
+	orb.collision_mask = 1
+	orb.set_meta("damage", 15.0)
+	orb.set_meta("destroy_on_hit", true)
 
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
@@ -176,6 +180,10 @@ func _spawn_plasma_orb(container: Node, spawn_pos: Vector3, travel_time: float) 
 func _spawn_laser_gate(container: Node, spawn_pos: Vector3) -> void:
 	var gate := Area3D.new()
 	gate.add_to_group("hazards")
+	gate.collision_layer = 2
+	gate.collision_mask = 1
+	gate.set_meta("damage", 20.0)
+	gate.set_meta("destroy_on_hit", true)
 
 	var shape := CollisionShape3D.new()
 	var box := BoxShape3D.new()

@@ -21,6 +21,7 @@ var is_overheated_lockout: bool = false
 var lockout_timer: float = 0.0
 var shots_fired: int = 0
 var shots_hit: int = 0
+var words_missed_this_run: int = 0
 
 var save_data: Dictionary = {
 	"sector_scores": {"1": 0, "2": 0, "3": 0, "4": 0},
@@ -97,6 +98,7 @@ func start_new_run(sector: int = 1) -> void:
 	lockout_timer = 0.0
 	shots_fired = 0
 	shots_hit = 0
+	words_missed_this_run = 0
 	var mm := _get_music_manager()
 	if mm and mm.has_method("set_low_pass_enabled"):
 		mm.set_low_pass_enabled(false)
@@ -134,6 +136,7 @@ func register_root_hit(root_id: String, base_points: int = 200) -> int:
 
 func register_root_miss(expected_root_id: String) -> void:
 	shots_fired += 1
+	words_missed_this_run += 1
 	streak_count = 0
 	combo_multiplier = 1
 	cognitive_overheat = min(100.0, cognitive_overheat + 25.0)
@@ -224,7 +227,8 @@ func finalize_run(survived: bool) -> Dictionary:
 		"accuracy": accuracy,
 		"grade": grade,
 		"max_combo": max_combo_this_run,
-		"survived": survived
+		"survived": survived,
+		"words_missed": words_missed_this_run
 	}
 	run_ended.emit(summary)
 	return summary

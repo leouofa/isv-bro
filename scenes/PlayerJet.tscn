@@ -23,7 +23,7 @@ shape = SubResource("BoxShape3D_body")
 
 [node name="HitArea" type="Area3D" parent="." groups=["player"]]
 collision_layer = 1
-collision_mask = 6
+collision_mask = 7
 
 [node name="HitCollision" type="CollisionShape3D" parent="HitArea"]
 shape = SubResource("SphereShape3D_hit")

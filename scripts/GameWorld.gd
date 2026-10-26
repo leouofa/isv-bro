@@ -50,6 +50,7 @@ var RING_MODEL: PackedScene = load("res://assets/models/hazard_collider_ring.glb
 var HAZARD_GATE: PackedScene = load("res://assets/models/hazard_laser_gate.glb")
 var PICKUP_COOLANT: PackedScene = load("res://assets/models/pickup_coolant_cell.glb")
 var PICKUP_SHIELD: PackedScene = load("res://assets/models/pickup_shield_orb.glb")
+var GAMEOVER_SCENE: PackedScene = load("res://scenes/GameOverScreen.tscn")
 
 func _ready() -> void:
 	Engine.time_scale = 1.0
@@ -61,6 +62,9 @@ func _ready() -> void:
 
 	if is_inside_tree() and has_node("/root/MusicManager"):
 		get_node("/root/MusicManager").play_sector_music(sector_id, 0)
+
+	if player_jet and player_jet.has_signal("jet_damaged"):
+		player_jet.jet_damaged.connect(func(_amount): shake_camera())
 
 	setup_lexicon_queue()
 	setup_tunnel()
@@ -444,6 +448,9 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 	if (bass > 0.16 or roll < 0.45) and HAZARD_GATE:
 		var gate := Area3D.new()
 		gate.add_to_group("hazards")
+		gate.collision_layer = 2
+		gate.collision_mask = 1
+		gate.set_meta("damage", 25.0)
 		var model: Node3D = HAZARD_GATE.instantiate()
 		gate.add_child(model)
 		var shape := CollisionShape3D.new()
@@ -465,6 +472,9 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 	elif roll < 0.65 and RING_MODEL:
 		var ring_hazard := Area3D.new()
 		ring_hazard.add_to_group("hazards")
+		ring_hazard.collision_layer = 2
+		ring_hazard.collision_mask = 1
+		ring_hazard.set_meta("damage", 20.0)
 		var model: Node3D = RING_MODEL.instantiate()
 		model.scale = Vector3(0.5, 0.5, 0.5)
 		ring_hazard.add_child(model)
@@ -489,6 +499,8 @@ func _spawn_pickup(scene: PackedScene, group_name: String) -> void:
 		return
 	var item := Area3D.new()
 	item.add_to_group(group_name)
+	item.collision_layer = 2
+	item.collision_mask = 1
 	var model: Node3D = scene.instantiate()
 	item.add_child(model)
 	var shape := CollisionShape3D.new()
@@ -537,8 +549,15 @@ func _on_boss_defeated() -> void:
 	Engine.time_scale = 1.0
 	if hud and hud.has_method("hide_boss_health"):
 		hud.hide_boss_health()
-	if has_node("/root/GameManager"):
+	if is_inside_tree() and has_node("/root/GameManager"):
 		get_node("/root/GameManager").finalize_run(true)
 
-func _on_run_ended(_summary: Dictionary) -> void:
+func _on_run_ended(summary: Dictionary) -> void:
 	Engine.time_scale = 1.0
+	if hud and hud.has_method("hide_boss_health"):
+		hud.hide_boss_health()
+
+	if GAMEOVER_SCENE:
+		var go := GAMEOVER_SCENE.instantiate()
+		add_child(go)
+		go.setup_results(summary)

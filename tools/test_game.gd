@@ -29,7 +29,8 @@ func _init() -> void:
 		"res://scenes/CodexScreen.tscn",
 		"res://scenes/PlayerJet.tscn",
 		"res://scenes/Anomaly.tscn",
-		"res://scenes/BossExam.tscn"
+		"res://scenes/BossExam.tscn",
+		"res://scenes/GameOverScreen.tscn"
 	]
 	for scn_path in scenes:
 		var exists := ResourceLoader.exists(scn_path)
@@ -404,6 +405,60 @@ func _init() -> void:
 	assert_true(boss_scn.is_defeated, "Boss defeated flag set upon 0 HP")
 
 	boss_scn.free()
+
+	# SUITE 16: Shield Depletion, Missed Words Tracking & GameOverScreen
+	print("\n--- SUITE 16: Shield Depletion, Missed Words Tracking & GameOverScreen ---")
+	gm.start_new_run(1)
+	assert_true(gm.words_missed_this_run == 0, "Missed words counter reset to 0 on new run")
+	gm.register_root_miss("bio")
+	gm.register_root_miss("cyto")
+	assert_true(gm.words_missed_this_run == 2, "Missed words counter tracked 2 misses")
+
+	# Shield damage from boss hazards (15.0 dmg per orb)
+	var jet_scn := (load("res://scenes/PlayerJet.tscn") as PackedScene).instantiate()
+	root.add_child(jet_scn)
+	var initial_shield: float = gm.shield_hp
+	var orb_hazard := Area3D.new()
+	orb_hazard.add_to_group("hazards")
+	orb_hazard.set_meta("damage", 15.0)
+	orb_hazard.set_meta("destroy_on_hit", true)
+	jet_scn._on_area_entered(orb_hazard)
+	assert_true(gm.shield_hp == initial_shield - 15.0, "Hazard collision decrements shield by 15.0 (%.1f -> %.1f)" % [initial_shield, gm.shield_hp])
+	orb_hazard.free()
+	jet_scn.free()
+
+	# Shield depletion to 0 triggers run_ended
+	var last_summary_box: Array[Dictionary] = [{}]
+	var conn_callable := func(s: Dictionary): last_summary_box[0] = s
+	gm.run_ended.connect(conn_callable)
+	gm.apply_shield_damage(gm.shield_hp) # Deplete completely
+	assert_true(gm.shield_hp == 0.0, "Shield integrity dropped to 0.0")
+	var sum_dict: Dictionary = last_summary_box[0]
+	assert_true(not sum_dict.is_empty(), "run_ended signal emitted on 0 shield")
+	assert_true(sum_dict.get("survived", true) == false, "Summary indicates player did not survive (Game Over)")
+	assert_true(int(sum_dict.get("words_missed", -1)) == 2, "Summary correctly reports 2 words missed")
+	gm.run_ended.disconnect(conn_callable)
+
+	# Verify GameOverScreen results presentation (Game Over and Victory)
+	var go_scn: Node = (load("res://scenes/GameOverScreen.tscn") as PackedScene).instantiate()
+	root.add_child(go_scn)
+	go_scn.call("_ready")
+
+	# Test Failure Presentation
+	go_scn.setup_results({"survived": false, "score": 2100, "words_missed": 3, "grade": "D", "sector": 1})
+	var h_lbl = go_scn.get_node_or_null("Panel/VBox/HeaderLabel") as Label
+	var m_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/MissedLabel") as Label
+	var s_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/ScoreLabel") as Label
+	assert_true(h_lbl != null and h_lbl.text == "CRITICAL FAILURE", "GameOverScreen shows 'CRITICAL FAILURE' on shield loss")
+	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 3", "GameOverScreen displays 'WORDS MISSED: 3'")
+	assert_true(s_lbl != null and s_lbl.text.contains("0002100"), "GameOverScreen displays formatted total score")
+
+	# Test Victory Presentation
+	go_scn.setup_results({"survived": true, "score": 15000, "words_missed": 1, "grade": "S", "sector": 1})
+	assert_true(h_lbl != null and h_lbl.text == "SECTOR 01 CLEARED", "GameOverScreen shows 'SECTOR 01 CLEARED' on victory")
+	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 1", "GameOverScreen displays 'WORDS MISSED: 1'")
+
+	go_scn.free()
 
 	gm.free()
 	lex_node.free()

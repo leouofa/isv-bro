@@ -86,6 +86,32 @@ func _physics_process(delta: float) -> void:
 			rotation.z = lerpf(rotation.z, clampf(-vel_x * 0.35, -0.65, 0.65), alpha)
 			rotation.x = lerpf(rotation.x, clampf(vel_y * 0.25, -0.45, 0.45), alpha)
 
+func _get_tree_safe() -> SceneTree:
+	if is_inside_tree() and get_tree():
+		return get_tree()
+	var main_loop := Engine.get_main_loop()
+	if main_loop is SceneTree:
+		return main_loop as SceneTree
+	if Engine.has_meta("active_tree"):
+		return Engine.get_meta("active_tree") as SceneTree
+	return null
+
+func _get_game_manager() -> Node:
+	if is_inside_tree() and has_node("/root/GameManager"):
+		return get_node("/root/GameManager")
+	var t := _get_tree_safe()
+	if t and t.root and t.root.has_node("GameManager"):
+		return t.root.get_node("GameManager")
+	return null
+
+func _get_sound_effects() -> Node:
+	if is_inside_tree() and has_node("/root/SoundEffects"):
+		return get_node("/root/SoundEffects")
+	var t := _get_tree_safe()
+	if t and t.root and t.root.has_node("SoundEffects"):
+		return t.root.get_node("SoundEffects")
+	return null
+
 func trigger_barrel_roll(dir: float = 1.0) -> void:
 	if is_barrel_rolling:
 		return
@@ -93,32 +119,44 @@ func trigger_barrel_roll(dir: float = 1.0) -> void:
 	is_invulnerable = true
 	roll_timer = 0.0
 	roll_direction = dir
-	if has_node("/root/SoundEffects"):
-		get_node("/root/SoundEffects").play_barrel_roll()
+	var sfx = _get_sound_effects()
+	if sfx:
+		sfx.play_barrel_roll()
 
 func _on_area_entered(area: Area3D) -> void:
 	if area.is_in_group("hazards"):
+		var dmg: float = float(area.get_meta("damage", 25.0))
+		var sfx = _get_sound_effects()
+		var gm = _get_game_manager()
 		if not is_invulnerable:
-			if has_node("/root/SoundEffects"):
-				get_node("/root/SoundEffects").play_shield_hit()
-			if has_node("/root/GameManager"):
-				get_node("/root/GameManager").apply_shield_damage(25.0)
-			jet_damaged.emit(25.0)
+			if sfx:
+				sfx.play_shield_hit()
+			if gm:
+				gm.apply_shield_damage(dmg)
+			jet_damaged.emit(dmg)
+			if area.has_meta("destroy_on_hit") and bool(area.get_meta("destroy_on_hit")):
+				area.queue_free()
 		else:
 			# Deflected hazard during barrel roll!
-			if has_node("/root/SoundEffects"):
-				get_node("/root/SoundEffects").play_barrel_roll()
+			if sfx:
+				sfx.play_barrel_roll()
+			if area.has_meta("destroy_on_hit") and bool(area.get_meta("destroy_on_hit")):
+				area.queue_free()
 	elif area.is_in_group("pickup_coolant"):
-		if has_node("/root/SoundEffects"):
-			get_node("/root/SoundEffects").play_pickup()
-		if has_node("/root/GameManager"):
-			get_node("/root/GameManager").apply_coolant(35.0)
+		var sfx = _get_sound_effects()
+		if sfx:
+			sfx.play_pickup()
+		var gm = _get_game_manager()
+		if gm:
+			gm.apply_coolant(35.0)
 		coolant_collected.emit(35.0)
 		area.get_parent().queue_free()
 	elif area.is_in_group("pickup_shield"):
-		if has_node("/root/SoundEffects"):
-			get_node("/root/SoundEffects").play_pickup()
-		if has_node("/root/GameManager"):
-			get_node("/root/GameManager").restore_shield(25.0)
-		shield_collected.emit(25.0)
+		var sfx = _get_sound_effects()
+		if sfx:
+			sfx.play_pickup()
+		var gm = _get_game_manager()
+		if gm:
+			gm.restore_shield(30.0)
+		shield_collected.emit(30.0)
 		area.get_parent().queue_free()
