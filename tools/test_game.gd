@@ -249,6 +249,13 @@ func _init() -> void:
 	card1.emit_signal("gui_input", key_ev)
 	assert_true(clicked_box[0] == 1, "Keyboard Enter on focused SectorCard triggers sector engagement")
 
+	# Test CheckBox styling and separation (prevents text touching check icon on hover)
+	var crt_cb = menu_scn.get_node_or_null("SettingsModal/Panel/VBox/CRTCheck") as CheckBox
+	assert_true(crt_cb != null and crt_cb.get_theme_constant("h_separation") >= 10, "CRTCheck has >= 10px h_separation spacing")
+	var hp_sb = crt_cb.get_theme_stylebox("hover_pressed")
+	var norm_sb = crt_cb.get_theme_stylebox("normal")
+	assert_true(hp_sb != null and norm_sb != null and hp_sb.content_margin_left == norm_sb.content_margin_left, "CRTCheck hover_pressed left margin matches normal margin")
+
 	menu_scn.free()
 
 	# Verify PauseMenu buttons cursor and panel padding

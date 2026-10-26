@@ -412,6 +412,7 @@ value = 90.0
 
 [node name="CRTCheck" type="CheckBox" parent="SettingsModal/Panel/VBox"]
 layout_mode = 2
+theme_override_constants/h_separation = 10
 button_pressed = true
 text = "Enable 90s CRT Scanlines Shader"
 
