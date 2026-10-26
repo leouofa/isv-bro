@@ -7,6 +7,10 @@ const SECTOR_TRACKS := {
 	2: ["res://tracks/Ultrabeat.mp3", "res://tracks/The Flight.mp3"],
 	3: ["res://tracks/Undercurrent.mp3", "res://tracks/Low Cut.mp3"],
 	4: ["res://tracks/Escape.mp3", "res://tracks/The Key.mp3", "res://tracks/Luck.mp3"],
+	5: ["res://tracks/The Flight.mp3", "res://tracks/Mirror Tech.mp3"],
+	6: ["res://tracks/The Key.mp3", "res://tracks/Escape.mp3"],
+	7: ["res://tracks/Understanding.mp3", "res://tracks/Undercurrent.mp3"],
+	8: ["res://tracks/Luck.mp3", "res://tracks/Ultrabeat.mp3"],
 	99: ["res://tracks/Left Turn.mp3", "res://tracks/Rerun.mp3", "res://tracks/The End.mp3"]
 }
 

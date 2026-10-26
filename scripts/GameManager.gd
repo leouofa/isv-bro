@@ -24,8 +24,8 @@ var shots_hit: int = 0
 var words_missed_this_run: int = 0
 
 var save_data: Dictionary = {
-	"sector_scores": {"1": 0, "2": 0, "3": 0, "4": 0},
-	"sector_grades": {"1": "-", "2": "-", "3": "-", "4": "-"},
+	"sector_scores": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0},
+	"sector_grades": {"1": "-", "2": "-", "3": "-", "4": "-", "5": "-", "6": "-", "7": "-", "8": "-"},
 	"unlocked_roots": {},
 	"root_stats": {}, # root_id -> {"hits": 0, "misses": 0}
 	"total_runs": 0,
@@ -87,7 +87,7 @@ func _process(delta: float) -> void:
 			overheat_changed.emit(cognitive_overheat, false)
 
 func start_new_run(sector: int = 1) -> void:
-	current_sector = clampi(sector, 1, 4)
+	current_sector = clampi(sector, 1, 8)
 	score = 0
 	combo_multiplier = 1
 	streak_count = 0

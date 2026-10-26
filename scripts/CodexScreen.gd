@@ -27,8 +27,8 @@ func _ready() -> void:
 		if gm and gm.get("current_sector") != null:
 			selected_sector = int(gm.current_sector)
 
-	setup_sector_filter()
 	load_all_roots()
+	setup_sector_filter()
 	populate_list()
 
 func _input(event: InputEvent) -> void:
@@ -50,11 +50,23 @@ func close_screen() -> void:
 func setup_sector_filter() -> void:
 	if sector_filter:
 		sector_filter.clear()
-		sector_filter.add_item("All Sectors (48 Roots)", 0)
-		sector_filter.add_item("Sector 01: Cytology & Bio-Genesis", 1)
-		sector_filter.add_item("Sector 02: Astro & Celestial Dynamics", 2)
-		sector_filter.add_item("Sector 03: Geo & Lithospheric Matrix", 3)
-		sector_filter.add_item("Sector 04: Thermo & Quantum Energetics", 4)
+		var count := all_roots.size()
+		if count == 0:
+			var lm_check = get_node_or_null("/root/LexiconManager")
+			if lm_check and lm_check.roots_by_id:
+				count = lm_check.roots_by_id.size()
+			else:
+				count = 96
+		sector_filter.add_item("All Sectors (%d Roots)" % count, 0)
+		var lm = get_node_or_null("/root/LexiconManager")
+		if lm and lm.sectors:
+			for sec in lm.sectors:
+				var sid: int = int(sec.get("id", 1))
+				var sname: String = str(sec.get("name", "Sector %02d" % sid))
+				sector_filter.add_item(sname, sid)
+		else:
+			for s in range(1, 9):
+				sector_filter.add_item("Sector %02d" % s, s)
 		for i in range(sector_filter.item_count):
 			if sector_filter.get_item_id(i) == selected_sector:
 				sector_filter.select(i)

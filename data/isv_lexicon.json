@@ -31,6 +31,38 @@
       "theme_color": "#FF007F",
       "track": "res://tracks/Escape.mp3",
       "boss_track": "res://tracks/Rerun.mp3"
+    },
+    {
+      "id": 5,
+      "code": "GENOME",
+      "name": "Sector 05: Genetics & Genomic Code",
+      "theme_color": "#A855F7",
+      "track": "res://tracks/The Flight.mp3",
+      "boss_track": "res://tracks/Rerun.mp3"
+    },
+    {
+      "id": 6,
+      "code": "PARTICLE",
+      "name": "Sector 06: Subatomic & Particle Dynamics",
+      "theme_color": "#FF2A85",
+      "track": "res://tracks/The Key.mp3",
+      "boss_track": "res://tracks/Left Turn.mp3"
+    },
+    {
+      "id": 7,
+      "code": "SONIC",
+      "name": "Sector 07: Acoustic & Optical Resonance",
+      "theme_color": "#05FFA1",
+      "track": "res://tracks/Understanding.mp3",
+      "boss_track": "res://tracks/The End.mp3"
+    },
+    {
+      "id": 8,
+      "code": "CYBER",
+      "name": "Sector 08: Cybernetics & Bionic Automata",
+      "theme_color": "#FF6B00",
+      "track": "res://tracks/Luck.mp3",
+      "boss_track": "res://tracks/The End.mp3"
     }
   ],
   "roots": [
@@ -40,8 +72,16 @@
       "root": "bio-",
       "origin": "Greek (bios)",
       "meaning": "Life or living organisms",
-      "examples": ["Biology", "Biosphere", "Symbiosis"],
-      "distractors": ["geo-", "lith-", "cryo-"],
+      "examples": [
+        "Biology",
+        "Biosphere",
+        "Symbiosis"
+      ],
+      "distractors": [
+        "geo-",
+        "lith-",
+        "cryo-"
+      ],
       "mnemonic": "BIO is LIFE, bro! Keep your bio-shield alive!"
     },
     {
@@ -50,8 +90,16 @@
       "root": "cyto-",
       "origin": "Greek (kytos)",
       "meaning": "Cell or hollow receptacle",
-      "examples": ["Cytoplasm", "Cytology", "Leukocyte"],
-      "distractors": ["soma-", "blast-", "troph-"],
+      "examples": [
+        "Cytoplasm",
+        "Cytology",
+        "Leukocyte"
+      ],
+      "distractors": [
+        "soma-",
+        "blast-",
+        "troph-"
+      ],
       "mnemonic": "CYTO = CELL! Every cell in your body is hyped!"
     },
     {
@@ -60,8 +108,16 @@
       "root": "-lysis",
       "origin": "Greek (lyein)",
       "meaning": "Dissolution, loosening, or cell destruction",
-      "examples": ["Cytolysis", "Hydrolysis", "Paralysis"],
-      "distractors": ["-stasis", "-genesis", "-trophy"],
+      "examples": [
+        "Cytolysis",
+        "Hydrolysis",
+        "Paralysis"
+      ],
+      "distractors": [
+        "-stasis",
+        "-genesis",
+        "-trophy"
+      ],
       "mnemonic": "LYSIS breaks it LOOSE and dissolves it with lasers!"
     },
     {
@@ -70,8 +126,16 @@
       "root": "-stasis",
       "origin": "Greek (stasis)",
       "meaning": "Standing still, equilibrium, or stability",
-      "examples": ["Homeostasis", "Hemostasis", "Cryostasis"],
-      "distractors": ["-lysis", "-kinesis", "-phagy"],
+      "examples": [
+        "Homeostasis",
+        "Hemostasis",
+        "Cryostasis"
+      ],
+      "distractors": [
+        "-lysis",
+        "-kinesis",
+        "-phagy"
+      ],
       "mnemonic": "STASIS = STAY STILL in perfect balance!"
     },
     {
@@ -80,8 +144,16 @@
       "root": "phag- / -phagy",
       "origin": "Greek (phagein)",
       "meaning": "To eat, engulf, or devour",
-      "examples": ["Macrophage", "Esophagus", "Autophagy"],
-      "distractors": ["troph-", "blast-", "soma-"],
+      "examples": [
+        "Macrophage",
+        "Esophagus",
+        "Autophagy"
+      ],
+      "distractors": [
+        "troph-",
+        "blast-",
+        "soma-"
+      ],
       "mnemonic": "PHAG = PAC-MAN eating up cellular debris!"
     },
     {
@@ -90,9 +162,17 @@
       "root": "soma- / -some",
       "origin": "Greek (soma)",
       "meaning": "Body or bodily structure",
-      "examples": ["Somatic", "Chromosome", "Ribosome"],
-      "distractors": ["cyto-", "morph-", "endo-"],
-      "mnemonic": "SOMA is the BODY, bro—never skip soma day!"
+      "examples": [
+        "Somatic",
+        "Chromosome",
+        "Ribosome"
+      ],
+      "distractors": [
+        "cyto-",
+        "morph-",
+        "endo-"
+      ],
+      "mnemonic": "SOMA is the BODY, bro\u2014never skip soma day!"
     },
     {
       "id": "blast",
@@ -100,8 +180,16 @@
       "root": "-blast / blasto-",
       "origin": "Greek (blastos)",
       "meaning": "Immature cell, bud, or germ layer",
-      "examples": ["Osteoblast", "Fibroblast", "Blastocyst"],
-      "distractors": ["-clast", "-lysis", "soma-"],
+      "examples": [
+        "Osteoblast",
+        "Fibroblast",
+        "Blastocyst"
+      ],
+      "distractors": [
+        "-clast",
+        "-lysis",
+        "soma-"
+      ],
       "mnemonic": "BLAST cells are young builders ready to sprout!"
     },
     {
@@ -110,8 +198,16 @@
       "root": "endo-",
       "origin": "Greek (endon)",
       "meaning": "Within, inner, or absorbing",
-      "examples": ["Endoskeleton", "Endocrine", "Endocytosis"],
-      "distractors": ["exo-", "peri-", "apo-"],
+      "examples": [
+        "Endoskeleton",
+        "Endocrine",
+        "Endocytosis"
+      ],
+      "distractors": [
+        "exo-",
+        "peri-",
+        "apo-"
+      ],
       "mnemonic": "ENDO goes IN-DOORS, deep inside the structure!"
     },
     {
@@ -120,8 +216,16 @@
       "root": "exo-",
       "origin": "Greek (exo)",
       "meaning": "Outside, external, or outer",
-      "examples": ["Exoskeleton", "Exothermic", "Exocytosis"],
-      "distractors": ["endo-", "meso-", "intra-"],
+      "examples": [
+        "Exoskeleton",
+        "Exothermic",
+        "Exocytosis"
+      ],
+      "distractors": [
+        "endo-",
+        "meso-",
+        "intra-"
+      ],
       "mnemonic": "EXO = EXIT to the outside shell!"
     },
     {
@@ -130,8 +234,16 @@
       "root": "auto-",
       "origin": "Greek (autos)",
       "meaning": "Self or occurring from within",
-      "examples": ["Autotroph", "Autophagy", "Autonomic"],
-      "distractors": ["hetero-", "homo-", "syn-"],
+      "examples": [
+        "Autotroph",
+        "Autophagy",
+        "Autonomic"
+      ],
+      "distractors": [
+        "hetero-",
+        "homo-",
+        "syn-"
+      ],
       "mnemonic": "AUTO = AUTOMATICALLY by yourself, bro!"
     },
     {
@@ -140,8 +252,16 @@
       "root": "-troph / tropho-",
       "origin": "Greek (trophe)",
       "meaning": "Nourishment, food, or growth",
-      "examples": ["Autotroph", "Hypertrophy", "Atrophy"],
-      "distractors": ["phag-", "lysis", "stasis"],
+      "examples": [
+        "Autotroph",
+        "Hypertrophy",
+        "Atrophy"
+      ],
+      "distractors": [
+        "phag-",
+        "lysis",
+        "stasis"
+      ],
       "mnemonic": "TROPH = Winner's TROPHY of cellular nutrition!"
     },
     {
@@ -150,8 +270,16 @@
       "root": "morph- / -morphic",
       "origin": "Greek (morphe)",
       "meaning": "Form, shape, or structure",
-      "examples": ["Metamorphosis", "Morphology", "Amorphous"],
-      "distractors": ["chrom-", "soma-", "stereo-"],
+      "examples": [
+        "Metamorphosis",
+        "Morphology",
+        "Amorphous"
+      ],
+      "distractors": [
+        "chrom-",
+        "soma-",
+        "stereo-"
+      ],
       "mnemonic": "MORPH = Mighty Morphin' shape-shifters!"
     },
     {
@@ -160,8 +288,16 @@
       "root": "astro-",
       "origin": "Greek (astron)",
       "meaning": "Star or celestial body",
-      "examples": ["Astrophysics", "Asteroid", "Astronaut"],
-      "distractors": ["cosmo-", "helio-", "geo-"],
+      "examples": [
+        "Astrophysics",
+        "Asteroid",
+        "Astronaut"
+      ],
+      "distractors": [
+        "cosmo-",
+        "helio-",
+        "geo-"
+      ],
       "mnemonic": "ASTRO = STARS shining across the galaxy!"
     },
     {
@@ -170,8 +306,16 @@
       "root": "cosmo-",
       "origin": "Greek (kosmos)",
       "meaning": "Universe, world, or order",
-      "examples": ["Cosmology", "Microcosm", "Cosmonaut"],
-      "distractors": ["astro-", "chrono-", "tele-"],
+      "examples": [
+        "Cosmology",
+        "Microcosm",
+        "Cosmonaut"
+      ],
+      "distractors": [
+        "astro-",
+        "chrono-",
+        "tele-"
+      ],
       "mnemonic": "COSMO = The entire ordered UNIVERSE, bro!"
     },
     {
@@ -180,8 +324,16 @@
       "root": "helio-",
       "origin": "Greek (helios)",
       "meaning": "The Sun",
-      "examples": ["Heliocentric", "Helium", "Perihelion"],
-      "distractors": ["lumin-", "pyro-", "photo-"],
+      "examples": [
+        "Heliocentric",
+        "Helium",
+        "Perihelion"
+      ],
+      "distractors": [
+        "lumin-",
+        "pyro-",
+        "photo-"
+      ],
       "mnemonic": "HELIO = Blazing hot SUN power!"
     },
     {
@@ -190,8 +342,16 @@
       "root": "peri-",
       "origin": "Greek (peri)",
       "meaning": "Around, near, or enclosing",
-      "examples": ["Perihelion", "Perigee", "Perimeter"],
-      "distractors": ["apo-", "tele-", "endo-"],
+      "examples": [
+        "Perihelion",
+        "Perigee",
+        "Perimeter"
+      ],
+      "distractors": [
+        "apo-",
+        "tele-",
+        "endo-"
+      ],
       "mnemonic": "PERI = Close around the PERIMETER!"
     },
     {
@@ -200,8 +360,16 @@
       "root": "apo-",
       "origin": "Greek (apo)",
       "meaning": "Away from, farthest point, or detached",
-      "examples": ["Apogee", "Aphelion", "Apoptosis"],
-      "distractors": ["peri-", "syn-", "ad-"],
+      "examples": [
+        "Apogee",
+        "Aphelion",
+        "Apoptosis"
+      ],
+      "distractors": [
+        "peri-",
+        "syn-",
+        "ad-"
+      ],
       "mnemonic": "APO = APART and far away in deep orbit!"
     },
     {
@@ -210,8 +378,16 @@
       "root": "chrono-",
       "origin": "Greek (khronos)",
       "meaning": "Time",
-      "examples": ["Chronology", "Synchronize", "Chronometer"],
-      "distractors": ["tachy-", "brady-", "kinet-"],
+      "examples": [
+        "Chronology",
+        "Synchronize",
+        "Chronometer"
+      ],
+      "distractors": [
+        "tachy-",
+        "brady-",
+        "kinet-"
+      ],
       "mnemonic": "CHRONO = Cosmic TIME on your chronograph!"
     },
     {
@@ -220,8 +396,16 @@
       "root": "tele-",
       "origin": "Greek (tele)",
       "meaning": "Far off, distant, or across space",
-      "examples": ["Telescope", "Telemetry", "Teleport"],
-      "distractors": ["peri-", "micro-", "auto-"],
+      "examples": [
+        "Telescope",
+        "Telemetry",
+        "Teleport"
+      ],
+      "distractors": [
+        "peri-",
+        "micro-",
+        "auto-"
+      ],
       "mnemonic": "TELE = Seeing FAR across the starfield!"
     },
     {
@@ -230,8 +414,16 @@
       "root": "baro-",
       "origin": "Greek (baros)",
       "meaning": "Weight or atmospheric pressure",
-      "examples": ["Barometer", "Isobar", "Hyperbaric"],
-      "distractors": ["grav-", "thermo-", "dynam-"],
+      "examples": [
+        "Barometer",
+        "Isobar",
+        "Hyperbaric"
+      ],
+      "distractors": [
+        "grav-",
+        "thermo-",
+        "dynam-"
+      ],
       "mnemonic": "BARO = Heavy BARBELL pressure, bro!"
     },
     {
@@ -240,8 +432,16 @@
       "root": "lumin-",
       "origin": "Latin (lumen)",
       "meaning": "Light or radiant emission",
-      "examples": ["Luminosity", "Bioluminescence", "Luminary"],
-      "distractors": ["photo-", "chrom-", "spectr-"],
+      "examples": [
+        "Luminosity",
+        "Bioluminescence",
+        "Luminary"
+      ],
+      "distractors": [
+        "photo-",
+        "chrom-",
+        "spectr-"
+      ],
       "mnemonic": "LUMIN = Illuminate the dark void!"
     },
     {
@@ -250,8 +450,16 @@
       "root": "grav-",
       "origin": "Latin (gravis)",
       "meaning": "Heavy or weight-inducing force",
-      "examples": ["Gravity", "Graviton", "Specific Gravity"],
-      "distractors": ["baro-", "dynam-", "kinet-"],
+      "examples": [
+        "Gravity",
+        "Graviton",
+        "Specific Gravity"
+      ],
+      "distractors": [
+        "baro-",
+        "dynam-",
+        "kinet-"
+      ],
       "mnemonic": "GRAV = Heavy GRAVITY pulling you in!"
     },
     {
@@ -260,8 +468,15 @@
       "root": "sidere-",
       "origin": "Latin (sidus)",
       "meaning": "Star or constellation alignment",
-      "examples": ["Sidereal", "Consider"],
-      "distractors": ["astro-", "cosmo-", "helio-"],
+      "examples": [
+        "Sidereal",
+        "Consider"
+      ],
+      "distractors": [
+        "astro-",
+        "cosmo-",
+        "helio-"
+      ],
       "mnemonic": "SIDERE = Locked onto distant STAR time!"
     },
     {
@@ -270,8 +485,16 @@
       "root": "nebul-",
       "origin": "Latin (nebula)",
       "meaning": "Mist, cloud, or vapor",
-      "examples": ["Nebula", "Nebulizer", "Nebulous"],
-      "distractors": ["hydro-", "hal-", "bath-"],
+      "examples": [
+        "Nebula",
+        "Nebulizer",
+        "Nebulous"
+      ],
+      "distractors": [
+        "hydro-",
+        "hal-",
+        "bath-"
+      ],
       "mnemonic": "NEBUL = Cosmic CLOUD of star-forming gas!"
     },
     {
@@ -280,8 +503,16 @@
       "root": "geo-",
       "origin": "Greek (ge)",
       "meaning": "Earth or planetary ground",
-      "examples": ["Geology", "Geothermal", "Apogee"],
-      "distractors": ["lith-", "petro-", "orogen-"],
+      "examples": [
+        "Geology",
+        "Geothermal",
+        "Apogee"
+      ],
+      "distractors": [
+        "lith-",
+        "petro-",
+        "orogen-"
+      ],
       "mnemonic": "GEO = Planet EARTH beneath our thrusters!"
     },
     {
@@ -290,8 +521,16 @@
       "root": "lith- / -lite",
       "origin": "Greek (lithos)",
       "meaning": "Stone or rock",
-      "examples": ["Lithosphere", "Monolith", "Neolithic"],
-      "distractors": ["petro-", "geo-", "clast-"],
+      "examples": [
+        "Lithosphere",
+        "Monolith",
+        "Neolithic"
+      ],
+      "distractors": [
+        "petro-",
+        "geo-",
+        "clast-"
+      ],
       "mnemonic": "LITH = Solid STONE monoliths!"
     },
     {
@@ -300,8 +539,16 @@
       "root": "petro-",
       "origin": "Greek (petra)",
       "meaning": "Rock or mineral crag",
-      "examples": ["Petrology", "Petrified", "Petroleum"],
-      "distractors": ["lith-", "strat-", "hal-"],
+      "examples": [
+        "Petrology",
+        "Petrified",
+        "Petroleum"
+      ],
+      "distractors": [
+        "lith-",
+        "strat-",
+        "hal-"
+      ],
       "mnemonic": "PETRO = Petrified into solid ROCK!"
     },
     {
@@ -310,8 +557,16 @@
       "root": "pyro-",
       "origin": "Greek (pyr)",
       "meaning": "Fire or extreme volcanic heat",
-      "examples": ["Pyroclastic", "Pyrite", "Pyrometer"],
-      "distractors": ["thermo-", "helio-", "radi-"],
+      "examples": [
+        "Pyroclastic",
+        "Pyrite",
+        "Pyrometer"
+      ],
+      "distractors": [
+        "thermo-",
+        "helio-",
+        "radi-"
+      ],
       "mnemonic": "PYRO = Blazing volcanic FIRE, bro!"
     },
     {
@@ -320,8 +575,16 @@
       "root": "strat-",
       "origin": "Latin (stratum)",
       "meaning": "Layer or horizontal sheet",
-      "examples": ["Stratigraphy", "Stratosphere", "Substrate"],
-      "distractors": ["clast-", "morph-", "stereo-"],
+      "examples": [
+        "Stratigraphy",
+        "Stratosphere",
+        "Substrate"
+      ],
+      "distractors": [
+        "clast-",
+        "morph-",
+        "stereo-"
+      ],
       "mnemonic": "STRAT = Stacked horizontal LAYERS of rock!"
     },
     {
@@ -330,8 +593,16 @@
       "root": "seism-",
       "origin": "Greek (seismos)",
       "meaning": "Earthquake or vibration",
-      "examples": ["Seismograph", "Seismic", "Microseism"],
-      "distractors": ["kinet-", "dynam-", "baro-"],
+      "examples": [
+        "Seismograph",
+        "Seismic",
+        "Microseism"
+      ],
+      "distractors": [
+        "kinet-",
+        "dynam-",
+        "baro-"
+      ],
       "mnemonic": "SEISM = Earth-shaking vibration waves!"
     },
     {
@@ -340,8 +611,16 @@
       "root": "hydro-",
       "origin": "Greek (hydor)",
       "meaning": "Water or liquid fluid",
-      "examples": ["Hydrology", "Hydrothermal", "Dehydrate"],
-      "distractors": ["cryo-", "hal-", "bath-"],
+      "examples": [
+        "Hydrology",
+        "Hydrothermal",
+        "Dehydrate"
+      ],
+      "distractors": [
+        "cryo-",
+        "hal-",
+        "bath-"
+      ],
       "mnemonic": "HYDRO = Stay HYDRATED with pure H2O!"
     },
     {
@@ -350,8 +629,15 @@
       "root": "oro-",
       "origin": "Greek (oros)",
       "meaning": "Mountain or relief uplift",
-      "examples": ["Orogeny", "Orographic"],
-      "distractors": ["geo-", "strat-", "lith-"],
+      "examples": [
+        "Orogeny",
+        "Orographic"
+      ],
+      "distractors": [
+        "geo-",
+        "strat-",
+        "lith-"
+      ],
       "mnemonic": "ORO = Towering MOUNTAIN peaks rising up!"
     },
     {
@@ -360,8 +646,16 @@
       "root": "cryo-",
       "origin": "Greek (kryos)",
       "meaning": "Icy cold or frost",
-      "examples": ["Cryosphere", "Cryogenics", "Cryolite"],
-      "distractors": ["thermo-", "hydro-", "pyro-"],
+      "examples": [
+        "Cryosphere",
+        "Cryogenics",
+        "Cryolite"
+      ],
+      "distractors": [
+        "thermo-",
+        "hydro-",
+        "pyro-"
+      ],
       "mnemonic": "CRYO = Ice-cold sub-zero freeze!"
     },
     {
@@ -370,8 +664,16 @@
       "root": "hal- / halo-",
       "origin": "Greek (hals)",
       "meaning": "Salt or saline mineral",
-      "examples": ["Halite", "Halophile", "Halogen"],
-      "distractors": ["petro-", "lith-", "bath-"],
+      "examples": [
+        "Halite",
+        "Halophile",
+        "Halogen"
+      ],
+      "distractors": [
+        "petro-",
+        "lith-",
+        "bath-"
+      ],
       "mnemonic": "HAL = Crystalline rock SALT!"
     },
     {
@@ -380,8 +682,16 @@
       "root": "-clast / clastic",
       "origin": "Greek (klastos)",
       "meaning": "Broken in pieces or fragmented",
-      "examples": ["Pyroclastic", "Clastic Rock", "Osteoclast"],
-      "distractors": ["-blast", "-lysis", "strat-"],
+      "examples": [
+        "Pyroclastic",
+        "Clastic Rock",
+        "Osteoclast"
+      ],
+      "distractors": [
+        "-blast",
+        "-lysis",
+        "strat-"
+      ],
       "mnemonic": "CLAST = Smashed and BROKEN rock fragments!"
     },
     {
@@ -390,8 +700,16 @@
       "root": "bath- / bathy-",
       "origin": "Greek (bathys)",
       "meaning": "Deep or abyssal depth",
-      "examples": ["Bathymetry", "Batholith", "Bathysphere"],
-      "distractors": ["orogen-", "peri-", "apo-"],
+      "examples": [
+        "Bathymetry",
+        "Batholith",
+        "Bathysphere"
+      ],
+      "distractors": [
+        "orogen-",
+        "peri-",
+        "apo-"
+      ],
       "mnemonic": "BATHY = Deep ocean trench depths!"
     },
     {
@@ -400,8 +718,16 @@
       "root": "thermo-",
       "origin": "Greek (therme)",
       "meaning": "Heat or thermal energy",
-      "examples": ["Thermodynamics", "Endothermic", "Thermometer"],
-      "distractors": ["cryo-", "pyro-", "dynam-"],
+      "examples": [
+        "Thermodynamics",
+        "Endothermic",
+        "Thermometer"
+      ],
+      "distractors": [
+        "cryo-",
+        "pyro-",
+        "dynam-"
+      ],
       "mnemonic": "THERMO = Thermal HEAT energy cranked to 11!"
     },
     {
@@ -410,8 +736,16 @@
       "root": "kinet- / cine-",
       "origin": "Greek (kinein)",
       "meaning": "Motion or active movement",
-      "examples": ["Kinetic", "Telekinesis", "Kinematics"],
-      "distractors": ["stasis-", "tachy-", "dynam-"],
+      "examples": [
+        "Kinetic",
+        "Telekinesis",
+        "Kinematics"
+      ],
+      "distractors": [
+        "stasis-",
+        "tachy-",
+        "dynam-"
+      ],
       "mnemonic": "KINET = Pure KINETIC motion in flight!"
     },
     {
@@ -420,8 +754,16 @@
       "root": "tachy-",
       "origin": "Greek (tachys)",
       "meaning": "Swift, rapid, or faster-than-light",
-      "examples": ["Tachyon", "Tachycardia", "Tachometer"],
-      "distractors": ["brady-", "chrono-", "kinet-"],
+      "examples": [
+        "Tachyon",
+        "Tachycardia",
+        "Tachometer"
+      ],
+      "distractors": [
+        "brady-",
+        "chrono-",
+        "kinet-"
+      ],
       "mnemonic": "TACHY = Hyper-SPEED tachyon boost!"
     },
     {
@@ -430,8 +772,15 @@
       "root": "brady-",
       "origin": "Greek (bradys)",
       "meaning": "Slow or decelerated",
-      "examples": ["Bradycardia", "Bradykinesia"],
-      "distractors": ["tachy-", "iso-", "chrono-"],
+      "examples": [
+        "Bradycardia",
+        "Bradykinesia"
+      ],
+      "distractors": [
+        "tachy-",
+        "iso-",
+        "chrono-"
+      ],
       "mnemonic": "BRADY = Slowing down the pace!"
     },
     {
@@ -440,8 +789,16 @@
       "root": "photo-",
       "origin": "Greek (phos / photos)",
       "meaning": "Light or photon radiation",
-      "examples": ["Photosynthesis", "Photon", "Photoelectric"],
-      "distractors": ["lumin-", "chrom-", "spectr-"],
+      "examples": [
+        "Photosynthesis",
+        "Photon",
+        "Photoelectric"
+      ],
+      "distractors": [
+        "lumin-",
+        "chrom-",
+        "spectr-"
+      ],
       "mnemonic": "PHOTO = Laser LIGHT beams!"
     },
     {
@@ -450,8 +807,16 @@
       "root": "chrom- / chromato-",
       "origin": "Greek (khroma)",
       "meaning": "Color or spectral pigment",
-      "examples": ["Chromatography", "Monochrome", "Chromosome"],
-      "distractors": ["photo-", "spectr-", "morph-"],
+      "examples": [
+        "Chromatography",
+        "Monochrome",
+        "Chromosome"
+      ],
+      "distractors": [
+        "photo-",
+        "spectr-",
+        "morph-"
+      ],
       "mnemonic": "CHROM = Full-spectrum neon COLOR!"
     },
     {
@@ -460,8 +825,16 @@
       "root": "iso-",
       "origin": "Greek (isos)",
       "meaning": "Equal, identical, or uniform",
-      "examples": ["Isotope", "Isothermal", "Isometric"],
-      "distractors": ["hetero-", "auto-", "homo-"],
+      "examples": [
+        "Isotope",
+        "Isothermal",
+        "Isometric"
+      ],
+      "distractors": [
+        "hetero-",
+        "auto-",
+        "homo-"
+      ],
       "mnemonic": "ISO = Perfectly EQUAL on all sides!"
     },
     {
@@ -470,8 +843,16 @@
       "root": "dynam-",
       "origin": "Greek (dynamis)",
       "meaning": "Power, force, or work capacity",
-      "examples": ["Thermodynamics", "Aerodynamics", "Dynamo"],
-      "distractors": ["kinet-", "grav-", "thermo-"],
+      "examples": [
+        "Thermodynamics",
+        "Aerodynamics",
+        "Dynamo"
+      ],
+      "distractors": [
+        "kinet-",
+        "grav-",
+        "thermo-"
+      ],
       "mnemonic": "DYNAM = Explosive DYNAMITE force!"
     },
     {
@@ -480,8 +861,15 @@
       "root": "stereo-",
       "origin": "Greek (stereos)",
       "meaning": "Solid or three-dimensional",
-      "examples": ["Stereochemistry", "Stereoscopic"],
-      "distractors": ["strat-", "morph-", "soma-"],
+      "examples": [
+        "Stereochemistry",
+        "Stereoscopic"
+      ],
+      "distractors": [
+        "strat-",
+        "morph-",
+        "soma-"
+      ],
       "mnemonic": "STEREO = 3D solid spatial structure!"
     },
     {
@@ -490,8 +878,16 @@
       "root": "radi-",
       "origin": "Latin (radius)",
       "meaning": "Ray, beam, or spoke emission",
-      "examples": ["Radiation", "Radioactive", "Radiant"],
-      "distractors": ["photo-", "spectr-", "lumin-"],
+      "examples": [
+        "Radiation",
+        "Radioactive",
+        "Radiant"
+      ],
+      "distractors": [
+        "photo-",
+        "spectr-",
+        "lumin-"
+      ],
       "mnemonic": "RADI = Emitting high-energy RAYS!"
     },
     {
@@ -500,8 +896,16 @@
       "root": "spectr-",
       "origin": "Latin (spectrum)",
       "meaning": "Image, band of wavelengths, or appearance",
-      "examples": ["Spectroscopy", "Mass Spectrometer", "Electromagnetic Spectrum"],
-      "distractors": ["chrom-", "photo-", "lumin-"],
+      "examples": [
+        "Spectroscopy",
+        "Mass Spectrometer",
+        "Electromagnetic Spectrum"
+      ],
+      "distractors": [
+        "chrom-",
+        "photo-",
+        "lumin-"
+      ],
       "mnemonic": "SPECTR = The full wavelength band!"
     },
     {
@@ -510,9 +914,881 @@
       "root": "quant-",
       "origin": "Latin (quantus)",
       "meaning": "Discrete amount or how much",
-      "examples": ["Quantum", "Quantize", "Quantification"],
-      "distractors": ["iso-", "baro-", "chrono-"],
+      "examples": [
+        "Quantum",
+        "Quantize",
+        "Quantification"
+      ],
+      "distractors": [
+        "iso-",
+        "baro-",
+        "chrono-"
+      ],
       "mnemonic": "QUANT = Discrete packets of quantum energy!"
+    },
+    {
+      "id": "gen",
+      "sector": 5,
+      "root": "gen-",
+      "origin": "Greek (genesis) / Latin (generare)",
+      "meaning": "Origin, birth, or production",
+      "examples": [
+        "Genetics",
+        "Genesis",
+        "Biogenesis"
+      ],
+      "distractors": [
+        "-lysis",
+        "-stasis",
+        "phag-"
+      ],
+      "mnemonic": "GEN produces life and origins, bro!"
+    },
+    {
+      "id": "mut",
+      "sector": 5,
+      "root": "mut-",
+      "origin": "Latin (mutare)",
+      "meaning": "Change or alter genetic code",
+      "examples": [
+        "Mutation",
+        "Mutagen",
+        "Permutation"
+      ],
+      "distractors": [
+        "-stasis",
+        "iso-",
+        "morph-"
+      ],
+      "mnemonic": "MUT changes the sequence, radical alter!"
+    },
+    {
+      "id": "chromos",
+      "sector": 5,
+      "root": "chromo-",
+      "origin": "Greek (chroma)",
+      "meaning": "Color or pigment body",
+      "examples": [
+        "Chromosome",
+        "Chromatin",
+        "Chromoplast"
+      ],
+      "distractors": [
+        "soma-",
+        "blast-",
+        "cyto-"
+      ],
+      "mnemonic": "CHROMO stains bright under the microscope, bro!"
+    },
+    {
+      "id": "helix",
+      "sector": 5,
+      "root": "helix-",
+      "origin": "Greek (helix)",
+      "meaning": "Spiral or twisted coil shape",
+      "examples": [
+        "Double Helix",
+        "Helicase",
+        "Helicoid"
+      ],
+      "distractors": [
+        "stereo-",
+        "morph-",
+        "strat-"
+      ],
+      "mnemonic": "HELIX is the spiral staircase of DNA, bro!"
+    },
+    {
+      "id": "poly",
+      "sector": 5,
+      "root": "poly-",
+      "origin": "Greek (polys)",
+      "meaning": "Many, several, or multiple",
+      "examples": [
+        "Polymerase",
+        "Polyploid",
+        "Polypeptide"
+      ],
+      "distractors": [
+        "mono-",
+        "iso-",
+        "aniso-"
+      ],
+      "mnemonic": "POLY means many units strung together, bro!"
+    },
+    {
+      "id": "karyo",
+      "sector": 5,
+      "root": "karyo-",
+      "origin": "Greek (karyon)",
+      "meaning": "Cell nucleus or nut kernel",
+      "examples": [
+        "Karyotype",
+        "Eukaryote",
+        "Prokaryote"
+      ],
+      "distractors": [
+        "soma-",
+        "cyto-",
+        "blast-"
+      ],
+      "mnemonic": "KARYO is the nuclear kernel inside the cell!"
+    },
+    {
+      "id": "nucleo",
+      "sector": 5,
+      "root": "nucleo-",
+      "origin": "Latin (nucleus)",
+      "meaning": "Central core or genetic kernel",
+      "examples": [
+        "Nucleotide",
+        "Nucleic Acid",
+        "Nucleolus"
+      ],
+      "distractors": [
+        "karyo-",
+        "soma-",
+        "endo-"
+      ],
+      "mnemonic": "NUCLEO guards the core command center, bro!"
+    },
+    {
+      "id": "trans",
+      "sector": 5,
+      "root": "trans-",
+      "origin": "Latin (trans)",
+      "meaning": "Across, beyond, or through",
+      "examples": [
+        "Transcription",
+        "Translation",
+        "Transgenic"
+      ],
+      "distractors": [
+        "cis-",
+        "endo-",
+        "exo-"
+      ],
+      "mnemonic": "TRANS crosses the barrier to code new proteins!"
+    },
+    {
+      "id": "comb",
+      "sector": 5,
+      "root": "comb-",
+      "origin": "Latin (combinare)",
+      "meaning": "Join together or unite elements",
+      "examples": [
+        "Recombination",
+        "Combination",
+        "Combinatorial"
+      ],
+      "distractors": [
+        "-lysis",
+        "-clast",
+        "apo-"
+      ],
+      "mnemonic": "COMB splices genetic fragments into one!"
+    },
+    {
+      "id": "lig",
+      "sector": 5,
+      "root": "lig-",
+      "origin": "Latin (ligare)",
+      "meaning": "Bind, tie, or knit together",
+      "examples": [
+        "Ligase",
+        "Ligament",
+        "Ligation"
+      ],
+      "distractors": [
+        "-lysis",
+        "tachy-",
+        "phag-"
+      ],
+      "mnemonic": "LIG is the molecular glue tying strands, bro!"
+    },
+    {
+      "id": "ploid",
+      "sector": 5,
+      "root": "-ploid",
+      "origin": "Greek (ploos)",
+      "meaning": "Fold or chromosome set count",
+      "examples": [
+        "Diploid",
+        "Haploid",
+        "Aneuploid"
+      ],
+      "distractors": [
+        "morph-",
+        "gen-",
+        "-troph"
+      ],
+      "mnemonic": "PLOID counts how many chromosome sets you pack!"
+    },
+    {
+      "id": "telo",
+      "sector": 5,
+      "root": "telo-",
+      "origin": "Greek (telos)",
+      "meaning": "End, completion, or terminal cap",
+      "examples": [
+        "Telomere",
+        "Telophase",
+        "Teleology"
+      ],
+      "distractors": [
+        "blast-",
+        "proto-",
+        "peri-"
+      ],
+      "mnemonic": "TELO protects the end caps of chromosomes, bro!"
+    },
+    {
+      "id": "lepto",
+      "sector": 6,
+      "root": "lepto-",
+      "origin": "Greek (leptos)",
+      "meaning": "Light, fine, or small subatomic particle",
+      "examples": [
+        "Lepton",
+        "Leptogenesis",
+        "Lepton Number"
+      ],
+      "distractors": [
+        "bary-",
+        "hadro-",
+        "gravit-"
+      ],
+      "mnemonic": "LEPTO particles are featherweight leptons like electrons!"
+    },
+    {
+      "id": "bary",
+      "sector": 6,
+      "root": "bary-",
+      "origin": "Greek (barys)",
+      "meaning": "Heavy or massive subatomic matter",
+      "examples": [
+        "Baryon",
+        "Baryogenesis",
+        "Barycenter"
+      ],
+      "distractors": [
+        "lepto-",
+        "tachy-",
+        "brady-"
+      ],
+      "mnemonic": "BARY is heavy matter packing serious mass!"
+    },
+    {
+      "id": "hadro",
+      "sector": 6,
+      "root": "hadro-",
+      "origin": "Greek (hadros)",
+      "meaning": "Thick, strong, or strongly interacting",
+      "examples": [
+        "Hadron",
+        "Large Hadron Collider",
+        "Hadronic"
+      ],
+      "distractors": [
+        "lepto-",
+        "quant-",
+        "photo-"
+      ],
+      "mnemonic": "HADRO packs the strong nuclear force, bro!"
+    },
+    {
+      "id": "tach",
+      "sector": 6,
+      "root": "tachy-",
+      "origin": "Greek (tachys)",
+      "meaning": "Swift, fast, or faster-than-light",
+      "examples": [
+        "Tachyon",
+        "Tachycardia",
+        "Tachymeter"
+      ],
+      "distractors": [
+        "brady-",
+        "-stasis",
+        "gravit-"
+      ],
+      "mnemonic": "TACHY streaks past the speed of light, bro!"
+    },
+    {
+      "id": "aniso",
+      "sector": 6,
+      "root": "aniso-",
+      "origin": "Greek (aniso-)",
+      "meaning": "Unequal, non-uniform, or asymmetrical",
+      "examples": [
+        "Anisotropy",
+        "Anisotropic",
+        "Anisocoria"
+      ],
+      "distractors": [
+        "iso-",
+        "homo-",
+        "synchro-"
+      ],
+      "mnemonic": "ANISO measures directional asymmetry in fields!"
+    },
+    {
+      "id": "neutr",
+      "sector": 6,
+      "root": "neutr-",
+      "origin": "Latin (neuter)",
+      "meaning": "Neither, uncharged, or neutral",
+      "examples": [
+        "Neutron",
+        "Neutrino",
+        "Neutralino"
+      ],
+      "distractors": [
+        "posit-",
+        "ion-",
+        "hadro-"
+      ],
+      "mnemonic": "NEUTR carries zero electrical charge, bro!"
+    },
+    {
+      "id": "plasm",
+      "sector": 6,
+      "root": "plasmo-",
+      "origin": "Greek (plasma)",
+      "meaning": "Molded form or ionized high-energy gas",
+      "examples": [
+        "Plasma",
+        "Plasmon",
+        "Quark-Gluon Plasma"
+      ],
+      "distractors": [
+        "lith-",
+        "cryo-",
+        "petro-"
+      ],
+      "mnemonic": "PLASMA is the superheated fourth state of matter!"
+    },
+    {
+      "id": "glu",
+      "sector": 6,
+      "root": "glu-",
+      "origin": "Latin (gluten)",
+      "meaning": "Glue or strong binding force carrier",
+      "examples": [
+        "Gluon",
+        "Gluonic",
+        "Glutinous"
+      ],
+      "distractors": [
+        "lepto-",
+        "tach-",
+        "gravit-"
+      ],
+      "mnemonic": "GLU holds quarks glued tight inside hadrons!"
+    },
+    {
+      "id": "gravit",
+      "sector": 6,
+      "root": "gravit-",
+      "origin": "Latin (gravitas)",
+      "meaning": "Heavy attraction or spacetime curvature",
+      "examples": [
+        "Graviton",
+        "Gravitational Lens",
+        "Microgravity"
+      ],
+      "distractors": [
+        "lepto-",
+        "photo-",
+        "dynam-"
+      ],
+      "mnemonic": "GRAVIT bends spacetime with immense attraction!"
+    },
+    {
+      "id": "singul",
+      "sector": 6,
+      "root": "singul-",
+      "origin": "Latin (singularis)",
+      "meaning": "Alone, unique, or infinite density point",
+      "examples": [
+        "Singularity",
+        "Singular",
+        "Singlet"
+      ],
+      "distractors": [
+        "poly-",
+        "hadro-",
+        "iso-"
+      ],
+      "mnemonic": "SINGULARITY condenses infinite density to one point!"
+    },
+    {
+      "id": "posit",
+      "sector": 6,
+      "root": "posit-",
+      "origin": "Latin (ponere / positus)",
+      "meaning": "Positive charge or placed state",
+      "examples": [
+        "Positron",
+        "Positronium",
+        "Position"
+      ],
+      "distractors": [
+        "neutr-",
+        "neg-",
+        "aniso-"
+      ],
+      "mnemonic": "POSIT is antimatter with positive charge, bro!"
+    },
+    {
+      "id": "synchro",
+      "sector": 6,
+      "root": "synchro-",
+      "origin": "Greek (syn + chronos)",
+      "meaning": "Together in time or phase resonance",
+      "examples": [
+        "Synchrotron",
+        "Synchronous",
+        "Synchronize"
+      ],
+      "distractors": [
+        "aniso-",
+        "chrono-",
+        "tachy-"
+      ],
+      "mnemonic": "SYNCHRO pulses particle beams in perfect phase lock!"
+    },
+    {
+      "id": "phon",
+      "sector": 7,
+      "root": "phon-",
+      "origin": "Greek (phone)",
+      "meaning": "Sound, voice, or acoustic frequency",
+      "examples": [
+        "Phonon",
+        "Phonetics",
+        "Phonograph"
+      ],
+      "distractors": [
+        "photo-",
+        "opto-",
+        "graph-"
+      ],
+      "mnemonic": "PHON resonates sound waves through the medium!"
+    },
+    {
+      "id": "son",
+      "sector": 7,
+      "root": "sono-",
+      "origin": "Latin (sonus)",
+      "meaning": "Acoustic vibration or audible resonance",
+      "examples": [
+        "Sonar",
+        "Sonoluminescence",
+        "Sonogram"
+      ],
+      "distractors": [
+        "lumin-",
+        "spectr-",
+        "baro-"
+      ],
+      "mnemonic": "SONO blasts shockwaves through acoustic channels!"
+    },
+    {
+      "id": "acoust",
+      "sector": 7,
+      "root": "acoust-",
+      "origin": "Greek (akouein)",
+      "meaning": "Hearing, listening, or sound wave physics",
+      "examples": [
+        "Acoustics",
+        "Acousto-optics",
+        "Bioacoustics"
+      ],
+      "distractors": [
+        "opto-",
+        "spectr-",
+        "thermo-"
+      ],
+      "mnemonic": "ACOUST governs sonic wave transmission, bro!"
+    },
+    {
+      "id": "opto",
+      "sector": 7,
+      "root": "opto-",
+      "origin": "Greek (optos)",
+      "meaning": "Sight, vision, or light beam propagation",
+      "examples": [
+        "Optics",
+        "Optoelectronic",
+        "Optometry"
+      ],
+      "distractors": [
+        "phon-",
+        "acoust-",
+        "son-"
+      ],
+      "mnemonic": "OPTO channels photons through precision laser lenses!"
+    },
+    {
+      "id": "prism",
+      "sector": 7,
+      "root": "prism-",
+      "origin": "Greek (prisma)",
+      "meaning": "Refracted beam or geometrical wedge",
+      "examples": [
+        "Prismatic",
+        "Prism",
+        "Biprism"
+      ],
+      "distractors": [
+        "chrom-",
+        "spectr-",
+        "holo-"
+      ],
+      "mnemonic": "PRISM splits pure white light into vivid spectra!"
+    },
+    {
+      "id": "vibro",
+      "sector": 7,
+      "root": "vibro-",
+      "origin": "Latin (vibrare)",
+      "meaning": "Shake, oscillate, or mechanical tremor",
+      "examples": [
+        "Vibration",
+        "Vibrometer",
+        "Vibro-acoustic"
+      ],
+      "distractors": [
+        "-stasis",
+        "brady-",
+        "iso-"
+      ],
+      "mnemonic": "VIBRO shakes resonators at peak frequencies!"
+    },
+    {
+      "id": "ech",
+      "sector": 7,
+      "root": "echo-",
+      "origin": "Greek (eche)",
+      "meaning": "Reflected sound wave repetition",
+      "examples": [
+        "Echolocation",
+        "Echocardiogram",
+        "Echoic"
+      ],
+      "distractors": [
+        "son-",
+        "phon-",
+        "acoust-"
+      ],
+      "mnemonic": "ECHO bounces sound right back to the sensor, bro!"
+    },
+    {
+      "id": "diffract",
+      "sector": 7,
+      "root": "diffract-",
+      "origin": "Latin (diffringere)",
+      "meaning": "Break apart or bend wave paths around edges",
+      "examples": [
+        "Diffraction",
+        "Diffractometer",
+        "Diffractive"
+      ],
+      "distractors": [
+        "refract-",
+        "reflect-",
+        "prism-"
+      ],
+      "mnemonic": "DIFFRACT bends waveforms around quantum obstacles!"
+    },
+    {
+      "id": "holo",
+      "sector": 7,
+      "root": "holo-",
+      "origin": "Greek (holos)",
+      "meaning": "Whole, entire, or complete reconstruction",
+      "examples": [
+        "Hologram",
+        "Holography",
+        "Holistic"
+      ],
+      "distractors": [
+        "photo-",
+        "prism-",
+        "spectr-"
+      ],
+      "mnemonic": "HOLO projects full 3D interference patterns!"
+    },
+    {
+      "id": "ultra",
+      "sector": 7,
+      "root": "ultra-",
+      "origin": "Latin (ultra)",
+      "meaning": "Beyond, above, or extreme frequency threshold",
+      "examples": [
+        "Ultrasound",
+        "Ultraviolet",
+        "Ultrasonic"
+      ],
+      "distractors": [
+        "infra-",
+        "sub-",
+        "hyper-"
+      ],
+      "mnemonic": "ULTRA spikes frequencies beyond human perception!"
+    },
+    {
+      "id": "interfer",
+      "sector": 7,
+      "root": "interfer-",
+      "origin": "Latin (inter + ferire)",
+      "meaning": "Collide, superimpose, or clash wave phases",
+      "examples": [
+        "Interference",
+        "Interferometer",
+        "Interferometry"
+      ],
+      "distractors": [
+        "diffract-",
+        "reson-",
+        "synchro-"
+      ],
+      "mnemonic": "INTERFER combines waves into constructive harmonics!"
+    },
+    {
+      "id": "cyber",
+      "sector": 8,
+      "root": "cyber-",
+      "origin": "Greek (kybernetes)",
+      "meaning": "Steer, govern, pilot, or feedback control",
+      "examples": [
+        "Cybernetics",
+        "Cyberspace",
+        "Cyberneticist"
+      ],
+      "distractors": [
+        "techno-",
+        "mecha-",
+        "auto-"
+      ],
+      "mnemonic": "CYBER pilots automated feedback loops, bro!"
+    },
+    {
+      "id": "mech",
+      "sector": 8,
+      "root": "mecha-",
+      "origin": "Greek (mechane)",
+      "meaning": "Machine, apparatus, or mechanical device",
+      "examples": [
+        "Mechanism",
+        "Mechatronics",
+        "Mechanical"
+      ],
+      "distractors": [
+        "cyber-",
+        "bion-",
+        "serv-"
+      ],
+      "mnemonic": "MECHA drives motorized titanium gear assemblies!"
+    },
+    {
+      "id": "auto_cyber",
+      "sector": 8,
+      "root": "auto-",
+      "origin": "Greek (autos)",
+      "meaning": "Self, independent, or automatic control",
+      "examples": [
+        "Autonomous",
+        "Automaton",
+        "Autopilot"
+      ],
+      "distractors": [
+        "tele-",
+        "syn-",
+        "hetero-"
+      ],
+      "mnemonic": "AUTO executes missions without human intervention!"
+    },
+    {
+      "id": "tele_cyber",
+      "sector": 8,
+      "root": "tele-",
+      "origin": "Greek (tele)",
+      "meaning": "Distant, remote, or far-off control",
+      "examples": [
+        "Telerobotics",
+        "Telemetry",
+        "Teleoperation"
+      ],
+      "distractors": [
+        "auto-",
+        "peri-",
+        "endo-"
+      ],
+      "mnemonic": "TELE beams telemetry control over lightyears!"
+    },
+    {
+      "id": "techn",
+      "sector": 8,
+      "root": "techno-",
+      "origin": "Greek (techne)",
+      "meaning": "Art, craft, skill, or engineered system",
+      "examples": [
+        "Technology",
+        "Technocrat",
+        "Nanotechnology"
+      ],
+      "distractors": [
+        "mech-",
+        "cyber-",
+        "arithm-"
+      ],
+      "mnemonic": "TECHNO turns scientific theory into radical machinery!"
+    },
+    {
+      "id": "bion",
+      "sector": 8,
+      "root": "bion-",
+      "origin": "Greek (bios + electronic)",
+      "meaning": "Biological life augmented with mechanics",
+      "examples": [
+        "Bionics",
+        "Bionic",
+        "Bionano"
+      ],
+      "distractors": [
+        "bio-",
+        "mech-",
+        "cyber-"
+      ],
+      "mnemonic": "BION fuses organic muscle with cyber servos, bro!"
+    },
+    {
+      "id": "neur",
+      "sector": 8,
+      "root": "neuro-",
+      "origin": "Greek (neuron)",
+      "meaning": "Nerve, synaptic path, or neural network",
+      "examples": [
+        "Neuromorphic",
+        "Neural Network",
+        "Neuron"
+      ],
+      "distractors": [
+        "soma-",
+        "karyo-",
+        "psych-"
+      ],
+      "mnemonic": "NEURO circuits compute like synthetic silicon brains!"
+    },
+    {
+      "id": "proto",
+      "sector": 8,
+      "root": "proto-",
+      "origin": "Greek (protos)",
+      "meaning": "First iteration, model, or prototype",
+      "examples": [
+        "Prototype",
+        "Protocol",
+        "Protomorphic"
+      ],
+      "distractors": [
+        "neo-",
+        "telo-",
+        "arch-"
+      ],
+      "mnemonic": "PROTO is model number 001 fresh off the assembly line!"
+    },
+    {
+      "id": "synth",
+      "sector": 8,
+      "root": "synth-",
+      "origin": "Greek (synthetos)",
+      "meaning": "Placed together, combined, or artificial",
+      "examples": [
+        "Synthesis",
+        "Synthetic",
+        "Synthesizer"
+      ],
+      "distractors": [
+        "-lysis",
+        "auto-",
+        "bion-"
+      ],
+      "mnemonic": "SYNTH fuses discrete components into synthetic alloys!"
+    },
+    {
+      "id": "arithm",
+      "sector": 8,
+      "root": "arithm-",
+      "origin": "Greek (arithmos)",
+      "meaning": "Number, numerical calculation, or algorithm",
+      "examples": [
+        "Algorithm",
+        "Arithmetic",
+        "Algorithmic"
+      ],
+      "distractors": [
+        "techn-",
+        "servo-",
+        "cyber-"
+      ],
+      "mnemonic": "ARITHM computes millions of clock-cycle operations!"
+    },
+    {
+      "id": "serv",
+      "sector": 8,
+      "root": "serv-",
+      "origin": "Latin (servus)",
+      "meaning": "Auxiliary servo actuator mechanism",
+      "examples": [
+        "Servomotor",
+        "Servomechanism",
+        "Servovalve"
+      ],
+      "distractors": [
+        "mech-",
+        "auto-",
+        "cyber-"
+      ],
+      "mnemonic": "SERVO micro-adjusts hydraulic steering thrusters!"
+    },
+    {
+      "id": "hapt",
+      "sector": 8,
+      "root": "hapt-",
+      "origin": "Greek (haptein)",
+      "meaning": "Touch, fasten, or tactile sensory feedback",
+      "examples": [
+        "Haptics",
+        "Haptic",
+        "Synhaptic"
+      ],
+      "distractors": [
+        "opto-",
+        "acoust-",
+        "phon-"
+      ],
+      "mnemonic": "HAPT gives high-fidelity tactile feedback through your stick!"
+    },
+    {
+      "id": "reson",
+      "sector": 7,
+      "root": "reson-",
+      "origin": "Latin (resonare)",
+      "meaning": "Resound, reverberate, or vibrate in harmony",
+      "examples": [
+        "Resonance",
+        "Resonator",
+        "Resonant"
+      ],
+      "distractors": [
+        "diffract-",
+        "vibro-",
+        "interfer-"
+      ],
+      "mnemonic": "RESON rings in frequency lock with sonic waves!"
     }
   ],
   "boss_exams": [
@@ -524,17 +1800,26 @@
         {
           "term": "CYTOLYSIS",
           "clue": "Dissolution or destruction of a living cell",
-          "sequence": ["cyto", "lysis"]
+          "sequence": [
+            "cyto",
+            "lysis"
+          ]
         },
         {
           "term": "ENDOCYTOSIS",
           "clue": "Taking matter INSIDE a CELL",
-          "sequence": ["endo", "cyto"]
+          "sequence": [
+            "endo",
+            "cyto"
+          ]
         },
         {
           "term": "AUTOPHAGY",
           "clue": "SELF-EATING of cellular components",
-          "sequence": ["auto", "phag"]
+          "sequence": [
+            "auto",
+            "phag"
+          ]
         }
       ]
     },
@@ -546,17 +1831,26 @@
         {
           "term": "PERIHELION",
           "clue": "Point in orbit nearest to the Sun",
-          "sequence": ["peri", "helio"]
+          "sequence": [
+            "peri",
+            "helio"
+          ]
         },
         {
           "term": "ASTROCHRONOLOGY",
           "clue": "Dating of celestial bodies and cosmic time",
-          "sequence": ["astro", "chrono"]
+          "sequence": [
+            "astro",
+            "chrono"
+          ]
         },
         {
           "term": "COSMOLUMINOSITY",
           "clue": "Radiant light emission across the universe",
-          "sequence": ["cosmo", "lumin"]
+          "sequence": [
+            "cosmo",
+            "lumin"
+          ]
         }
       ]
     },
@@ -568,17 +1862,26 @@
         {
           "term": "GEOTHERMAL",
           "clue": "Relating to the internal heat of the Earth",
-          "sequence": ["geo", "thermo"]
+          "sequence": [
+            "geo",
+            "thermo"
+          ]
         },
         {
           "term": "PYROCLASTIC",
           "clue": "Formed from volcanic fire and broken rock fragments",
-          "sequence": ["pyro", "clast"]
+          "sequence": [
+            "pyro",
+            "clast"
+          ]
         },
         {
           "term": "CRYOLITHOSPHERE",
           "clue": "Frozen icy stone layer of a planetary crust",
-          "sequence": ["cryo", "lith"]
+          "sequence": [
+            "cryo",
+            "lith"
+          ]
         }
       ]
     },
@@ -590,17 +1893,150 @@
         {
           "term": "THERMODYNAMICS",
           "clue": "Physics of heat energy and mechanical power",
-          "sequence": ["thermo", "dynam"]
+          "sequence": [
+            "thermo",
+            "dynam"
+          ]
         },
         {
           "term": "PHOTOKINESIS",
           "clue": "Motion or activity induced by light rays",
-          "sequence": ["photo", "kinet"]
+          "sequence": [
+            "photo",
+            "kinet"
+          ]
         },
         {
           "term": "ISOCHROMATIC",
           "clue": "Having equal or uniform spectral color",
-          "sequence": ["iso", "chrom"]
+          "sequence": [
+            "iso",
+            "chrom"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": 5,
+      "boss_name": "THE TELOMERASE HYDRA",
+      "subtitle": "Genomic Synthesis Final Exam",
+      "compounds": [
+        {
+          "term": "KARYOTYPE",
+          "clue": "Visual layout and appearance of cell chromosomes",
+          "sequence": [
+            "karyo",
+            "soma"
+          ]
+        },
+        {
+          "term": "POLYGENIC",
+          "clue": "Trait influenced by multiple distinct genes",
+          "sequence": [
+            "poly",
+            "gen"
+          ]
+        },
+        {
+          "term": "MUTAGENESIS",
+          "clue": "Creation or induction of genetic mutations",
+          "sequence": [
+            "mut",
+            "gen"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": 6,
+      "boss_name": "THE HADRONIC TITAN",
+      "subtitle": "Subatomic Physics Final Exam",
+      "compounds": [
+        {
+          "term": "SYNCHROTRON",
+          "clue": "Cyclical particle accelerator synchronizing magnetic fields",
+          "sequence": [
+            "synchro",
+            "tach"
+          ]
+        },
+        {
+          "term": "BARYONIC",
+          "clue": "Heavy composite subatomic matter like protons",
+          "sequence": [
+            "bary",
+            "hadro"
+          ]
+        },
+        {
+          "term": "POSITRONIUM",
+          "clue": "Exotic atom formed by electron and antimatter positron",
+          "sequence": [
+            "posit",
+            "neutr"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": 7,
+      "boss_name": "THE SONIC HARMONIZER",
+      "subtitle": "Acoustic-Optic Resonance Final Exam",
+      "compounds": [
+        {
+          "term": "RESONANCE",
+          "clue": "Reinforcement of sound or oscillation amplitude",
+          "sequence": [
+            "reson",
+            "son"
+          ]
+        },
+        {
+          "term": "DIFFRACTION",
+          "clue": "Bending of light or sound waves around obstacles",
+          "sequence": [
+            "diffract",
+            "opto"
+          ]
+        },
+        {
+          "term": "HOLOGRAPHY",
+          "clue": "Complete 3D visual wave recording and projection",
+          "sequence": [
+            "holo",
+            "opto"
+          ]
+        }
+      ]
+    },
+    {
+      "sector": 8,
+      "boss_name": "THE CYBERNETIC GESTALT",
+      "subtitle": "Bionic Automata Final Exam",
+      "compounds": [
+        {
+          "term": "BIONICS",
+          "clue": "Mechanical systems inspired by biological organisms",
+          "sequence": [
+            "bion",
+            "mech"
+          ]
+        },
+        {
+          "term": "NEUROMORPHIC",
+          "clue": "Computing circuits designed like biological neural synapses",
+          "sequence": [
+            "neur",
+            "morph"
+          ]
+        },
+        {
+          "term": "TELEROBOTICS",
+          "clue": "Remote-distance control of semi-autonomous machines",
+          "sequence": [
+            "tele_cyber",
+            "auto_cyber"
+          ]
         }
       ]
     }

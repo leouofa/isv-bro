@@ -158,4 +158,89 @@ for radius, rot in [(2.7, (0.5, 0.2, 0)), (3.3, (-0.4, 0.6, 0.3))]:
     bring.data.materials.append(mat_cyan)
 export_glb("boss_core.glb")
 
-print("\n>>> ALL 10 ISV BRO 3D ASSETS GENERATED SUCCESSFULLY! <<<")
+# 11. Sector 05 Anomaly: Genomic Double Helix Construct
+clear_scene()
+mat_violet = make_material("NeonViolet", (0.66, 0.33, 0.97, 1.0), roughness=0.25, emission=(0.66, 0.33, 0.97, 1.0), emission_strength=2.4)
+mat_cyan = make_material("ElectricCyan", (0.0, 0.94, 1.0, 1.0), roughness=0.1, metallic=0.2, emission=(0.0, 0.94, 1.0, 1.0), emission_strength=3.0)
+# Helix strand nodes and cross rungs
+for step in range(12):
+    t = step / 12.0 * math.pi * 2.0
+    z = (step - 6.0) * 0.22
+    x1 = math.cos(t) * 0.75
+    y1 = math.sin(t) * 0.75
+    x2 = math.cos(t + math.pi) * 0.75
+    y2 = math.sin(t + math.pi) * 0.75
+    # Strand spheres
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=0.18, location=(x1, y1, z))
+    s1 = bpy.context.active_object
+    s1.data.materials.append(mat_violet)
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=0.18, location=(x2, y2, z))
+    s2 = bpy.context.active_object
+    s2.data.materials.append(mat_violet)
+    # Cross rung cylinder
+    bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.06, depth=1.5, location=(0, 0, z))
+    rung = bpy.context.active_object
+    rung.rotation_euler = (math.pi / 2, 0, t)
+    rung.data.materials.append(mat_cyan)
+export_glb("anomaly_gen.glb")
+
+# 12. Sector 06 Anomaly: Subatomic Quark Nucleus & Orbital Shell
+clear_scene()
+mat_coral = make_material("AtomicCoral", (1.0, 0.16, 0.52, 1.0), roughness=0.2, emission=(1.0, 0.16, 0.52, 1.0), emission_strength=2.8)
+mat_gold = make_material("AstroGold", (1.0, 0.9, 0.0, 1.0), roughness=0.2, emission=(1.0, 0.85, 0.0, 1.0), emission_strength=2.5)
+# Multi-quark central cluster
+for q_pos in [(0.25, 0.2, 0), (-0.25, 0.2, 0.2), (0, -0.3, -0.2)]:
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=0.55, location=q_pos)
+    quark = bpy.context.active_object
+    quark.data.materials.append(mat_coral)
+# Three high-speed hadron orbital rings
+for rot in [(0.7, 0.3, 0), (-0.5, 0.8, 0.4), (0.2, -0.7, 0.9)]:
+    bpy.ops.mesh.primitive_torus_add(major_radius=1.5, minor_radius=0.08, rotation=rot)
+    ring = bpy.context.active_object
+    ring.data.materials.append(mat_gold)
+export_glb("anomaly_particle.glb")
+
+# 13. Sector 07 Anomaly: Acoustic-Optical Wave Reflector & Prism
+clear_scene()
+mat_aqua = make_material("SonicAqua", (0.02, 1.0, 0.63, 1.0), roughness=0.2, emission=(0.02, 1.0, 0.63, 1.0), emission_strength=2.6)
+mat_cyan = make_material("ElectricCyan", (0.0, 0.94, 1.0, 1.0), roughness=0.1, metallic=0.2, emission=(0.0, 0.94, 1.0, 1.0), emission_strength=3.0)
+# Parabolic acoustic dish
+bpy.ops.mesh.primitive_cone_add(vertices=12, radius1=1.35, radius2=0.2, depth=0.8)
+dish = bpy.context.active_object
+dish.rotation_euler = (math.pi / 2, 0, 0)
+dish.data.materials.append(mat_aqua)
+# Optical prism crystal at center
+bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.45, depth=1.6, location=(0, 0.4, 0))
+prism = bpy.context.active_object
+prism.data.materials.append(mat_cyan)
+# Wave concentric rings radiating outward
+bpy.ops.mesh.primitive_torus_add(major_radius=1.8, minor_radius=0.07, location=(0, -0.4, 0))
+wring = bpy.context.active_object
+wring.rotation_euler = (math.pi / 2, 0, 0)
+wring.data.materials.append(mat_aqua)
+export_glb("anomaly_wave.glb")
+
+# 14. Sector 08 Anomaly: Cybernetic Automaton Chassis
+clear_scene()
+mat_cyber = make_material("MatrixBlaze", (1.0, 0.42, 0.0, 1.0), roughness=0.25, metallic=0.7, emission=(1.0, 0.38, 0.0, 1.0), emission_strength=2.5)
+mat_hull = make_material("ObsidianHull", (0.06, 0.06, 0.1, 1.0), roughness=0.2, metallic=0.9)
+mat_cyan = make_material("ElectricCyan", (0.0, 0.94, 1.0, 1.0), roughness=0.1, metallic=0.2, emission=(0.0, 0.94, 1.0, 1.0), emission_strength=3.0)
+# Angular faceted polyhedral skull/chassis
+bpy.ops.mesh.primitive_cube_add(size=1.2)
+chassis = bpy.context.active_object
+chassis.scale = (0.9, 1.1, 0.8)
+chassis.data.materials.append(mat_hull)
+# Cybernetic optical sensor bar
+bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.22, depth=1.4, location=(0, 0.6, 0.1))
+visor = bpy.context.active_object
+visor.rotation_euler = (0, math.pi / 2, 0)
+visor.data.materials.append(mat_cyber)
+# Auxiliary cooling fins
+for fin_x in (-0.75, 0.75):
+    bpy.ops.mesh.primitive_cube_add(size=0.6, location=(fin_x, -0.2, 0))
+    fin = bpy.context.active_object
+    fin.scale = (0.2, 0.9, 0.9)
+    fin.data.materials.append(mat_cyan)
+export_glb("anomaly_cyber.glb")
+
+print("\n>>> ALL 14 ISV BRO 3D ASSETS GENERATED SUCCESSFULLY! <<<")

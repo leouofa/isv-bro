@@ -10,6 +10,11 @@ extends Control
 @onready var settings_btn: Button = $VBox/MainMenuView/MenuVBox/SettingsBtn
 @onready var quit_btn: Button = $VBox/MainMenuView/MenuVBox/QuitBtn
 @onready var back_btn: Button = $VBox/SectorSelectView/TopBar/BackBtn
+@onready var prev_page_btn: Button = $VBox/SectorSelectView/CarouselBar/PrevPageBtn
+@onready var next_page_btn: Button = $VBox/SectorSelectView/CarouselBar/NextPageBtn
+@onready var page_indicator: Label = $VBox/SectorSelectView/CarouselBar/PageIndicator
+
+var current_page: int = 0
 
 @onready var settings_modal: Control = $SettingsModal
 @onready var master_slider: HSlider = $SettingsModal/Panel/VBox/MasterSlider
@@ -22,7 +27,11 @@ const SECTORS_DATA := [
 	{"id": 1, "name": "SECTOR 01\nBIO-GENESIS", "desc": "Cytology & Cellular Dynamics", "color": "#39FF14", "unlocked": true},
 	{"id": 2, "name": "SECTOR 02\nASTRO-DYNAMICS", "desc": "Celestial Bodies & Orbital Mechanics", "color": "#00F0FF", "unlocked": true},
 	{"id": 3, "name": "SECTOR 03\nLITHOSPHERIC MATRIX", "desc": "Geology, Rocks & Crust Dynamics", "color": "#FFE600", "unlocked": true},
-	{"id": 4, "name": "SECTOR 04\nQUANTUM ENERGETICS", "desc": "Thermodynamics & Light Radiation", "color": "#FF007F", "unlocked": true}
+	{"id": 4, "name": "SECTOR 04\nQUANTUM ENERGETICS", "desc": "Thermodynamics & Light Radiation", "color": "#FF007F", "unlocked": true},
+	{"id": 5, "name": "SECTOR 05\nGENOMIC CODE", "desc": "Genetics, DNA & Mutation Splicing", "color": "#A855F7", "unlocked": true},
+	{"id": 6, "name": "SECTOR 06\nPARTICLE DYNAMICS", "desc": "Subatomic Matter, Quarks & Hadrons", "color": "#FF2A85", "unlocked": true},
+	{"id": 7, "name": "SECTOR 07\nSONIC RESONANCE", "desc": "Acoustics, Wave Optics & Holography", "color": "#05FFA1", "unlocked": true},
+	{"id": 8, "name": "SECTOR 08\nBIONIC AUTOMATA", "desc": "Cybernetics, Neural Links & Robotics", "color": "#FF6B00", "unlocked": true}
 ]
 
 func _ready() -> void:
@@ -41,6 +50,10 @@ func _ready() -> void:
 		quit_btn.pressed.connect(_on_quit_pressed)
 	if back_btn and not back_btn.pressed.is_connected(_on_back_pressed):
 		back_btn.pressed.connect(_on_back_pressed)
+	if prev_page_btn and not prev_page_btn.pressed.is_connected(_on_prev_page_pressed):
+		prev_page_btn.pressed.connect(_on_prev_page_pressed)
+	if next_page_btn and not next_page_btn.pressed.is_connected(_on_next_page_pressed):
+		next_page_btn.pressed.connect(_on_next_page_pressed)
 
 	setup_settings_modal()
 	show_main_menu()
@@ -74,20 +87,50 @@ func _on_new_game_pressed() -> void:
 func _on_back_pressed() -> void:
 	show_main_menu()
 
+func set_page(page: int) -> void:
+	current_page = clampi(page, 0, 1)
+	setup_sector_cards()
+	if is_inside_tree():
+		var card1: Control = sector_cards_container.get_node_or_null("Card1") if sector_cards_container else null
+		if card1 and card1.focus_mode != Control.FOCUS_NONE:
+			card1.grab_focus()
+
+func _on_prev_page_pressed() -> void:
+	if current_page > 0:
+		set_page(current_page - 1)
+	else:
+		set_page(1)
+
+func _on_next_page_pressed() -> void:
+	if current_page < 1:
+		set_page(current_page + 1)
+	else:
+		set_page(0)
+
 func setup_sector_cards() -> void:
 	if sector_cards_container == null:
 		return
+
+	if page_indicator:
+		if current_page == 0:
+			page_indicator.text = "PAGE 1 / 2 : SECTORS 01–04"
+		else:
+			page_indicator.text = "PAGE 2 / 2 : SECTORS 05–08"
 
 	var gm = get_node_or_null("/root/GameManager") if is_inside_tree() else null
 	var sec_scores: Dictionary = gm.save_data.get("sector_scores", {}) if gm else {}
 	var sec_grades: Dictionary = gm.save_data.get("sector_grades", {}) if gm else {}
 
 	var card_nodes := sector_cards_container.get_children()
-	for i in range(SECTORS_DATA.size()):
-		var data: Dictionary = SECTORS_DATA[i]
-		var card: PanelContainer = card_nodes[i] if i < card_nodes.size() else null
-		if card == null:
+	var offset: int = current_page * 4
+	for i in range(card_nodes.size()):
+		var card: PanelContainer = card_nodes[i]
+		var data_idx := offset + i
+		if data_idx >= SECTORS_DATA.size():
+			card.visible = false
 			continue
+		card.visible = true
+		var data: Dictionary = SECTORS_DATA[data_idx]
 
 		var sec_key := str(data["id"])
 		var best_score: int = int(sec_scores.get(sec_key, 0))

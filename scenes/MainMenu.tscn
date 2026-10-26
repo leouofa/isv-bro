@@ -189,6 +189,33 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
+[node name="CarouselBar" type="HBoxContainer" parent="VBox/SectorSelectView"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PrevPageBtn" type="Button" parent="VBox/SectorSelectView/CarouselBar"]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 14
+text = "◀ PREV SECTORS"
+
+[node name="PageIndicator" type="Label" parent="VBox/SectorSelectView/CarouselBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "PAGE 1 / 2 : SECTORS 01–04"
+horizontal_alignment = 1
+
+[node name="NextPageBtn" type="Button" parent="VBox/SectorSelectView/CarouselBar"]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 14
+text = "NEXT SECTORS ▶"
+
 [node name="SectorCards" type="HBoxContainer" parent="VBox/SectorSelectView"]
 layout_mode = 2
 size_flags_vertical = 3
