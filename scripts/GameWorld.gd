@@ -23,6 +23,7 @@ var mastered_root_ids: Array[String] = []
 var total_sector_roots: int = 12
 
 var spawn_timer: float = 0.0
+const ANOMALY_SPAWN_INTERVAL: float = 6.5
 var hazard_timer: float = 0.0
 const FALLBACK_HAZARD_INTERVAL: float = 5.5
 
@@ -162,7 +163,7 @@ func _physics_process(delta: float) -> void:
 	# Wave Spawning (indefinite until all sector vocabulary is cleared)
 	if not is_boss_active:
 		spawn_timer += delta
-		if spawn_timer >= 3.8 and not unmastered_roots.is_empty() and active_anomalies.size() < 2:
+		if spawn_timer >= ANOMALY_SPAWN_INTERVAL and not unmastered_roots.is_empty() and active_anomalies.size() < 2:
 			spawn_timer = 0.0
 			spawn_anomaly()
 

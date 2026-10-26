@@ -3,7 +3,7 @@ extends Area3D
 
 signal destroyed(anomaly_node: Node3D)
 
-@export var move_speed: float = 14.0
+@export var move_speed: float = 7.4
 @export var oscillation_speed: float = 2.0
 @export var oscillation_amplitude: float = 0.5
 

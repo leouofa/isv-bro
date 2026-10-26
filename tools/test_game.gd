@@ -375,6 +375,12 @@ func _init() -> void:
 	assert_true(not world_scn.mastered_root_ids.has(second_root_id), "Incorrect root is NOT mastered")
 	assert_true(world_scn.unmastered_roots.size() == 11, "Incorrect root remains in unmastered queue for replay")
 
+	# Pacing & Extended Word Visibility Verification
+	var test_anom: Node = (load("res://scenes/Anomaly.tscn") as PackedScene).instantiate()
+	assert_true(is_equal_approx(test_anom.move_speed, 7.4), "Anomaly move_speed reduced to 7.4 m/s for extended word visibility")
+	test_anom.free()
+	assert_true(is_equal_approx(world_scn.ANOMALY_SPAWN_INTERVAL, 6.5), "GameWorld ANOMALY_SPAWN_INTERVAL set to 6.5s")
+
 	world_scn.free()
 
 	# SUITE 15: Boss Dogfight & Space Laser Combat
