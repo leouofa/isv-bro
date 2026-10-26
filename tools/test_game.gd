@@ -86,6 +86,9 @@ func _init() -> void:
 	for s in range(1, 9):
 		assert_true(lex_node.roots_by_sector.get(s, []).size() >= 12, "Sector %d has >= 12 roots (found %d)" % [s, lex_node.roots_by_sector.get(s, []).size()])
 		assert_true(lex_node.boss_exams.has(s), "Boss Exam defined for Sector %d" % s)
+		assert_true(lex_node.boss_exams[s].has("boss_name"), "Boss Exam has valid boss_name for Sector %d" % s)
+		assert_true(not lex_node.boss_exams[s].has("compounds"), "Cleaned-up Boss Exam does not carry legacy compounds data for Sector %d" % s)
+		assert_true(lex_node.get_sector(s).has("boss_track"), "Sector %d defines valid boss_track in lexicon config" % s)
 
 	var prompt: Dictionary = lex_node.build_multiple_choice_prompt("lysis", 4)
 	assert_true(prompt.get("options", []).size() == 4, "4-choice prompt generates 4 distinct root options")
@@ -428,10 +431,15 @@ func _init() -> void:
 	boss_scn.setup_boss(1)
 	assert_true(boss_scn.boss_hp == 600.0, "Boss HP initialized to 600.0 for Sector 1")
 	assert_true(boss_scn.is_active and not boss_scn.is_defeated, "Boss enters active combat mode")
+	var hint_lbl: Label3D = boss_scn.get_node_or_null("BossLabels/HintLabel")
+	assert_true(hint_lbl != null and hint_lbl.text.contains("FIRE LASER"), "HintLabel present with space laser instructions")
+	var integrity_lbl: Label3D = boss_scn.get_node_or_null("BossLabels/IntegrityLabel")
+	assert_true(integrity_lbl != null and integrity_lbl.text == "CORE INTEGRITY: 100%", "IntegrityLabel initialized to 100%")
 
 	# Test laser damage
 	boss_scn.take_laser_damage(100.0)
 	assert_true(boss_scn.boss_hp == 500.0, "Laser deals direct damage to Boss HP (600.0 -> 500.0)")
+	assert_true(integrity_lbl.text == "CORE INTEGRITY: 83%", "IntegrityLabel dynamically updates percentage (83%)")
 
 	# Test boss attacks
 	boss_scn.launch_boss_attack()

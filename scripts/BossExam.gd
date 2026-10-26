@@ -2,17 +2,10 @@
 extends Area3D
 
 signal boss_defeated()
-signal phase_advanced(current_phase: int, total_phases: int, term: String, root_needed: String)
 signal boss_hp_changed(current_hp: float, max_hp: float)
 
 var sector_id: int = 1
 var boss_data: Dictionary = {}
-var compounds: Array = []
-var compound_idx: int = 0
-var sequence_idx: int = 0
-
-var current_target_root_id: String = ""
-var prompt_data: Dictionary = {}
 var is_active: bool = false
 var is_defeated: bool = false
 var attack_timer: float = 0.0
@@ -22,8 +15,8 @@ var boss_max_hp: float = 600.0
 var boss_hp: float = 600.0
 
 @onready var label_name: Label3D = $BossLabels/NameLabel
-@onready var label_clue: Label3D = $BossLabels/ClueLabel
-@onready var label_synthesis: Label3D = $BossLabels/SynthesisLabel
+@onready var label_hint: Label3D = $BossLabels/HintLabel
+@onready var label_integrity: Label3D = $BossLabels/IntegrityLabel
 @onready var core_mesh: Node3D = $boss_core
 
 func _ready() -> void:
@@ -33,39 +26,40 @@ func setup_boss(sector: int) -> void:
 	sector_id = sector
 	is_active = true
 	is_defeated = false
-	compound_idx = 0
-	sequence_idx = 0
 	boss_max_hp = 500.0 + (sector * 100.0)
 	boss_hp = boss_max_hp
 	attack_timer = 0.0
 
+	var boss_track := ""
 	if is_inside_tree() and has_node("/root/LexiconManager"):
-		boss_data = get_node("/root/LexiconManager").get_boss_exam(sector_id)
-		compounds = boss_data.get("compounds", [])
+		var lex = get_node("/root/LexiconManager")
+		boss_data = lex.get_boss_exam(sector_id)
+		var sector_data: Dictionary = lex.get_sector(sector_id)
+		boss_track = sector_data.get("boss_track", "")
 
 	if label_name:
 		label_name.text = boss_data.get("boss_name", "ANOMALY OVERLORD")
 
-	if label_clue:
-		label_clue.text = "[ SPACE: FIRE LASER | WASD: DODGE ATTACKS ]"
+	if label_hint:
+		label_hint.text = "[ SPACE: FIRE LASER | WASD: DODGE ATTACKS ]"
 
 	_update_hp_display()
 
 	if is_inside_tree() and has_node("/root/MusicManager"):
-		get_node("/root/MusicManager").play_boss_music(0)
+		get_node("/root/MusicManager").play_boss_music(0, boss_track)
 
 	boss_hp_changed.emit(boss_hp, boss_max_hp)
 
 func _update_hp_display() -> void:
-	if label_synthesis:
+	if label_integrity:
 		var pct := int((boss_hp / boss_max_hp) * 100.0)
-		label_synthesis.text = "CORE INTEGRITY: %d%%" % pct
+		label_integrity.text = "CORE INTEGRITY: %d%%" % pct
 		if pct > 50:
-			label_synthesis.modulate = Color("#39FF14")
+			label_integrity.modulate = Color("#39FF14")
 		elif pct > 25:
-			label_synthesis.modulate = Color("#FFE600")
+			label_integrity.modulate = Color("#FFE600")
 		else:
-			label_synthesis.modulate = Color("#FF007F")
+			label_integrity.modulate = Color("#FF007F")
 
 func take_laser_damage(amount: float) -> void:
 	if not is_active or is_defeated:
@@ -83,10 +77,6 @@ func take_laser_damage(amount: float) -> void:
 
 	if boss_hp <= 0.0:
 		defeat_boss()
-
-func register_hit() -> void:
-	# Fallback/compatibility method for test suite or external calls
-	take_laser_damage(boss_max_hp / 4.0)
 
 func defeat_boss() -> void:
 	if is_defeated:

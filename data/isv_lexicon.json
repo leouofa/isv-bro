@@ -1794,251 +1794,35 @@
   "boss_exams": [
     {
       "sector": 1,
-      "boss_name": "THE MITOCHONDRION OVERLORD",
-      "subtitle": "Cellular Synthesis Final Exam",
-      "compounds": [
-        {
-          "term": "CYTOLYSIS",
-          "clue": "Dissolution or destruction of a living cell",
-          "sequence": [
-            "cyto",
-            "lysis"
-          ]
-        },
-        {
-          "term": "ENDOCYTOSIS",
-          "clue": "Taking matter INSIDE a CELL",
-          "sequence": [
-            "endo",
-            "cyto"
-          ]
-        },
-        {
-          "term": "AUTOPHAGY",
-          "clue": "SELF-EATING of cellular components",
-          "sequence": [
-            "auto",
-            "phag"
-          ]
-        }
-      ]
+      "boss_name": "THE MITOCHONDRION OVERLORD"
     },
     {
       "sector": 2,
-      "boss_name": "THE SINGULARITY LEVIATHAN",
-      "subtitle": "Orbital Celestial Final Exam",
-      "compounds": [
-        {
-          "term": "PERIHELION",
-          "clue": "Point in orbit nearest to the Sun",
-          "sequence": [
-            "peri",
-            "helio"
-          ]
-        },
-        {
-          "term": "ASTROCHRONOLOGY",
-          "clue": "Dating of celestial bodies and cosmic time",
-          "sequence": [
-            "astro",
-            "chrono"
-          ]
-        },
-        {
-          "term": "COSMOLUMINOSITY",
-          "clue": "Radiant light emission across the universe",
-          "sequence": [
-            "cosmo",
-            "lumin"
-          ]
-        }
-      ]
+      "boss_name": "THE SINGULARITY LEVIATHAN"
     },
     {
       "sector": 3,
-      "boss_name": "THE LITHIC COLOSSUS",
-      "subtitle": "Lithospheric Matrix Final Exam",
-      "compounds": [
-        {
-          "term": "GEOTHERMAL",
-          "clue": "Relating to the internal heat of the Earth",
-          "sequence": [
-            "geo",
-            "thermo"
-          ]
-        },
-        {
-          "term": "PYROCLASTIC",
-          "clue": "Formed from volcanic fire and broken rock fragments",
-          "sequence": [
-            "pyro",
-            "clast"
-          ]
-        },
-        {
-          "term": "CRYOLITHOSPHERE",
-          "clue": "Frozen icy stone layer of a planetary crust",
-          "sequence": [
-            "cryo",
-            "lith"
-          ]
-        }
-      ]
+      "boss_name": "THE LITHIC COLOSSUS"
     },
     {
       "sector": 4,
-      "boss_name": "THE ENTROPIC AUTOMATON",
-      "subtitle": "Quantum Energetics Final Exam",
-      "compounds": [
-        {
-          "term": "THERMODYNAMICS",
-          "clue": "Physics of heat energy and mechanical power",
-          "sequence": [
-            "thermo",
-            "dynam"
-          ]
-        },
-        {
-          "term": "PHOTOKINESIS",
-          "clue": "Motion or activity induced by light rays",
-          "sequence": [
-            "photo",
-            "kinet"
-          ]
-        },
-        {
-          "term": "ISOCHROMATIC",
-          "clue": "Having equal or uniform spectral color",
-          "sequence": [
-            "iso",
-            "chrom"
-          ]
-        }
-      ]
+      "boss_name": "THE ENTROPIC AUTOMATON"
     },
     {
       "sector": 5,
-      "boss_name": "THE TELOMERASE HYDRA",
-      "subtitle": "Genomic Synthesis Final Exam",
-      "compounds": [
-        {
-          "term": "KARYOTYPE",
-          "clue": "Visual layout and appearance of cell chromosomes",
-          "sequence": [
-            "karyo",
-            "soma"
-          ]
-        },
-        {
-          "term": "POLYGENIC",
-          "clue": "Trait influenced by multiple distinct genes",
-          "sequence": [
-            "poly",
-            "gen"
-          ]
-        },
-        {
-          "term": "MUTAGENESIS",
-          "clue": "Creation or induction of genetic mutations",
-          "sequence": [
-            "mut",
-            "gen"
-          ]
-        }
-      ]
+      "boss_name": "THE TELOMERASE HYDRA"
     },
     {
       "sector": 6,
-      "boss_name": "THE HADRONIC TITAN",
-      "subtitle": "Subatomic Physics Final Exam",
-      "compounds": [
-        {
-          "term": "SYNCHROTRON",
-          "clue": "Cyclical particle accelerator synchronizing magnetic fields",
-          "sequence": [
-            "synchro",
-            "tach"
-          ]
-        },
-        {
-          "term": "BARYONIC",
-          "clue": "Heavy composite subatomic matter like protons",
-          "sequence": [
-            "bary",
-            "hadro"
-          ]
-        },
-        {
-          "term": "POSITRONIUM",
-          "clue": "Exotic atom formed by electron and antimatter positron",
-          "sequence": [
-            "posit",
-            "neutr"
-          ]
-        }
-      ]
+      "boss_name": "THE HADRONIC TITAN"
     },
     {
       "sector": 7,
-      "boss_name": "THE SONIC HARMONIZER",
-      "subtitle": "Acoustic-Optic Resonance Final Exam",
-      "compounds": [
-        {
-          "term": "RESONANCE",
-          "clue": "Reinforcement of sound or oscillation amplitude",
-          "sequence": [
-            "reson",
-            "son"
-          ]
-        },
-        {
-          "term": "DIFFRACTION",
-          "clue": "Bending of light or sound waves around obstacles",
-          "sequence": [
-            "diffract",
-            "opto"
-          ]
-        },
-        {
-          "term": "HOLOGRAPHY",
-          "clue": "Complete 3D visual wave recording and projection",
-          "sequence": [
-            "holo",
-            "opto"
-          ]
-        }
-      ]
+      "boss_name": "THE SONIC HARMONIZER"
     },
     {
       "sector": 8,
-      "boss_name": "THE CYBERNETIC GESTALT",
-      "subtitle": "Bionic Automata Final Exam",
-      "compounds": [
-        {
-          "term": "BIONICS",
-          "clue": "Mechanical systems inspired by biological organisms",
-          "sequence": [
-            "bion",
-            "mech"
-          ]
-        },
-        {
-          "term": "NEUROMORPHIC",
-          "clue": "Computing circuits designed like biological neural synapses",
-          "sequence": [
-            "neur",
-            "morph"
-          ]
-        },
-        {
-          "term": "TELEROBOTICS",
-          "clue": "Remote-distance control of semi-autonomous machines",
-          "sequence": [
-            "tele_cyber",
-            "auto_cyber"
-          ]
-        }
-      ]
+      "boss_name": "THE CYBERNETIC GESTALT"
     }
   ]
 }

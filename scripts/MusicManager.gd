@@ -173,8 +173,12 @@ func play_sector_music(sector: int, track_index: int = 0) -> void:
 	var idx := track_index % track_list.size()
 	play_track(track_list[idx])
 
-func play_boss_music(boss_variant: int = 0) -> void:
-	play_sector_music(99, boss_variant)
+func play_boss_music(boss_variant: int = 0, track_path: String = "") -> void:
+	if not track_path.is_empty():
+		current_sector_played = 99
+		play_track(track_path)
+	else:
+		play_sector_music(99, boss_variant)
 
 func _ensure_player() -> void:
 	if audio_player == null:
