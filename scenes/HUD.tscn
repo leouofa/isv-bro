@@ -7,26 +7,26 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_crt"]
 shader = ExtResource("3_crt")
 shader_parameter/scanline_count = 360.0
-shader_parameter/scanline_intensity = 0.25
-shader_parameter/curvature = 0.02
-shader_parameter/vignette_intensity = 0.35
-shader_parameter/chromatic_aberration = 0.002
+shader_parameter/scanline_intensity = 0.08
+shader_parameter/curvature = 0.01
+shader_parameter/vignette_intensity = 0.25
+shader_parameter/chromatic_aberration = 0.0005
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
-bg_color = Color(0.06, 0.06, 0.12, 0.88)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color(0.03, 0.03, 0.08, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_color = Color(0, 0.94, 1, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-content_margin_left = 16.0
-content_margin_top = 10.0
-content_margin_right = 16.0
-content_margin_bottom = 10.0
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -54,10 +54,10 @@ editor_only = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -340.0
-offset_top = 18.0
-offset_right = 340.0
-offset_bottom = 110.0
+offset_left = -400.0
+offset_top = 14.0
+offset_right = 400.0
+offset_bottom = 124.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
 
@@ -67,8 +67,10 @@ theme_override_constants/separation = 8
 
 [node name="ClueLabel" type="Label" parent="TacticalBanner/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.95, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
 text = "TARGET CLUE: \"CELL DISSOLUTION OR DESTRUCTION\""
 horizontal_alignment = 1
 
@@ -78,27 +80,39 @@ theme_override_constants/separation = 12
 alignment = 1
 
 [node name="Btn1" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
-custom_minimum_size = Vector2(140, 36)
+custom_minimum_size = Vector2(170, 42)
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
 text = "[1 / Q] -lysis"
 
 [node name="Btn2" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
-custom_minimum_size = Vector2(140, 36)
+custom_minimum_size = Vector2(170, 42)
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
 text = "[2 / E] -stasis"
 
 [node name="Btn3" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
-custom_minimum_size = Vector2(140, 36)
+custom_minimum_size = Vector2(170, 42)
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
 text = "[3 / R] cyto-"
 
 [node name="Btn4" type="Button" parent="TacticalBanner/VBox/ButtonsContainer"]
-custom_minimum_size = Vector2(140, 36)
+custom_minimum_size = Vector2(170, 42)
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
 text = "[4 / F] bio-"
 
 [node name="TopLeft" type="VBoxContainer" parent="."]

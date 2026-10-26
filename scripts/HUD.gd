@@ -83,7 +83,7 @@ func display_prompt(prompt: Dictionary) -> void:
 
 	var options: Array = prompt.get("options", [])
 	var keys := ["1 / Q", "2 / E", "3 / R", "4 / F"]
-	var colors := [Color("#00F0FF"), Color("#39FF14"), Color("#FFE600"), Color("#FF007F")]
+	var colors := [Color("#00FFFF"), Color("#39FF14"), Color("#FFE600"), Color("#FF66CC")]
 
 	var btns := buttons_container.get_children()
 	for i in range(btns.size()):

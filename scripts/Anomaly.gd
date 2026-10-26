@@ -40,6 +40,10 @@ func setup(target_root: Dictionary, sector: int) -> void:
 	if label_3d:
 		var clue_text: String = root_data.get("meaning", "").to_upper()
 		label_3d.text = "[ " + clue_text + " ]"
+		label_3d.modulate = Color("#FFF033")
+		label_3d.outline_modulate = Color(0, 0, 0, 1)
+		label_3d.outline_size = 14
+		label_3d.font_size = 48
 
 	# Instantiate Sector-specific 3D Model
 	if model_container:
