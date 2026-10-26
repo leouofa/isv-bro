@@ -22,7 +22,11 @@ const MODEL_PATHS := {
 	1: "res://assets/models/anomaly_bio.glb",
 	2: "res://assets/models/anomaly_astro.glb",
 	3: "res://assets/models/anomaly_geo.glb",
-	4: "res://assets/models/anomaly_thermo.glb"
+	4: "res://assets/models/anomaly_thermo.glb",
+	5: "res://assets/models/anomaly_gen.glb",
+	6: "res://assets/models/anomaly_particle.glb",
+	7: "res://assets/models/anomaly_wave.glb",
+	8: "res://assets/models/anomaly_cyber.glb"
 }
 
 func _ready() -> void:
@@ -33,7 +37,7 @@ func _ready() -> void:
 func setup(target_root: Dictionary, sector: int) -> void:
 	root_data = target_root
 	sector_id = sector
-	if has_node("/root/LexiconManager"):
+	if is_inside_tree() and has_node("/root/LexiconManager"):
 		prompt_data = get_node("/root/LexiconManager").build_multiple_choice_prompt(root_data.get("id", "bio"), 4)
 
 	# Update 3D Billboard label

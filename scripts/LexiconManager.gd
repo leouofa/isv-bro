@@ -5,7 +5,7 @@ const LEXICON_PATH := "res://data/isv_lexicon.json"
 
 var sectors: Array = []
 var roots_by_id: Dictionary = {}
-var roots_by_sector: Dictionary = {1: [], 2: [], 3: [], 4: []}
+var roots_by_sector: Dictionary = {}
 var boss_exams: Dictionary = {}
 var weights: Dictionary = {} # root_id -> float (default 1.0)
 
@@ -28,7 +28,10 @@ func load_lexicon() -> void:
 	var data: Dictionary = json.data
 	sectors = data.get("sectors", [])
 	roots_by_id.clear()
-	roots_by_sector = {1: [], 2: [], 3: [], 4: []}
+	roots_by_sector.clear()
+	for s in sectors:
+		var sid: int = int(s.get("id", 1))
+		roots_by_sector[sid] = []
 	for entry in data.get("roots", []):
 		var rid: String = entry["id"]
 		var sec: int = int(entry.get("sector", 1))

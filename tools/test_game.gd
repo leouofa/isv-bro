@@ -48,6 +48,10 @@ func _init() -> void:
 		"res://assets/models/anomaly_astro.glb",
 		"res://assets/models/anomaly_geo.glb",
 		"res://assets/models/anomaly_thermo.glb",
+		"res://assets/models/anomaly_gen.glb",
+		"res://assets/models/anomaly_particle.glb",
+		"res://assets/models/anomaly_wave.glb",
+		"res://assets/models/anomaly_cyber.glb",
 		"res://assets/models/hazard_laser_gate.glb",
 		"res://assets/models/hazard_collider_ring.glb",
 		"res://assets/models/pickup_coolant_cell.glb",
@@ -70,7 +74,7 @@ func _init() -> void:
 			"InputAction registered & mapped: " + act
 		)
 
-	# SUITE 3: Verify ISV Lexicon (48+ Roots, 4 Sectors, 4 Boss Exams, 4-Choice Prompt & Spaced Repetition)
+	# SUITE 3: Verify ISV Lexicon (96+ Roots, 8 Sectors, 8 Boss Exams, 4-Choice Prompt & Spaced Repetition)
 	print("\n--- SUITE 3: ISV Lexicon & Spaced Repetition Engine ---")
 	var lex_node := Node.new()
 	lex_node.name = "LexiconManager"
@@ -78,9 +82,9 @@ func _init() -> void:
 	root.add_child(lex_node)
 	lex_node._ready()
 
-	assert_true(lex_node.roots_by_id.size() >= 48, "Lexicon contains >= 48 ISV roots (found %d)" % lex_node.roots_by_id.size())
-	for s in [1, 2, 3, 4]:
-		assert_true(lex_node.roots_by_sector.get(s, []).size() >= 12, "Sector %d has >= 12 roots" % s)
+	assert_true(lex_node.roots_by_id.size() >= 96, "Lexicon contains >= 96 ISV roots (found %d)" % lex_node.roots_by_id.size())
+	for s in range(1, 9):
+		assert_true(lex_node.roots_by_sector.get(s, []).size() >= 12, "Sector %d has >= 12 roots (found %d)" % [s, lex_node.roots_by_sector.get(s, []).size()])
 		assert_true(lex_node.boss_exams.has(s), "Boss Exam defined for Sector %d" % s)
 
 	var prompt: Dictionary = lex_node.build_multiple_choice_prompt("lysis", 4)
@@ -248,6 +252,26 @@ func _init() -> void:
 	key_ev.pressed = true
 	card1.emit_signal("gui_input", key_ev)
 	assert_true(clicked_box[0] == 1, "Keyboard Enter on focused SectorCard triggers sector engagement")
+
+	# Test CarouselBar elements and page switching
+	var prev_btn = menu_scn.get_node_or_null("VBox/SectorSelectView/CarouselBar/PrevPageBtn") as Button
+	var next_btn = menu_scn.get_node_or_null("VBox/SectorSelectView/CarouselBar/NextPageBtn") as Button
+	var page_lbl = menu_scn.get_node_or_null("VBox/SectorSelectView/CarouselBar/PageIndicator") as Label
+	assert_true(prev_btn != null and prev_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Carousel PrevPageBtn has CURSOR_POINTING_HAND")
+	assert_true(next_btn != null and next_btn.mouse_default_cursor_shape == Control.CURSOR_POINTING_HAND, "Carousel NextPageBtn has CURSOR_POINTING_HAND")
+	assert_true(page_lbl != null and page_lbl.text.contains("PAGE 1"), "Carousel starts on Page 1")
+
+	# Flip to Page 2
+	next_btn.emit_signal("pressed")
+	assert_true(menu_scn.current_page == 1, "NextPageBtn flips to Page 2 (current_page = 1)")
+	var card1_title = card1.get_node_or_null("VBox/Title") as Label
+	assert_true(card1_title != null and card1_title.text.contains("SECTOR 05"), "Card1 displays SECTOR 05 on Page 2")
+	assert_true(page_lbl.text.contains("PAGE 2"), "Carousel label updates to Page 2")
+
+	# Flip back to Page 1
+	prev_btn.emit_signal("pressed")
+	assert_true(menu_scn.current_page == 0, "PrevPageBtn flips back to Page 1 (current_page = 0)")
+	assert_true(card1_title.text.contains("SECTOR 01"), "Card1 displays SECTOR 01 on Page 1")
 
 	# Test CheckBox styling and separation (prevents text touching check icon on hover)
 	var crt_cb = menu_scn.get_node_or_null("SettingsModal/Panel/VBox/CRTCheck") as CheckBox
