@@ -65,7 +65,7 @@ You pilot the experimental **Hadron Jet** alongside **B.R.O.** (*Blaster Researc
 - **Resonant Lock-On Combat:** Soft-lock onto approaching anomalies displaying scientific definitions. Quickly identify and trigger the matching Latin/Greek root (`1-4` / `Q-E`) to fire resonant laser salvos.
 - **Cognitive Overheat System:** Incorrect root selections spike the Hadron Jet’s Cognitive Overheat meter (+25%). Reaching 100% forces an emergency coolant vent—locking weapons and leaving your ship vulnerable.
 - **The "Bro-Factor" Combo Multiplier:** Chain consecutive correct answers to elevate your score multiplier from `1x` to `8x ("RADICAL!")` while B.R.O. hypes up your etymological mastery.
-- **Multi-Stage Boss Exams:** Survive sector gauntlets to face monumental bosses (*The Mitochondrion Overlord*, *The Lithic Golem*, *The Quantum Singularity*) that require multi-root sequential synthesis under intense bullet-pattern fire.
+- **Climactic Sector Boss Dogfights:** Master each sector's vocabulary curriculum to summon monumental anomaly overlords (*The Mitochondrion Overlord*, *The Lithic Colossus*, *The Quantum Singularity*). Dodge bullet-hell plasma patterns and unleash rapid-fire space laser salvos to shatter their core integrity.
 - **Adaptive Spaced Repetition Engine:** Missed or hesitant roots are automatically logged in `user://isv_save.json` and served with higher frequency in subsequent runs until fluency is achieved.
 - **Codex Bro-tanica:** An extensive in-game compendium documenting all unlocked Greek/Latin roots, etymological derivations, definitions, and real-world scientific applications.
 

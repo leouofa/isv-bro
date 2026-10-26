@@ -29,21 +29,21 @@ text = "THE MITOCHONDRION OVERLORD"
 font_size = 40
 outline_size = 12
 
-[node name="ClueLabel" type="Label3D" parent="BossLabels"]
+[node name="HintLabel" type="Label3D" parent="BossLabels"]
 billboard = 1
 no_depth_test = true
 modulate = Color(1, 0.95, 0.2, 1)
 outline_modulate = Color(0, 0, 0, 1)
-text = "[ DISSOLUTION OR DESTRUCTION OF A CELL ]"
+text = "[ SPACE: FIRE LASER | WASD: DODGE ATTACKS ]"
 font_size = 40
 outline_size = 14
 
-[node name="SynthesisLabel" type="Label3D" parent="BossLabels"]
+[node name="IntegrityLabel" type="Label3D" parent="BossLabels"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
 billboard = 1
 no_depth_test = true
 modulate = Color(1, 0.9, 0, 1)
 outline_modulate = Color(0, 0, 0, 1)
-text = "SYNTHESIS: [ ??? ] + [ ??? ]"
+text = "CORE INTEGRITY: 100%"
 font_size = 32
 outline_size = 10

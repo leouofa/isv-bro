@@ -395,8 +395,6 @@ func fire_space_laser_at_boss() -> void:
 	draw_laser_beam(player_jet.global_position, boss_instance.global_position)
 	if boss_instance.has_method("take_laser_damage"):
 		boss_instance.take_laser_damage(26.0)
-	elif boss_instance.has_method("register_hit"):
-		boss_instance.register_hit()
 
 func draw_laser_beam(start_pos: Vector3, end_pos: Vector3) -> void:
 	if laser_mesh == null:

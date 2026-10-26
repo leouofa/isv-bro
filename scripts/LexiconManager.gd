@@ -4,6 +4,7 @@ extends Node
 const LEXICON_PATH := "res://data/isv_lexicon.json"
 
 var sectors: Array = []
+var sectors_by_id: Dictionary = {}
 var roots_by_id: Dictionary = {}
 var roots_by_sector: Dictionary = {}
 var boss_exams: Dictionary = {}
@@ -27,10 +28,12 @@ func load_lexicon() -> void:
 
 	var data: Dictionary = json.data
 	sectors = data.get("sectors", [])
+	sectors_by_id.clear()
 	roots_by_id.clear()
 	roots_by_sector.clear()
 	for s in sectors:
 		var sid: int = int(s.get("id", 1))
+		sectors_by_id[sid] = s
 		roots_by_sector[sid] = []
 	for entry in data.get("roots", []):
 		var rid: String = entry["id"]
@@ -122,3 +125,6 @@ func build_multiple_choice_prompt(target_root_id: String, count: int = 4) -> Dic
 
 func get_boss_exam(sector_id: int) -> Dictionary:
 	return boss_exams.get(sector_id, {})
+
+func get_sector(sector_id: int) -> Dictionary:
+	return sectors_by_id.get(sector_id, {})
