@@ -15,6 +15,11 @@ const TITLE_SECTOR_ID: int = -2
 var audio_player: AudioStreamPlayer
 var music_bus_idx: int = 0
 var lpf_effect_idx: int = 0
+var spectrum_effect_idx: int = -1
+var spectrum_analyzer: AudioEffectSpectrumAnalyzer = null
+var spectrum_instance: AudioEffectSpectrumAnalyzerInstance = null
+var bass_moving_avg: float = 0.05
+var last_kick_time: float = 0.0
 var current_sector_played: int = -1
 var current_track_path: String = ""
 var all_tracks_cache: Array[String] = []
@@ -48,9 +53,56 @@ func setup_audio_bus() -> void:
 
 	AudioServer.set_bus_effect_enabled(music_bus_idx, lpf_effect_idx, false)
 
+	# Check if SpectrumAnalyzer already exists on Music bus
+	var has_spectrum := false
+	for i in range(AudioServer.get_bus_effect_count(music_bus_idx)):
+		if AudioServer.get_bus_effect(music_bus_idx, i) is AudioEffectSpectrumAnalyzer:
+			has_spectrum = true
+			spectrum_effect_idx = i
+			spectrum_analyzer = AudioServer.get_bus_effect(music_bus_idx, i) as AudioEffectSpectrumAnalyzer
+			break
+
+	if not has_spectrum:
+		spectrum_analyzer = AudioEffectSpectrumAnalyzer.new()
+		spectrum_analyzer.buffer_length = 0.1
+		AudioServer.add_bus_effect(music_bus_idx, spectrum_analyzer)
+		spectrum_effect_idx = AudioServer.get_bus_effect_count(music_bus_idx) - 1
+
+	AudioServer.set_bus_effect_enabled(music_bus_idx, spectrum_effect_idx, true)
+
 func set_low_pass_enabled(enabled: bool) -> void:
-	if music_bus_idx >= 0 and lpf_effect_idx >= 0:
+	if music_bus_idx >= 0 and lpf_effect_idx >= 0 and lpf_effect_idx < AudioServer.get_bus_effect_count(music_bus_idx):
 		AudioServer.set_bus_effect_enabled(music_bus_idx, lpf_effect_idx, enabled)
+
+func get_spectrum_instance() -> AudioEffectSpectrumAnalyzerInstance:
+	if music_bus_idx >= 0 and spectrum_effect_idx >= 0 and spectrum_effect_idx < AudioServer.get_bus_effect_count(music_bus_idx):
+		if spectrum_instance == null:
+			spectrum_instance = AudioServer.get_bus_effect_instance(music_bus_idx, spectrum_effect_idx) as AudioEffectSpectrumAnalyzerInstance
+		return spectrum_instance
+	return null
+
+func get_beat_energy() -> Dictionary:
+	var inst := get_spectrum_instance()
+	if inst == null:
+		return {"bass": 0.0, "mid": 0.0, "treble": 0.0, "is_kick": false}
+
+	var bass_mag := inst.get_magnitude_for_frequency_range(20.0, 150.0).length()
+	var mid_mag := inst.get_magnitude_for_frequency_range(250.0, 2500.0).length()
+	var treble_mag := inst.get_magnitude_for_frequency_range(3000.0, 11000.0).length()
+
+	bass_moving_avg = lerpf(bass_moving_avg, bass_mag, 0.08)
+	var now := Time.get_ticks_msec() / 1000.0
+	var is_kick := false
+	if bass_mag > 0.08 and bass_mag > bass_moving_avg * 1.35 and (now - last_kick_time) > 0.38:
+		is_kick = true
+		last_kick_time = now
+
+	return {
+		"bass": bass_mag,
+		"mid": mid_mag,
+		"treble": treble_mag,
+		"is_kick": is_kick
+	}
 
 func get_all_tracks() -> Array[String]:
 	if not all_tracks_cache.is_empty():

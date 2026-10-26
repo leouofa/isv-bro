@@ -104,8 +104,8 @@ text = "[4 / F] bio-"
 [node name="TopLeft" type="VBoxContainer" parent="."]
 offset_left = 24.0
 offset_top = 20.0
-offset_right = 260.0
-offset_bottom = 90.0
+offset_right = 320.0
+offset_bottom = 120.0
 
 [node name="ScoreLabel" type="Label" parent="TopLeft"]
 layout_mode = 2
@@ -118,6 +118,44 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "1X BRO-FACTOR"
+
+[node name="MasteryLabel" type="Label" parent="TopLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "ROOTS MASTERED: 0 / 12"
+
+[node name="BossHealthContainer" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 18.0
+offset_right = 280.0
+offset_bottom = 86.0
+grow_horizontal = 2
+theme_override_constants/separation = 4
+
+[node name="BossNameLabel" type="Label" parent="BossHealthContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "ANOMALY OVERLORD"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="BossHealthContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="BossActionHint" type="Label" parent="BossHealthContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "[SPACE] FIRE LASER | [WASD] DODGE ATTACKS | [SHIFT] FOCUS"
+horizontal_alignment = 1
 
 [node name="TopRight" type="VBoxContainer" parent="."]
 anchors_preset = 1
@@ -141,32 +179,44 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 24.0
-offset_top = -120.0
+offset_top = -176.0
 offset_right = 320.0
-offset_bottom = -24.0
+offset_bottom = -20.0
 grow_vertical = 0
-theme_override_constants/separation = 6
+theme_override_constants/separation = 4
 
 [node name="ShieldLabel" type="Label" parent="BottomLeft"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.22, 1, 0.08, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 13
 text = "SHIELD INTEGRITY"
 
 [node name="ShieldBar" type="ProgressBar" parent="BottomLeft"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="FocusLabel" type="Label" parent="BottomLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "FOCUS CHRONO (HOLD SHIFT)"
+
+[node name="FocusBar" type="ProgressBar" parent="BottomLeft"]
+custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 value = 100.0
 show_percentage = false
 
 [node name="OverheatLabel" type="Label" parent="BottomLeft"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0.94, 1, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 13
 text = "COGNITIVE OVERHEAT"
 
 [node name="OverheatBar" type="ProgressBar" parent="BottomLeft"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 show_percentage = false
 

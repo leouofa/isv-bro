@@ -72,6 +72,7 @@ func _init() -> void:
 	# SUITE 3: Verify ISV Lexicon (48+ Roots, 4 Sectors, 4 Boss Exams, 4-Choice Prompt & Spaced Repetition)
 	print("\n--- SUITE 3: ISV Lexicon & Spaced Repetition Engine ---")
 	var lex_node := Node.new()
+	lex_node.name = "LexiconManager"
 	lex_node.set_script(load("res://scripts/LexiconManager.gd"))
 	root.add_child(lex_node)
 	lex_node._ready()
@@ -94,6 +95,7 @@ func _init() -> void:
 	# SUITE 4: Verify Bro-Factor Combo Scaling & Cognitive Overheat Lockout Math
 	print("\n--- SUITE 4: Bro-Factor Combo Scaling & Cognitive Overheat ---")
 	var gm := Node.new()
+	gm.name = "GameManager"
 	gm.set_script(load("res://scripts/GameManager.gd"))
 	root.add_child(gm)
 	gm._ready()
@@ -300,6 +302,108 @@ func _init() -> void:
 
 	main_menu.free()
 	mm_node.free()
+
+	# SUITE 11: Space Laser & Focus Time-Slow Action Bindings
+	print("\n--- SUITE 11: Space Laser & Focus Time-Slow Input Mappings ---")
+	assert_true(InputMap.has_action("fire_laser"), "InputAction registered: fire_laser")
+	assert_true(InputMap.has_action("time_slow"), "InputAction registered: time_slow")
+	var fire_events := InputMap.action_get_events("fire_laser")
+	var has_space := false
+	for ev in fire_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SPACE or ev.keycode == KEY_SPACE):
+			has_space = true
+	assert_true(has_space, "fire_laser mapped to Spacebar")
+
+	var roll_events := InputMap.action_get_events("barrel_roll")
+	var roll_has_space := false
+	for ev in roll_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SPACE or ev.keycode == KEY_SPACE):
+			roll_has_space = true
+	assert_true(not roll_has_space, "barrel_roll does NOT conflict with Spacebar")
+
+	var slow_events := InputMap.action_get_events("time_slow")
+	var has_shift := false
+	for ev in slow_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SHIFT or ev.keycode == KEY_SHIFT):
+			has_shift = true
+	assert_true(has_shift, "time_slow mapped to Shift key")
+
+	# SUITE 12: Music Spectrum Analyzer & Real-time Beat Energy
+	print("\n--- SUITE 12: AudioEffectSpectrumAnalyzer & Beat Detection ---")
+	var mm_test: Node = (load("res://scripts/MusicManager.gd") as GDScript).new()
+	root.add_child(mm_test)
+	mm_test._ready()
+	assert_true(mm_test.spectrum_analyzer != null, "AudioEffectSpectrumAnalyzer initialized on Music bus")
+	assert_true(mm_test.spectrum_effect_idx >= 0, "Spectrum effect index registered on bus")
+	var beat_energy: Dictionary = mm_test.get_beat_energy()
+	assert_true(beat_energy.has("bass") and beat_energy.has("mid") and beat_energy.has("is_kick"), "get_beat_energy returns valid spectrum dictionary")
+	mm_test.free()
+
+	# SUITE 13: Focus Time-Slow & Chrono Energy Drain/Regen
+	print("\n--- SUITE 13: Focus Time-Slow & Chrono Energy System ---")
+	var world_scn: Node = (load("res://scenes/GameWorld.tscn") as PackedScene).instantiate()
+	root.add_child(world_scn)
+	world_scn._ready()
+	assert_true(world_scn.focus_energy == 100.0, "Focus energy starts at max 100.0")
+	var hud_node: Node = world_scn.get_node_or_null("HUD")
+	assert_true(hud_node != null, "HUD present in GameWorld")
+	var focus_bar := hud_node.get_node_or_null("BottomLeft/FocusBar") as ProgressBar
+	assert_true(focus_bar != null, "FocusBar widget present in HUD BottomLeft")
+	var mastery_lbl := hud_node.get_node_or_null("TopLeft/MasteryLabel") as Label
+	assert_true(mastery_lbl != null, "MasteryLabel widget present in HUD TopLeft")
+	var boss_hud_box: Node = hud_node.get_node_or_null("BossHealthContainer")
+	assert_true(boss_hud_box != null, "BossHealthContainer widget present in HUD")
+
+	# SUITE 14: Indefinite Sector Lexicon Mastery Queue
+	print("\n--- SUITE 14: Indefinite Sector Lexicon Mastery Queue ---")
+	assert_true(world_scn.unmastered_roots.size() == 12, "Sector 1 initializes queue with 12 unmastered roots (found %d)" % world_scn.unmastered_roots.size())
+	assert_true(world_scn.mastered_root_ids.is_empty(), "Mastered roots list starts empty")
+	var first_root_id: String = world_scn.unmastered_roots[0]["id"]
+
+	# Simulate correct answer: root moves to mastered_root_ids and is removed from unmastered_roots
+	world_scn.current_prompt = {"correct_index": 0, "target_id": first_root_id}
+	world_scn.fire_laser_salvo(0)
+	assert_true(world_scn.mastered_root_ids.has(first_root_id), "Correct root registered into mastered_root_ids")
+	assert_true(world_scn.unmastered_roots.size() == 11, "Unmastered roots queue decremented to 11")
+	assert_true(world_scn.anomalies_cleared == 1, "Anomalies cleared tracks mastered count")
+
+	# Simulate incorrect answer: target remains in unmastered_roots
+	var second_root_id: String = world_scn.unmastered_roots[0]["id"]
+	world_scn.current_prompt = {"correct_index": 1, "target_id": second_root_id}
+	world_scn.fire_laser_salvo(0)
+	assert_true(not world_scn.mastered_root_ids.has(second_root_id), "Incorrect root is NOT mastered")
+	assert_true(world_scn.unmastered_roots.size() == 11, "Incorrect root remains in unmastered queue for replay")
+
+	world_scn.free()
+
+	# SUITE 15: Boss Dogfight & Space Laser Combat
+	print("\n--- SUITE 15: Boss Dogfight & Space Laser Combat ---")
+	var boss_scn: Node = (load("res://scenes/BossExam.tscn") as PackedScene).instantiate()
+	root.add_child(boss_scn)
+	boss_scn._ready()
+	boss_scn.setup_boss(1)
+	assert_true(boss_scn.boss_hp == 600.0, "Boss HP initialized to 600.0 for Sector 1")
+	assert_true(boss_scn.is_active and not boss_scn.is_defeated, "Boss enters active combat mode")
+
+	# Test laser damage
+	boss_scn.take_laser_damage(100.0)
+	assert_true(boss_scn.boss_hp == 500.0, "Laser deals direct damage to Boss HP (600.0 -> 500.0)")
+
+	# Test boss attacks
+	boss_scn.launch_boss_attack()
+	var hazards_found: int = 0
+	for ch in root.get_children():
+		if ch.is_in_group("hazards"):
+			hazards_found += 1
+			ch.queue_free()
+	assert_true(hazards_found > 0, "Boss launched projectile hazards in group 'hazards' (found %d)" % hazards_found)
+
+	# Test boss defeat
+	boss_scn.take_laser_damage(500.0)
+	assert_true(boss_scn.boss_hp == 0.0, "Boss HP depleted to 0.0")
+	assert_true(boss_scn.is_defeated, "Boss defeated flag set upon 0 HP")
+
+	boss_scn.free()
 
 	gm.free()
 	lex_node.free()

@@ -18,6 +18,9 @@ var roll_duration := 0.45
 var roll_direction := 1.0
 
 var speed_multiplier := 1.0
+var last_tap_left_time := -10.0
+var last_tap_right_time := -10.0
+const DOUBLE_TAP_WINDOW := 0.28
 
 @onready var model_node: Node3D = $ModelRoot
 @onready var collision_area: Area3D = $HitArea
@@ -28,6 +31,10 @@ func _ready() -> void:
 		collision_area.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
+	# Calculate effective delta so steering remains 100% responsive during Focus Time-Slow
+	var time_factor := Engine.time_scale if Engine.time_scale > 0.05 else 1.0
+	var jet_delta := delta / time_factor
+
 	# Boost and Airbrake handling
 	if Input.is_action_pressed("boost"):
 		speed_multiplier = 1.6
@@ -38,17 +45,28 @@ func _physics_process(delta: float) -> void:
 
 	# Input movement
 	var input_vec := Input.get_vector("move_left", "move_right", "move_down", "move_up")
-	target_pos.x = clampf(target_pos.x + input_vec.x * MOVE_SPEED * speed_multiplier * delta, -BOUNDS_X, BOUNDS_X)
-	target_pos.y = clampf(target_pos.y + input_vec.y * MOVE_SPEED * speed_multiplier * delta, -BOUNDS_Y, BOUNDS_Y)
+	target_pos.x = clampf(target_pos.x + input_vec.x * MOVE_SPEED * speed_multiplier * jet_delta, -BOUNDS_X, BOUNDS_X)
+	target_pos.y = clampf(target_pos.y + input_vec.y * MOVE_SPEED * speed_multiplier * jet_delta, -BOUNDS_Y, BOUNDS_Y)
 
 	# Framerate-independent smoothing
-	var alpha := 1.0 - exp(-SMOOTH_LAMBDA * delta)
+	var alpha := 1.0 - exp(-SMOOTH_LAMBDA * jet_delta)
 	position.x = lerpf(position.x, target_pos.x, alpha)
 	position.y = lerpf(position.y, target_pos.y, alpha)
 
+	# Check for double-tap A/D barrel roll
+	var now := Time.get_ticks_msec() / 1000.0
+	if Input.is_action_just_pressed("move_left"):
+		if (now - last_tap_left_time) <= DOUBLE_TAP_WINDOW:
+			trigger_barrel_roll(-1.0)
+		last_tap_left_time = now
+	elif Input.is_action_just_pressed("move_right"):
+		if (now - last_tap_right_time) <= DOUBLE_TAP_WINDOW:
+			trigger_barrel_roll(1.0)
+		last_tap_right_time = now
+
 	# Barrel roll execution
 	if is_barrel_rolling:
-		roll_timer += delta
+		roll_timer += jet_delta
 		var roll_progress := roll_timer / roll_duration
 		if model_node:
 			model_node.rotation.z = roll_direction * roll_progress * TAU
@@ -58,7 +76,7 @@ func _physics_process(delta: float) -> void:
 			if model_node:
 				model_node.rotation.z = 0.0
 	else:
-		# Check for barrel roll trigger
+		# Check for dedicated barrel roll action trigger
 		if Input.is_action_just_pressed("barrel_roll"):
 			trigger_barrel_roll(1.0 if input_vec.x >= 0.0 else -1.0)
 		else:
