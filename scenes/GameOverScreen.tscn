@@ -1,0 +1,147 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/GameOverScreen.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 32.0
+content_margin_top = 28.0
+content_margin_right = 32.0
+content_margin_bottom = 28.0
+bg_color = Color(0.04, 0.04, 0.09, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.94, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GameOverScreen" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("1_script")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -220.0
+offset_right = 260.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="HeaderLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 28
+text = "CRITICAL FAILURE"
+horizontal_alignment = 1
+
+[node name="SubHeaderLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "SHIELD INTEGRITY DEPLETED — SHIP DESTROYED"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="GradeBox" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="GradeTitle" type="Label" parent="Panel/VBox/GradeBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.85, 1)
+theme_override_font_sizes/font_size = 20
+text = "PERFORMANCE GRADE:"
+
+[node name="GradeLabel" type="Label" parent="Panel/VBox/GradeBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "S"
+
+[node name="StatsBox" type="VBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ScoreLabel" type="Label" parent="Panel/VBox/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "TOTAL SCORE: 0000000"
+horizontal_alignment = 1
+
+[node name="RecordLabel" type="Label" parent="Panel/VBox/StatsBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "★ NEW HIGH SCORE RECORD! ★"
+horizontal_alignment = 1
+
+[node name="MissedLabel" type="Label" parent="Panel/VBox/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "WORDS MISSED: 0"
+horizontal_alignment = 1
+
+[node name="AccuracyLabel" type="Label" parent="Panel/VBox/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "VOCABULARY ACCURACY: 100%"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="Panel/VBox/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 15
+text = "MAX BRO-FACTOR: 1X"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RetryBtn" type="Button" parent="Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "RETRY SECTOR"
+
+[node name="MenuBtn" type="Button" parent="Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "MAIN MENU"

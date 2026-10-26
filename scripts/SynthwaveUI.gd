@@ -134,8 +134,12 @@ func _create_global_theme() -> void:
 	global_theme.set_stylebox("normal", "Button", btn_style_normal)
 	global_theme.set_stylebox("hover", "Button", btn_style_hover)
 	global_theme.set_stylebox("pressed", "Button", btn_style_pressed)
+	global_theme.set_stylebox("hover_pressed", "Button", btn_style_hover)
 	global_theme.set_stylebox("disabled", "Button", btn_style_disabled)
 	global_theme.set_stylebox("focus", "Button", btn_style_focus)
+
+	global_theme.set_stylebox("hover_pressed", "CheckBox", btn_style_hover)
+	global_theme.set_constant("h_separation", "CheckBox", 10)
 
 	global_theme.set_color("font_color", "Button", COLOR_CYAN)
 	global_theme.set_color("font_hover_color", "Button", Color.WHITE)
@@ -198,8 +202,12 @@ func apply_button_style(btn: Button) -> void:
 	btn.add_theme_stylebox_override("normal", btn_style_normal)
 	btn.add_theme_stylebox_override("hover", btn_style_hover)
 	btn.add_theme_stylebox_override("pressed", btn_style_pressed)
+	btn.add_theme_stylebox_override("hover_pressed", btn_style_hover)
 	btn.add_theme_stylebox_override("disabled", btn_style_disabled)
 	btn.add_theme_stylebox_override("focus", btn_style_focus)
+
+	if btn is CheckBox:
+		btn.add_theme_constant_override("h_separation", 10)
 
 	# Font colors
 	btn.add_theme_color_override("font_color", COLOR_CYAN)
@@ -224,6 +232,9 @@ func apply_button_style(btn: Button) -> void:
 			if sfx and sfx.has_method("play_ui_click"):
 				sfx.play_ui_click()
 		)
+
+func apply_btn_style(btn: Button) -> void:
+	apply_button_style(btn)
 
 # ----------------------------------------------------
 # Card Styling, Cursor & Interactivity

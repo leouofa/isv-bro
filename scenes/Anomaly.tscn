@@ -16,11 +16,12 @@ shape = SubResource("SphereShape3D_anom")
 [node name="ModelContainer" type="Node3D" parent="."]
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 billboard = 1
 no_depth_test = true
-modulate = Color(0, 0.94, 1, 1)
-outline_modulate = Color(0.04, 0.04, 0.08, 1)
+render_priority = 3
+modulate = Color(1, 0.95, 0.15, 1)
+outline_modulate = Color(0, 0, 0, 1)
 text = "[ SCIENTIFIC ANOMALY ]"
-font_size = 28
-outline_size = 8
+font_size = 48
+outline_size = 14

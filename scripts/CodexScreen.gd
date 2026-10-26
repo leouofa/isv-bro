@@ -22,6 +22,11 @@ func _ready() -> void:
 	if close_btn:
 		close_btn.pressed.connect(close_screen)
 
+	if selected_sector == 0 and paused_game and is_inside_tree():
+		var gm = get_node_or_null("/root/GameManager")
+		if gm and gm.get("current_sector") != null:
+			selected_sector = int(gm.current_sector)
+
 	setup_sector_filter()
 	load_all_roots()
 	populate_list()
@@ -50,11 +55,25 @@ func setup_sector_filter() -> void:
 		sector_filter.add_item("Sector 02: Astro & Celestial Dynamics", 2)
 		sector_filter.add_item("Sector 03: Geo & Lithospheric Matrix", 3)
 		sector_filter.add_item("Sector 04: Thermo & Quantum Energetics", 4)
-		sector_filter.item_selected.connect(_on_sector_filter_changed)
+		for i in range(sector_filter.item_count):
+			if sector_filter.get_item_id(i) == selected_sector:
+				sector_filter.select(i)
+				break
+		if not sector_filter.item_selected.is_connected(_on_sector_filter_changed):
+			sector_filter.item_selected.connect(_on_sector_filter_changed)
+
+func set_selected_sector(sec: int) -> void:
+	selected_sector = sec
+	if sector_filter:
+		for i in range(sector_filter.item_count):
+			if sector_filter.get_item_id(i) == selected_sector:
+				sector_filter.select(i)
+				break
+	populate_list()
 
 func load_all_roots() -> void:
 	all_roots.clear()
-	var lm = get_node_or_null("/root/LexiconManager")
+	var lm = get_node_or_null("/root/LexiconManager") if is_inside_tree() else null
 	if lm:
 		all_roots = lm.roots_by_id.values()
 
@@ -66,9 +85,12 @@ func populate_list() -> void:
 	for c in root_list_container.get_children():
 		c.queue_free()
 
-	var gm = get_node_or_null("/root/GameManager")
+	var gm = get_node_or_null("/root/GameManager") if is_inside_tree() else null
 	var unlocked_dict: Dictionary = gm.save_data.get("unlocked_roots", {}) if gm else {}
 	var unlocked_count := 0
+
+	var first_displayed_entry: Dictionary = {}
+	var first_unlocked: bool = false
 
 	for root_entry in all_roots:
 		var sec_id: int = int(root_entry.get("sector", 1))
@@ -79,6 +101,10 @@ func populate_list() -> void:
 
 		if selected_sector != 0 and sec_id != selected_sector:
 			continue
+
+		if first_displayed_entry.is_empty():
+			first_displayed_entry = root_entry
+			first_unlocked = is_unlocked
 
 		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(0, 36)
@@ -98,12 +124,14 @@ func populate_list() -> void:
 		var pct := float(unlocked_count) / float(max(1, all_roots.size())) * 100.0
 		progress_label.text = "CODEX DISCOVERY: %d / %d (%.1f%%)" % [unlocked_count, all_roots.size(), pct]
 
-	if not all_roots.is_empty():
+	if not first_displayed_entry.is_empty():
+		display_root_card(first_displayed_entry, first_unlocked)
+	elif not all_roots.is_empty():
 		display_root_card(all_roots[0], unlocked_dict.has(all_roots[0].get("id", "")))
 
 func display_root_card(root_entry: Dictionary, is_unlocked: bool) -> void:
 	var rid: String = root_entry.get("id", "")
-	var gm = get_node_or_null("/root/GameManager")
+	var gm = get_node_or_null("/root/GameManager") if is_inside_tree() else null
 	var rstat: Dictionary = gm.save_data.get("root_stats", {}).get(rid, {"hits": 0, "misses": 0}) if gm else {"hits": 0, "misses": 0}
 	var hits := int(rstat.get("hits", 0))
 	var misses := int(rstat.get("misses", 0))

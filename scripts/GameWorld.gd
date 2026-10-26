@@ -2,7 +2,7 @@
 extends Node3D
 
 @export var sector_id: int = 1
-@export var total_anomalies: int = 8
+@export var total_anomalies: int = 12
 
 var active_anomalies: Array[Node3D] = []
 var locked_target: Node3D = null
@@ -18,8 +18,22 @@ var anomalies_cleared: int = 0
 var is_boss_active: bool = false
 var boss_instance: Node3D = null
 
+var unmastered_roots: Array[Dictionary] = []
+var mastered_root_ids: Array[String] = []
+var total_sector_roots: int = 12
+
 var spawn_timer: float = 0.0
+const ANOMALY_SPAWN_INTERVAL: float = 6.5
 var hazard_timer: float = 0.0
+const FALLBACK_HAZARD_INTERVAL: float = 5.5
+
+var focus_energy: float = 100.0
+const MAX_FOCUS_ENERGY: float = 100.0
+const FOCUS_DRAIN_RATE: float = 28.0
+const FOCUS_REGEN_RATE: float = 18.0
+var is_focus_active: bool = false
+
+var space_laser_cooldown: float = 0.0
 
 @onready var camera: Camera3D = $Camera3D
 @onready var player_jet: CharacterBody3D = $PlayerJet
@@ -37,19 +51,75 @@ var RING_MODEL: PackedScene = load("res://assets/models/hazard_collider_ring.glb
 var HAZARD_GATE: PackedScene = load("res://assets/models/hazard_laser_gate.glb")
 var PICKUP_COOLANT: PackedScene = load("res://assets/models/pickup_coolant_cell.glb")
 var PICKUP_SHIELD: PackedScene = load("res://assets/models/pickup_shield_orb.glb")
+var GAMEOVER_SCENE: PackedScene = load("res://scenes/GameOverScreen.tscn")
 
 func _ready() -> void:
-	if has_node("/root/GameManager"):
+	Engine.time_scale = 1.0
+
+	if is_inside_tree() and has_node("/root/GameManager"):
 		sector_id = get_node("/root/GameManager").current_sector
 		get_node("/root/GameManager").start_new_run(sector_id)
 		get_node("/root/GameManager").run_ended.connect(_on_run_ended)
 
-	if has_node("/root/MusicManager"):
+	if is_inside_tree() and has_node("/root/MusicManager"):
 		get_node("/root/MusicManager").play_sector_music(sector_id, 0)
 
+	if player_jet and player_jet.has_signal("jet_damaged"):
+		player_jet.jet_damaged.connect(func(_amount): shake_camera())
+
+	setup_lexicon_queue()
 	setup_tunnel()
 	if laser_mesh:
 		laser_mesh.visible = false
+
+func _exit_tree() -> void:
+	Engine.time_scale = 1.0
+
+func _get_lexicon_manager() -> Node:
+	if is_inside_tree() and has_node("/root/LexiconManager"):
+		return get_node("/root/LexiconManager")
+	var tree := _get_tree_safe()
+	if tree and tree.root and tree.root.has_node("LexiconManager"):
+		return tree.root.get_node("LexiconManager")
+	return null
+
+func _get_objects_container() -> Node3D:
+	if is_instance_valid(objects_container):
+		return objects_container
+	if is_inside_tree() and has_node("DynamicObjects"):
+		var dyn = get_node("DynamicObjects") as Node3D
+		if is_instance_valid(dyn):
+			objects_container = dyn
+			return objects_container
+	var new_dyn := Node3D.new()
+	new_dyn.name = "DynamicObjects"
+	add_child(new_dyn)
+	objects_container = new_dyn
+	return objects_container
+
+func setup_lexicon_queue() -> void:
+	unmastered_roots.clear()
+	mastered_root_ids.clear()
+	var lm = _get_lexicon_manager()
+	var sec_roots: Array = []
+	if lm:
+		sec_roots = lm.roots_by_sector.get(sector_id, [])
+		if sec_roots.is_empty():
+			sec_roots = lm.roots_by_id.values()
+	else:
+		var tmp_lex = load("res://scripts/LexiconManager.gd").new()
+		sec_roots = tmp_lex.roots_by_sector.get(sector_id, [])
+		if sec_roots.is_empty():
+			sec_roots = tmp_lex.roots_by_id.values()
+
+	for r in sec_roots:
+		unmastered_roots.append(r)
+	total_sector_roots = unmastered_roots.size()
+
+	total_anomalies = total_sector_roots
+	anomalies_cleared = 0
+	if hud and hud.has_method("update_mastery"):
+		hud.update_mastery(0, total_sector_roots)
 
 func setup_tunnel() -> void:
 	if RING_MODEL == null:
@@ -67,20 +137,50 @@ func _physics_process(delta: float) -> void:
 		if ring.position.z > 12.0:
 			ring.position.z -= float(NUM_RINGS) * RING_SPACING
 
-	# Wave Spawning
+	# Shift Focus (Time-Slow)
+	var can_focus := focus_energy > 5.0
+	if Input.is_action_pressed("time_slow") and can_focus:
+		is_focus_active = true
+		var unscaled_dt := delta / (Engine.time_scale if Engine.time_scale > 0.05 else 1.0)
+		focus_energy = max(0.0, focus_energy - FOCUS_DRAIN_RATE * unscaled_dt)
+		Engine.time_scale = 0.32
+		if has_node("/root/MusicManager"):
+			get_node("/root/MusicManager").set_low_pass_enabled(true)
+	else:
+		if is_focus_active:
+			is_focus_active = false
+			Engine.time_scale = 1.0
+			var gm = get_node_or_null("/root/GameManager")
+			if gm and not gm.is_overheated_lockout and has_node("/root/MusicManager"):
+				get_node("/root/MusicManager").set_low_pass_enabled(false)
+		else:
+			Engine.time_scale = 1.0
+		focus_energy = min(MAX_FOCUS_ENERGY, focus_energy + FOCUS_REGEN_RATE * delta)
+
+	if hud and hud.has_method("update_focus"):
+		hud.update_focus(focus_energy, MAX_FOCUS_ENERGY)
+
+	# Wave Spawning (indefinite until all sector vocabulary is cleared)
 	if not is_boss_active:
 		spawn_timer += delta
-		hazard_timer += delta
-
-		if spawn_timer >= 3.8 and anomalies_spawned < total_anomalies:
+		if spawn_timer >= ANOMALY_SPAWN_INTERVAL and not unmastered_roots.is_empty() and active_anomalies.size() < 2:
 			spawn_timer = 0.0
 			spawn_anomaly()
 
-		if hazard_timer >= 6.5 and anomalies_spawned < total_anomalies:
-			hazard_timer = 0.0
-			spawn_hazard_or_pickup()
+		# Procedural soundtrack-driven obstacle generation
+		var spawned_by_beat := false
+		if has_node("/root/MusicManager"):
+			var beat_data: Dictionary = get_node("/root/MusicManager").get_beat_energy()
+			if beat_data.get("is_kick", false):
+				spawn_procedural_obstacle(beat_data)
+				spawned_by_beat = true
 
-		if anomalies_cleared >= total_anomalies and not is_boss_active:
+		hazard_timer += delta
+		if not spawned_by_beat and hazard_timer >= FALLBACK_HAZARD_INTERVAL:
+			hazard_timer = 0.0
+			spawn_procedural_obstacle()
+
+		if unmastered_roots.is_empty() and active_anomalies.is_empty():
 			spawn_boss()
 
 	# Lock-on Targeting
@@ -90,8 +190,11 @@ func _physics_process(delta: float) -> void:
 	if hud and hud.has_method("update_reticle_projection"):
 		hud.update_reticle_projection(camera, locked_target)
 
-	# Handle root salvo key inputs (1-4, Q-E-R-F)
-	handle_root_inputs()
+	# Combat Inputs
+	if is_boss_active and is_instance_valid(boss_instance):
+		handle_boss_combat(delta)
+	else:
+		handle_root_inputs()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_codex"):
@@ -135,6 +238,7 @@ func open_codex() -> void:
 	if codex_scn:
 		var inst = codex_scn.instantiate()
 		inst.set("paused_game", true)
+		inst.set("selected_sector", sector_id)
 		codex_instance = inst
 		var h := _get_hud()
 		if h:
@@ -145,6 +249,7 @@ func open_codex() -> void:
 			cl.add_child(inst)
 		else:
 			add_child(inst)
+		Engine.time_scale = 1.0
 		var tree := _get_tree_safe()
 		if tree:
 			tree.paused = true
@@ -177,10 +282,6 @@ func update_lock_on_target() -> void:
 			locked_target = boss_instance
 			if has_node("/root/SoundEffects"):
 				get_node("/root/SoundEffects").play_lock_on()
-		if boss_instance.has_method("get") and boss_instance.prompt_data:
-			current_prompt = boss_instance.prompt_data
-			if hud and hud.has_method("display_prompt"):
-				hud.display_prompt(current_prompt)
 		return
 
 	if active_anomalies.is_empty():
@@ -231,41 +332,71 @@ func handle_root_inputs() -> void:
 		fire_laser_salvo(selected_idx)
 
 func fire_laser_salvo(selected_index: int) -> void:
-	if locked_target == null:
+	if locked_target == null and current_prompt.is_empty():
 		return
 
 	# SFX and visual laser beam
-	if has_node("/root/SoundEffects"):
+	if is_inside_tree() and has_node("/root/SoundEffects"):
 		get_node("/root/SoundEffects").play_laser_salvo()
 
-	draw_laser_beam(player_jet.global_position, locked_target.global_position)
+	if is_instance_valid(locked_target) and player_jet:
+		draw_laser_beam(player_jet.global_position, locked_target.global_position)
 
 	var correct_idx: int = int(current_prompt.get("correct_index", -1))
 	var target_id: String = current_prompt.get("target_id", "")
 
 	if selected_index == correct_idx:
 		# Hit!
-		if has_node("/root/GameManager"):
+		if is_inside_tree() and has_node("/root/GameManager"):
 			var pts: int = get_node("/root/GameManager").register_root_hit(target_id)
 			if pts > 200:
-				if has_node("/root/SoundEffects"):
+				if is_inside_tree() and has_node("/root/SoundEffects"):
 					get_node("/root/SoundEffects").play_combo_up(get_node("/root/GameManager").combo_multiplier)
 			if get_node("/root/GameManager").combo_multiplier >= 8:
 				get_node("/root/GameManager").bro_callout.emit("HYPE_COMBO", "RADICAL 8X ETYMOLOGY, BRO!!")
 
-		if is_boss_active and locked_target == boss_instance:
-			boss_instance.register_hit()
-		else:
-			anomalies_cleared += 1
+		# Record root as mastered and remove from unmastered queue
+		if not mastered_root_ids.has(target_id):
+			mastered_root_ids.append(target_id)
+			for i in range(unmastered_roots.size() - 1, -1, -1):
+				if unmastered_roots[i]["id"] == target_id:
+					unmastered_roots.remove_at(i)
+					break
+			anomalies_cleared = mastered_root_ids.size()
+			if hud and hud.has_method("update_mastery"):
+				hud.update_mastery(mastered_root_ids.size(), total_sector_roots)
+
+		if is_instance_valid(locked_target):
 			locked_target.detonate()
 			locked_target = null
 	else:
-		# Miss!
-		if has_node("/root/SoundEffects"):
+		# Miss! (Root stays in unmastered_roots to be encountered again)
+		if is_inside_tree() and has_node("/root/SoundEffects"):
 			get_node("/root/SoundEffects").play_error_buzz()
-		if has_node("/root/GameManager"):
+		if is_inside_tree() and has_node("/root/GameManager"):
 			get_node("/root/GameManager").register_root_miss(target_id)
 		shake_camera()
+
+func handle_boss_combat(delta: float) -> void:
+	if space_laser_cooldown > 0.0:
+		space_laser_cooldown -= delta
+
+	if Input.is_action_pressed("fire_laser") and space_laser_cooldown <= 0.0:
+		space_laser_cooldown = 0.16 # Rapid fire Space laser!
+		fire_space_laser_at_boss()
+
+func fire_space_laser_at_boss() -> void:
+	if not is_instance_valid(boss_instance):
+		return
+
+	if has_node("/root/SoundEffects"):
+		get_node("/root/SoundEffects").play_laser_salvo()
+
+	draw_laser_beam(player_jet.global_position, boss_instance.global_position)
+	if boss_instance.has_method("take_laser_damage"):
+		boss_instance.take_laser_damage(26.0)
+	elif boss_instance.has_method("register_hit"):
+		boss_instance.register_hit()
 
 func draw_laser_beam(start_pos: Vector3, end_pos: Vector3) -> void:
 	if laser_mesh == null:
@@ -287,7 +418,7 @@ func shake_camera() -> void:
 	tween.tween_property(camera, "position:x", 0.0, 0.04)
 
 func spawn_anomaly() -> void:
-	if ANOMALY_SCENE == null:
+	if ANOMALY_SCENE == null or unmastered_roots.is_empty():
 		return
 	anomalies_spawned += 1
 	var anom := ANOMALY_SCENE.instantiate() as Node3D
@@ -295,11 +426,26 @@ func spawn_anomaly() -> void:
 	var spawn_y := randf_range(-2.5, 2.5)
 	anom.position = Vector3(spawn_x, spawn_y, -55.0)
 
+	# Pick target root from unmastered roots with spaced repetition weighting
 	var target_root := {}
-	if has_node("/root/LexiconManager"):
-		target_root = get_node("/root/LexiconManager").select_weighted_root(sector_id)
+	var lm = get_node_or_null("/root/LexiconManager")
+	if lm:
+		var total_w := 0.0
+		for item in unmastered_roots:
+			total_w += lm.get_weight(item["id"])
+		var roll := randf() * total_w
+		var accum := 0.0
+		for item in unmastered_roots:
+			accum += lm.get_weight(item["id"])
+			if roll <= accum:
+				target_root = item
+				break
+		if target_root.is_empty():
+			target_root = unmastered_roots[0]
+	else:
+		target_root = unmastered_roots[0]
 
-	objects_container.add_child(anom)
+	_get_objects_container().add_child(anom)
 	anom.setup(target_root, sector_id)
 	active_anomalies.append(anom)
 	anom.destroyed.connect(_on_anomaly_destroyed)
@@ -309,12 +455,18 @@ func _on_anomaly_destroyed(anom: Node3D) -> void:
 	if locked_target == anom:
 		locked_target = null
 
-func spawn_hazard_or_pickup() -> void:
+func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
+	var bass: float = beat_data.get("bass", 0.1)
+	var mid: float = beat_data.get("mid", 0.1)
 	var roll := randf()
-	if roll < 0.5 and HAZARD_GATE:
-		# Laser gate hazard
+
+	# High bass kicks or obstacle roll triggers laser gate hazards
+	if (bass > 0.16 or roll < 0.65) and HAZARD_GATE:
 		var gate := Area3D.new()
 		gate.add_to_group("hazards")
+		gate.collision_layer = 2
+		gate.collision_mask = 1
+		gate.set_meta("damage", 25.0)
 		var model: Node3D = HAZARD_GATE.instantiate()
 		gate.add_child(model)
 		var shape := CollisionShape3D.new()
@@ -326,63 +478,82 @@ func spawn_hazard_or_pickup() -> void:
 		var pos_x := randf_range(-3.5, 3.5)
 		var pos_y := randf_range(-2.0, 2.0)
 		gate.position = Vector3(pos_x, pos_y, -60.0)
-		objects_container.add_child(gate)
+		if mid > 0.14:
+			gate.rotation.z = PI * 0.5
+		_get_objects_container().add_child(gate)
 
-		# Move along rail
 		var tw := create_tween()
 		tw.tween_property(gate, "position:z", 10.0, 3.5)
 		tw.tween_callback(gate.queue_free)
-	elif roll < 0.75 and PICKUP_COOLANT:
-		# Coolant cell pickup
-		var cell := Area3D.new()
-		cell.add_to_group("pickup_coolant")
-		var model: Node3D = PICKUP_COOLANT.instantiate()
-		cell.add_child(model)
-		var shape := CollisionShape3D.new()
-		var sp := SphereShape3D.new()
-		sp.radius = 1.0
-		shape.shape = sp
-		cell.add_child(shape)
-		cell.position = Vector3(randf_range(-4.0, 4.0), randf_range(-2.0, 2.0), -55.0)
-		objects_container.add_child(cell)
-
-		var tw := create_tween()
-		tw.tween_property(cell, "position:z", 10.0, 3.8)
-		tw.tween_callback(cell.queue_free)
+	elif roll < 0.82 and PICKUP_COOLANT:
+		_spawn_pickup(PICKUP_COOLANT, "pickup_coolant")
 	elif PICKUP_SHIELD:
-		# Shield orb pickup
-		var orb := Area3D.new()
-		orb.add_to_group("pickup_shield")
-		var model: Node3D = PICKUP_SHIELD.instantiate()
-		orb.add_child(model)
-		var shape := CollisionShape3D.new()
-		var sp := SphereShape3D.new()
-		sp.radius = 1.0
-		shape.shape = sp
-		orb.add_child(shape)
-		orb.position = Vector3(randf_range(-4.0, 4.0), randf_range(-2.0, 2.0), -55.0)
-		objects_container.add_child(orb)
+		_spawn_pickup(PICKUP_SHIELD, "pickup_shield")
 
-		var tw := create_tween()
-		tw.tween_property(orb, "position:z", 10.0, 3.8)
-		tw.tween_callback(orb.queue_free)
+func _spawn_pickup(scene: PackedScene, group_name: String) -> void:
+	if scene == null:
+		return
+	var item := Area3D.new()
+	item.add_to_group(group_name)
+	item.collision_layer = 2
+	item.collision_mask = 1
+	var model: Node3D = scene.instantiate()
+	item.add_child(model)
+	var shape := CollisionShape3D.new()
+	var sp := SphereShape3D.new()
+	sp.radius = 1.0
+	shape.shape = sp
+	item.add_child(shape)
+	item.position = Vector3(randf_range(-4.0, 4.0), randf_range(-2.0, 2.0), -55.0)
+	_get_objects_container().add_child(item)
+
+	var tw := create_tween()
+	tw.tween_property(item, "position:z", 10.0, 3.8)
+	tw.tween_callback(item.queue_free)
 
 func spawn_boss() -> void:
 	if BOSS_SCENE == null:
 		return
 	is_boss_active = true
-	if has_node("/root/GameManager"):
-		get_node("/root/GameManager").bro_callout.emit("BOSS_ALERT", "FINAL EXAM BOSS APPROACHING! SYNTHESIZE COMPOUND ROOTS!")
+	if hud and hud.has_method("clear_prompt"):
+		hud.clear_prompt()
 
 	boss_instance = BOSS_SCENE.instantiate() as Node3D
 	boss_instance.position = Vector3(0, 1.0, -28.0)
-	objects_container.add_child(boss_instance)
+	_get_objects_container().add_child(boss_instance)
 	boss_instance.setup_boss(sector_id)
 	boss_instance.boss_defeated.connect(_on_boss_defeated)
 
-func _on_boss_defeated() -> void:
+	var boss_name: String = boss_instance.boss_data.get("boss_name", "ANOMALY OVERLORD")
+	if hud and hud.has_method("show_boss_health"):
+		hud.show_boss_health(boss_name, boss_instance.boss_hp, boss_instance.boss_max_hp)
+
+	if boss_instance.has_signal("boss_hp_changed"):
+		boss_instance.boss_hp_changed.connect(_on_boss_hp_changed)
+
 	if has_node("/root/GameManager"):
+		get_node("/root/GameManager").bro_callout.emit(
+			"BOSS_ALERT",
+			"FINAL EXAM BOSS DETECTED! AVOID ATTACKS AND FIRE LASERS WITH [SPACE]!"
+		)
+
+func _on_boss_hp_changed(current_hp: float, max_hp: float) -> void:
+	if hud and hud.has_method("update_boss_hp"):
+		hud.update_boss_hp(current_hp, max_hp)
+
+func _on_boss_defeated() -> void:
+	Engine.time_scale = 1.0
+	if hud and hud.has_method("hide_boss_health"):
+		hud.hide_boss_health()
+	if is_inside_tree() and has_node("/root/GameManager"):
 		get_node("/root/GameManager").finalize_run(true)
 
-func _on_run_ended(_summary: Dictionary) -> void:
-	pass
+func _on_run_ended(summary: Dictionary) -> void:
+	Engine.time_scale = 1.0
+	if hud and hud.has_method("hide_boss_health"):
+		hud.hide_boss_health()
+
+	if GAMEOVER_SCENE:
+		var go := GAMEOVER_SCENE.instantiate()
+		add_child(go)
+		go.setup_results(summary)

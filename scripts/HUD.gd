@@ -9,9 +9,14 @@ extends CanvasLayer
 @onready var bro_dialogue_label: Label = $CommsWidget/DialogueBox/Label
 @onready var score_label: Label = $TopLeft/ScoreLabel
 @onready var combo_badge: Label = $TopLeft/ComboBadge
+@onready var mastery_label: Label = $TopLeft/MasteryLabel
 @onready var shield_bar: ProgressBar = $BottomLeft/ShieldBar
+@onready var focus_bar: ProgressBar = $BottomLeft/FocusBar
 @onready var overheat_bar: ProgressBar = $BottomLeft/OverheatBar
 @onready var lockout_label: Label = $BottomLeft/LockoutLabel
+@onready var boss_container: Control = $BossHealthContainer
+@onready var boss_name_label: Label = $BossHealthContainer/BossNameLabel
+@onready var boss_bar: ProgressBar = $BossHealthContainer/BossBar
 @onready var crt_overlay: ColorRect = $CRTOverlay
 
 var dialogue_timer: float = 0.0
@@ -23,6 +28,8 @@ func _ready() -> void:
 		tactical_banner.visible = false
 	if lockout_label:
 		lockout_label.visible = false
+	if boss_container:
+		boss_container.visible = false
 
 	# Connect to GameManager signals
 	var gm = get_node_or_null("/root/GameManager")
@@ -76,7 +83,7 @@ func display_prompt(prompt: Dictionary) -> void:
 
 	var options: Array = prompt.get("options", [])
 	var keys := ["1 / Q", "2 / E", "3 / R", "4 / F"]
-	var colors := [Color("#00F0FF"), Color("#39FF14"), Color("#FFE600"), Color("#FF007F")]
+	var colors := [Color("#00FFFF"), Color("#39FF14"), Color("#FFE600"), Color("#FF66CC")]
 
 	var btns := buttons_container.get_children()
 	for i in range(btns.size()):
@@ -129,3 +136,29 @@ func trigger_bro_message(state: String, message: String) -> void:
 	if has_node("/root/SoundEffects"):
 		var syllables := clampi(int(message.length() / 8), 3, 6)
 		get_node("/root/SoundEffects").play_bro_voice_cadence(syllables)
+
+func update_focus(current: float, max_val: float) -> void:
+	if focus_bar:
+		focus_bar.max_value = max_val
+		focus_bar.value = current
+
+func update_mastery(cleared: int, total: int) -> void:
+	if mastery_label:
+		mastery_label.text = "ROOTS MASTERED: %d / %d" % [cleared, total]
+
+func show_boss_health(bname: String, current_hp: float, max_hp: float) -> void:
+	clear_prompt()
+	if boss_container:
+		boss_container.visible = true
+	if boss_name_label:
+		boss_name_label.text = bname.to_upper()
+	update_boss_hp(current_hp, max_hp)
+
+func update_boss_hp(current_hp: float, max_hp: float) -> void:
+	if boss_bar:
+		boss_bar.max_value = max_hp
+		boss_bar.value = current_hp
+
+func hide_boss_health() -> void:
+	if boss_container:
+		boss_container.visible = false

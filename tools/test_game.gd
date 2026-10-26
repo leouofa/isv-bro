@@ -29,7 +29,8 @@ func _init() -> void:
 		"res://scenes/CodexScreen.tscn",
 		"res://scenes/PlayerJet.tscn",
 		"res://scenes/Anomaly.tscn",
-		"res://scenes/BossExam.tscn"
+		"res://scenes/BossExam.tscn",
+		"res://scenes/GameOverScreen.tscn"
 	]
 	for scn_path in scenes:
 		var exists := ResourceLoader.exists(scn_path)
@@ -72,6 +73,7 @@ func _init() -> void:
 	# SUITE 3: Verify ISV Lexicon (48+ Roots, 4 Sectors, 4 Boss Exams, 4-Choice Prompt & Spaced Repetition)
 	print("\n--- SUITE 3: ISV Lexicon & Spaced Repetition Engine ---")
 	var lex_node := Node.new()
+	lex_node.name = "LexiconManager"
 	lex_node.set_script(load("res://scripts/LexiconManager.gd"))
 	root.add_child(lex_node)
 	lex_node._ready()
@@ -94,6 +96,7 @@ func _init() -> void:
 	# SUITE 4: Verify Bro-Factor Combo Scaling & Cognitive Overheat Lockout Math
 	print("\n--- SUITE 4: Bro-Factor Combo Scaling & Cognitive Overheat ---")
 	var gm := Node.new()
+	gm.name = "GameManager"
 	gm.set_script(load("res://scripts/GameManager.gd"))
 	root.add_child(gm)
 	gm._ready()
@@ -179,7 +182,13 @@ func _init() -> void:
 		assert_true(gw_hud != null and gw_hud.visible == true, "HUD is visible initially in GameWorld")
 		gw_scn.open_codex()
 		assert_true(paused == true, "GameWorld.open_codex() pauses SceneTree")
-		assert_true(gw_scn.get("codex_instance") != null, "GameWorld.open_codex() instantiates CodexScreen")
+		var codex_inst = gw_scn.get("codex_instance")
+		assert_true(codex_inst != null, "GameWorld.open_codex() instantiates CodexScreen")
+		if codex_inst and not codex_inst.is_node_ready():
+			codex_inst._ready()
+		assert_true(codex_inst.get("selected_sector") == gw_scn.sector_id, "In-game Codex defaults to current sector_id")
+		var c_filter_node = codex_inst.get_node_or_null("VBox/TopBar/SectorFilter") as OptionButton
+		assert_true(c_filter_node != null and c_filter_node.get_selected_id() == gw_scn.sector_id, "Codex SectorFilter OptionButton selects current sector_id")
 		assert_true(gw_hud.visible == false, "HUD and scanlines are hidden when Codex is open")
 		gw_scn.close_codex()
 		assert_true(paused == false, "GameWorld.close_codex() restores SceneTree.paused = false")
@@ -239,6 +248,13 @@ func _init() -> void:
 	key_ev.pressed = true
 	card1.emit_signal("gui_input", key_ev)
 	assert_true(clicked_box[0] == 1, "Keyboard Enter on focused SectorCard triggers sector engagement")
+
+	# Test CheckBox styling and separation (prevents text touching check icon on hover)
+	var crt_cb = menu_scn.get_node_or_null("SettingsModal/Panel/VBox/CRTCheck") as CheckBox
+	assert_true(crt_cb != null and crt_cb.get_theme_constant("h_separation") >= 10, "CRTCheck has >= 10px h_separation spacing")
+	var hp_sb = crt_cb.get_theme_stylebox("hover_pressed")
+	var norm_sb = crt_cb.get_theme_stylebox("normal")
+	assert_true(hp_sb != null and norm_sb != null and hp_sb.content_margin_left == norm_sb.content_margin_left, "CRTCheck hover_pressed left margin matches normal margin")
 
 	menu_scn.free()
 
@@ -300,6 +316,198 @@ func _init() -> void:
 
 	main_menu.free()
 	mm_node.free()
+
+	# SUITE 11: Space Laser & Focus Time-Slow Action Bindings
+	print("\n--- SUITE 11: Space Laser & Focus Time-Slow Input Mappings ---")
+	assert_true(InputMap.has_action("fire_laser"), "InputAction registered: fire_laser")
+	assert_true(InputMap.has_action("time_slow"), "InputAction registered: time_slow")
+	var fire_events := InputMap.action_get_events("fire_laser")
+	var has_space := false
+	for ev in fire_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SPACE or ev.keycode == KEY_SPACE):
+			has_space = true
+	assert_true(has_space, "fire_laser mapped to Spacebar")
+
+	var roll_events := InputMap.action_get_events("barrel_roll")
+	var roll_has_space := false
+	for ev in roll_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SPACE or ev.keycode == KEY_SPACE):
+			roll_has_space = true
+	assert_true(not roll_has_space, "barrel_roll does NOT conflict with Spacebar")
+
+	var slow_events := InputMap.action_get_events("time_slow")
+	var has_shift := false
+	for ev in slow_events:
+		if ev is InputEventKey and (ev.physical_keycode == KEY_SHIFT or ev.keycode == KEY_SHIFT):
+			has_shift = true
+	assert_true(has_shift, "time_slow mapped to Shift key")
+
+	# SUITE 12: Music Spectrum Analyzer & Real-time Beat Energy
+	print("\n--- SUITE 12: AudioEffectSpectrumAnalyzer & Beat Detection ---")
+	var mm_test: Node = (load("res://scripts/MusicManager.gd") as GDScript).new()
+	root.add_child(mm_test)
+	mm_test._ready()
+	assert_true(mm_test.spectrum_analyzer != null, "AudioEffectSpectrumAnalyzer initialized on Music bus")
+	assert_true(mm_test.spectrum_effect_idx >= 0, "Spectrum effect index registered on bus")
+	var beat_energy: Dictionary = mm_test.get_beat_energy()
+	assert_true(beat_energy.has("bass") and beat_energy.has("mid") and beat_energy.has("is_kick"), "get_beat_energy returns valid spectrum dictionary")
+	mm_test.free()
+
+	# SUITE 13: Focus Time-Slow & Chrono Energy Drain/Regen
+	print("\n--- SUITE 13: Focus Time-Slow & Chrono Energy System ---")
+	var world_scn: Node = (load("res://scenes/GameWorld.tscn") as PackedScene).instantiate()
+	root.add_child(world_scn)
+	world_scn._ready()
+	assert_true(world_scn.focus_energy == 100.0, "Focus energy starts at max 100.0")
+	var hud_node: Node = world_scn.get_node_or_null("HUD")
+	assert_true(hud_node != null, "HUD present in GameWorld")
+	var focus_bar := hud_node.get_node_or_null("BottomLeft/FocusBar") as ProgressBar
+	assert_true(focus_bar != null, "FocusBar widget present in HUD BottomLeft")
+	var mastery_lbl := hud_node.get_node_or_null("TopLeft/MasteryLabel") as Label
+	assert_true(mastery_lbl != null, "MasteryLabel widget present in HUD TopLeft")
+	var boss_hud_box: Node = hud_node.get_node_or_null("BossHealthContainer")
+	assert_true(boss_hud_box != null, "BossHealthContainer widget present in HUD")
+
+	# SUITE 14: Indefinite Sector Lexicon Mastery Queue
+	print("\n--- SUITE 14: Indefinite Sector Lexicon Mastery Queue ---")
+	assert_true(world_scn.unmastered_roots.size() == 12, "Sector 1 initializes queue with 12 unmastered roots (found %d)" % world_scn.unmastered_roots.size())
+	assert_true(world_scn.mastered_root_ids.is_empty(), "Mastered roots list starts empty")
+	var first_root_id: String = world_scn.unmastered_roots[0]["id"]
+
+	# Simulate correct answer: root moves to mastered_root_ids and is removed from unmastered_roots
+	world_scn.current_prompt = {"correct_index": 0, "target_id": first_root_id}
+	world_scn.fire_laser_salvo(0)
+	assert_true(world_scn.mastered_root_ids.has(first_root_id), "Correct root registered into mastered_root_ids")
+	assert_true(world_scn.unmastered_roots.size() == 11, "Unmastered roots queue decremented to 11")
+	assert_true(world_scn.anomalies_cleared == 1, "Anomalies cleared tracks mastered count")
+
+	# Simulate incorrect answer: target remains in unmastered_roots
+	var second_root_id: String = world_scn.unmastered_roots[0]["id"]
+	world_scn.current_prompt = {"correct_index": 1, "target_id": second_root_id}
+	world_scn.fire_laser_salvo(0)
+	assert_true(not world_scn.mastered_root_ids.has(second_root_id), "Incorrect root is NOT mastered")
+	assert_true(world_scn.unmastered_roots.size() == 11, "Incorrect root remains in unmastered queue for replay")
+
+	# Pacing & Extended Word Visibility Verification
+	var test_anom: Node = (load("res://scenes/Anomaly.tscn") as PackedScene).instantiate()
+	assert_true(is_equal_approx(test_anom.move_speed, 7.4), "Anomaly move_speed reduced to 7.4 m/s for extended word visibility")
+	test_anom.free()
+	assert_true(is_equal_approx(world_scn.ANOMALY_SPAWN_INTERVAL, 6.5), "GameWorld ANOMALY_SPAWN_INTERVAL set to 6.5s")
+
+	world_scn.free()
+
+	# SUITE 15: Boss Dogfight & Space Laser Combat
+	print("\n--- SUITE 15: Boss Dogfight & Space Laser Combat ---")
+	var boss_scn: Node = (load("res://scenes/BossExam.tscn") as PackedScene).instantiate()
+	root.add_child(boss_scn)
+	boss_scn._ready()
+	boss_scn.setup_boss(1)
+	assert_true(boss_scn.boss_hp == 600.0, "Boss HP initialized to 600.0 for Sector 1")
+	assert_true(boss_scn.is_active and not boss_scn.is_defeated, "Boss enters active combat mode")
+
+	# Test laser damage
+	boss_scn.take_laser_damage(100.0)
+	assert_true(boss_scn.boss_hp == 500.0, "Laser deals direct damage to Boss HP (600.0 -> 500.0)")
+
+	# Test boss attacks
+	boss_scn.launch_boss_attack()
+	var hazards_found: int = 0
+	for ch in root.get_children():
+		if ch.is_in_group("hazards"):
+			hazards_found += 1
+			ch.queue_free()
+	assert_true(hazards_found > 0, "Boss launched projectile hazards in group 'hazards' (found %d)" % hazards_found)
+
+	# Test boss defeat
+	boss_scn.take_laser_damage(500.0)
+	assert_true(boss_scn.boss_hp == 0.0, "Boss HP depleted to 0.0")
+	assert_true(boss_scn.is_defeated, "Boss defeated flag set upon 0 HP")
+
+	boss_scn.free()
+
+	# SUITE 16: Shield Depletion, Missed Words Tracking & GameOverScreen
+	print("\n--- SUITE 16: Shield Depletion, Missed Words Tracking & GameOverScreen ---")
+	gm.start_new_run(1)
+	assert_true(gm.words_missed_this_run == 0, "Missed words counter reset to 0 on new run")
+	gm.register_root_miss("bio")
+	gm.register_root_miss("cyto")
+	assert_true(gm.words_missed_this_run == 2, "Missed words counter tracked 2 misses")
+
+	# Shield damage from boss hazards (15.0 dmg per orb)
+	var jet_scn := (load("res://scenes/PlayerJet.tscn") as PackedScene).instantiate()
+	root.add_child(jet_scn)
+	var initial_shield: float = gm.shield_hp
+	var orb_hazard := Area3D.new()
+	orb_hazard.add_to_group("hazards")
+	orb_hazard.set_meta("damage", 15.0)
+	orb_hazard.set_meta("destroy_on_hit", true)
+	jet_scn._on_area_entered(orb_hazard)
+	assert_true(gm.shield_hp == initial_shield - 15.0, "Hazard collision decrements shield by 15.0 (%.1f -> %.1f)" % [initial_shield, gm.shield_hp])
+	orb_hazard.free()
+
+	# Pickup collection test: ensure parent container is NOT freed on collection
+	var test_container := Node3D.new()
+	root.add_child(test_container)
+	var coolant_pickup := Area3D.new()
+	coolant_pickup.add_to_group("pickup_coolant")
+	test_container.add_child(coolant_pickup)
+	jet_scn._on_area_entered(coolant_pickup)
+	assert_true(is_instance_valid(test_container), "Parent container remains valid after coolant pickup collected")
+
+	var shield_pickup := Area3D.new()
+	shield_pickup.add_to_group("pickup_shield")
+	test_container.add_child(shield_pickup)
+	jet_scn._on_area_entered(shield_pickup)
+	assert_true(is_instance_valid(test_container), "Parent container remains valid after shield pickup collected")
+	test_container.free()
+
+	jet_scn.free()
+
+	# Shield depletion to 0 triggers run_ended
+	var last_summary_box: Array[Dictionary] = [{}]
+	var conn_callable := func(s: Dictionary): last_summary_box[0] = s
+	gm.run_ended.connect(conn_callable)
+	gm.apply_shield_damage(gm.shield_hp) # Deplete completely
+	assert_true(gm.shield_hp == 0.0, "Shield integrity dropped to 0.0")
+	var sum_dict: Dictionary = last_summary_box[0]
+	assert_true(not sum_dict.is_empty(), "run_ended signal emitted on 0 shield")
+	assert_true(sum_dict.get("survived", true) == false, "Summary indicates player did not survive (Game Over)")
+	assert_true(int(sum_dict.get("words_missed", -1)) == 2, "Summary correctly reports 2 words missed")
+	gm.run_ended.disconnect(conn_callable)
+
+	# Verify GameOverScreen results presentation (Game Over and Victory)
+	var ui_for_go := Node.new()
+	ui_for_go.set_name("SynthwaveUI")
+	ui_for_go.set_script(load("res://scripts/SynthwaveUI.gd"))
+	root.add_child(ui_for_go)
+	ui_for_go._ready()
+
+	assert_true(ui_for_go.has_method("apply_button_style"), "SynthwaveUI provides apply_button_style")
+	assert_true(ui_for_go.has_method("apply_btn_style"), "SynthwaveUI provides apply_btn_style alias")
+
+	var go_scn: Node = (load("res://scenes/GameOverScreen.tscn") as PackedScene).instantiate()
+	root.add_child(go_scn)
+	go_scn.call("_ready")
+
+	# Test Failure Presentation
+	go_scn.setup_results({"survived": false, "score": 2100, "words_missed": 3, "grade": "D", "sector": 1})
+	var h_lbl = go_scn.get_node_or_null("Panel/VBox/HeaderLabel") as Label
+	var m_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/MissedLabel") as Label
+	var s_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/ScoreLabel") as Label
+	assert_true(h_lbl != null and h_lbl.text == "CRITICAL FAILURE", "GameOverScreen shows 'CRITICAL FAILURE' on shield loss")
+	assert_true(h_lbl != null and h_lbl.get_theme_color("font_color") == Color("#FF0055"), "GameOverScreen failure header has crimson font color")
+	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 3", "GameOverScreen displays 'WORDS MISSED: 3'")
+	assert_true(s_lbl != null and s_lbl.text.contains("0002100"), "GameOverScreen displays formatted total score")
+
+	# Test Victory Presentation
+	go_scn.setup_results({"survived": true, "score": 15000, "words_missed": 1, "grade": "S", "sector": 1})
+	assert_true(h_lbl != null and h_lbl.text == "SECTOR 01 CLEARED", "GameOverScreen shows 'SECTOR 01 CLEARED' on victory")
+	assert_true(h_lbl != null and h_lbl.get_theme_color("font_color") == Color("#39FF14"), "GameOverScreen victory header has vibrant neon green font color")
+	assert_true(h_lbl != null and h_lbl.modulate == Color.WHITE, "GameOverScreen header modulate is white (un-clamped)")
+	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 1", "GameOverScreen displays 'WORDS MISSED: 1'")
+
+	go_scn.free()
+	ui_for_go.free()
 
 	gm.free()
 	lex_node.free()
