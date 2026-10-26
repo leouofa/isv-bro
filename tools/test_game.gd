@@ -488,12 +488,15 @@ func _init() -> void:
 	var m_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/MissedLabel") as Label
 	var s_lbl = go_scn.get_node_or_null("Panel/VBox/StatsBox/ScoreLabel") as Label
 	assert_true(h_lbl != null and h_lbl.text == "CRITICAL FAILURE", "GameOverScreen shows 'CRITICAL FAILURE' on shield loss")
+	assert_true(h_lbl != null and h_lbl.get_theme_color("font_color") == Color("#FF0055"), "GameOverScreen failure header has crimson font color")
 	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 3", "GameOverScreen displays 'WORDS MISSED: 3'")
 	assert_true(s_lbl != null and s_lbl.text.contains("0002100"), "GameOverScreen displays formatted total score")
 
 	# Test Victory Presentation
 	go_scn.setup_results({"survived": true, "score": 15000, "words_missed": 1, "grade": "S", "sector": 1})
 	assert_true(h_lbl != null and h_lbl.text == "SECTOR 01 CLEARED", "GameOverScreen shows 'SECTOR 01 CLEARED' on victory")
+	assert_true(h_lbl != null and h_lbl.get_theme_color("font_color") == Color("#39FF14"), "GameOverScreen victory header has vibrant neon green font color")
+	assert_true(h_lbl != null and h_lbl.modulate == Color.WHITE, "GameOverScreen header modulate is white (un-clamped)")
 	assert_true(m_lbl != null and m_lbl.text == "WORDS MISSED: 1", "GameOverScreen displays 'WORDS MISSED: 1'")
 
 	go_scn.free()

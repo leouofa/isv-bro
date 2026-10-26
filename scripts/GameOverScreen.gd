@@ -72,7 +72,9 @@ func setup_results(summary: Dictionary) -> void:
 	var max_combo: int = int(summary.get("max_combo", 1))
 	var sector_num: int = int(summary.get("sector", 1))
 
-	var style: StyleBoxFlat = panel.get_theme_stylebox("panel") as StyleBoxFlat
+	var style: StyleBoxFlat = null
+	if panel:
+		style = panel.get_theme_stylebox("panel") as StyleBoxFlat
 	if style:
 		style = style.duplicate()
 		panel.add_theme_stylebox_override("panel", style)
@@ -80,10 +82,16 @@ func setup_results(summary: Dictionary) -> void:
 	if survived:
 		if header_label:
 			header_label.text = "SECTOR 0%d CLEARED" % sector_num
-			header_label.modulate = Color("#39FF14")
+			header_label.modulate = Color.WHITE
+			header_label.add_theme_color_override("font_color", Color("#39FF14"))
+			header_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.45, 0.1, 0.75))
+			header_label.add_theme_constant_override("shadow_offset_x", 0)
+			header_label.add_theme_constant_override("shadow_offset_y", 2)
+			header_label.add_theme_constant_override("shadow_outline_size", 4)
 		if subheader_label:
 			subheader_label.text = "ANOMALY CORE ANNIHILATED — MISSION ACCOMPLISHED!"
-			subheader_label.modulate = Color("#00FFFF")
+			subheader_label.modulate = Color.WHITE
+			subheader_label.add_theme_color_override("font_color", Color("#00FFFF"))
 		if dimmer:
 			dimmer.color = Color(0.02, 0.04, 0.08, 0.8)
 		if style:
@@ -91,10 +99,16 @@ func setup_results(summary: Dictionary) -> void:
 	else:
 		if header_label:
 			header_label.text = "CRITICAL FAILURE"
-			header_label.modulate = Color("#FF0055")
+			header_label.modulate = Color.WHITE
+			header_label.add_theme_color_override("font_color", Color("#FF0055"))
+			header_label.add_theme_color_override("font_shadow_color", Color(0.45, 0.0, 0.1, 0.75))
+			header_label.add_theme_constant_override("shadow_offset_x", 0)
+			header_label.add_theme_constant_override("shadow_offset_y", 2)
+			header_label.add_theme_constant_override("shadow_outline_size", 4)
 		if subheader_label:
 			subheader_label.text = "SHIELD INTEGRITY DEPLETED — SHIP DESTROYED"
-			subheader_label.modulate = Color("#FFAA00")
+			subheader_label.modulate = Color.WHITE
+			subheader_label.add_theme_color_override("font_color", Color("#FFAA00"))
 		if dimmer:
 			dimmer.color = Color(0.12, 0.01, 0.03, 0.85)
 		if style:
@@ -109,7 +123,8 @@ func setup_results(summary: Dictionary) -> void:
 			"C": Color("#FFA500"),
 			"D": Color("#FF0055")
 		}
-		grade_label.modulate = grade_colors.get(grade, Color.WHITE)
+		grade_label.modulate = Color.WHITE
+		grade_label.add_theme_color_override("font_color", grade_colors.get(grade, Color.WHITE))
 
 	if score_label:
 		score_label.text = "TOTAL SCORE: %07d" % score
@@ -119,7 +134,8 @@ func setup_results(summary: Dictionary) -> void:
 
 	if missed_label:
 		missed_label.text = "WORDS MISSED: %d" % words_missed
-		missed_label.modulate = Color("#FFE600")
+		missed_label.modulate = Color.WHITE
+		missed_label.add_theme_color_override("font_color", Color("#FFE600"))
 
 	if accuracy_label:
 		accuracy_label.text = "VOCABULARY ACCURACY: %d%%" % int(accuracy * 100.0)

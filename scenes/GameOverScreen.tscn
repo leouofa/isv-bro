@@ -52,14 +52,16 @@ alignment = 1
 
 [node name="HeaderLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0.33, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 28
 text = "CRITICAL FAILURE"
 horizontal_alignment = 1
 
 [node name="SubHeaderLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "SHIELD INTEGRITY DEPLETED — SHIP DESTROYED"
 horizontal_alignment = 1
@@ -80,7 +82,7 @@ text = "PERFORMANCE GRADE:"
 
 [node name="GradeLabel" type="Label" parent="Panel/VBox/GradeBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "S"
 
