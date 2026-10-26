@@ -459,8 +459,8 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 	var mid: float = beat_data.get("mid", 0.1)
 	var roll := randf()
 
-	# High bass kicks trigger laser gate hazards
-	if (bass > 0.16 or roll < 0.45) and HAZARD_GATE:
+	# High bass kicks or obstacle roll triggers laser gate hazards
+	if (bass > 0.16 or roll < 0.65) and HAZARD_GATE:
 		var gate := Area3D.new()
 		gate.add_to_group("hazards")
 		gate.collision_layer = 2
@@ -484,26 +484,6 @@ func spawn_procedural_obstacle(beat_data: Dictionary = {}) -> void:
 		var tw := create_tween()
 		tw.tween_property(gate, "position:z", 10.0, 3.5)
 		tw.tween_callback(gate.queue_free)
-	elif roll < 0.65 and RING_MODEL:
-		var ring_hazard := Area3D.new()
-		ring_hazard.add_to_group("hazards")
-		ring_hazard.collision_layer = 2
-		ring_hazard.collision_mask = 1
-		ring_hazard.set_meta("damage", 20.0)
-		var model: Node3D = RING_MODEL.instantiate()
-		model.scale = Vector3(0.5, 0.5, 0.5)
-		ring_hazard.add_child(model)
-		var shape := CollisionShape3D.new()
-		var box := BoxShape3D.new()
-		box.size = Vector3(2.5, 2.5, 0.6)
-		shape.shape = box
-		ring_hazard.add_child(shape)
-		ring_hazard.position = Vector3(randf_range(-3.0, 3.0), randf_range(-1.8, 1.8), -60.0)
-		_get_objects_container().add_child(ring_hazard)
-
-		var tw := create_tween()
-		tw.tween_property(ring_hazard, "position:z", 10.0, 3.2)
-		tw.tween_callback(ring_hazard.queue_free)
 	elif roll < 0.82 and PICKUP_COOLANT:
 		_spawn_pickup(PICKUP_COOLANT, "pickup_coolant")
 	elif PICKUP_SHIELD:
