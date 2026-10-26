@@ -238,6 +238,7 @@ func open_codex() -> void:
 	if codex_scn:
 		var inst = codex_scn.instantiate()
 		inst.set("paused_game", true)
+		inst.set("selected_sector", sector_id)
 		codex_instance = inst
 		var h := _get_hud()
 		if h:

@@ -182,7 +182,13 @@ func _init() -> void:
 		assert_true(gw_hud != null and gw_hud.visible == true, "HUD is visible initially in GameWorld")
 		gw_scn.open_codex()
 		assert_true(paused == true, "GameWorld.open_codex() pauses SceneTree")
-		assert_true(gw_scn.get("codex_instance") != null, "GameWorld.open_codex() instantiates CodexScreen")
+		var codex_inst = gw_scn.get("codex_instance")
+		assert_true(codex_inst != null, "GameWorld.open_codex() instantiates CodexScreen")
+		if codex_inst and not codex_inst.is_node_ready():
+			codex_inst._ready()
+		assert_true(codex_inst.get("selected_sector") == gw_scn.sector_id, "In-game Codex defaults to current sector_id")
+		var c_filter_node = codex_inst.get_node_or_null("VBox/TopBar/SectorFilter") as OptionButton
+		assert_true(c_filter_node != null and c_filter_node.get_selected_id() == gw_scn.sector_id, "Codex SectorFilter OptionButton selects current sector_id")
 		assert_true(gw_hud.visible == false, "HUD and scanlines are hidden when Codex is open")
 		gw_scn.close_codex()
 		assert_true(paused == false, "GameWorld.close_codex() restores SceneTree.paused = false")
